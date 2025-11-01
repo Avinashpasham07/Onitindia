@@ -34,7 +34,7 @@ function Task_Performers() {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full px-4 mt-15 sm:px-8 md:px-20 bg-[#f3f4f6] py-14 sm:py-20 relative min-h-screen">
+    <div className="w-full px-4 mt-15 sm:px-8 md:px-20 bg-[#f3f4f6] py-14 sm:py-20 relative ">
       {/* 🔙 Back Button */}
       <button
         onClick={() => navigate('/')}
