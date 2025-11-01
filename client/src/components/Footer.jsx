@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
-import.meta.env.MODE === "development"
+const BASE_URL =
+  import.meta.env.MODE === "development"
     ? "http://localhost:5000"
     : "https://onitindia.onrender.com";
 
