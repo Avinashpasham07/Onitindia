@@ -75,7 +75,7 @@ function Navbar({ onShowTaskPerformer }) {
         ))}
       </div>
 
-      {/* Right Buttons */}
+      {/* Right Buttons (Desktop) */}
       <div className="hidden md:flex items-center gap-4 mr-10">
         <button
           onClick={onShowTaskPerformer}
@@ -84,15 +84,14 @@ function Navbar({ onShowTaskPerformer }) {
           Add as Task Performer
         </button>
 
-     <a
-  href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="bg-green-500 text-white text-[1rem] px-5 py-2 rounded-full hover:bg-black hover:text-white transition"
->
-  Become a Tester
-</a>
-
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-green-500 text-white text-[1rem] px-5 py-2 rounded-full hover:bg-black hover:text-white transition"
+        >
+          Become a Tester
+        </a>
       </div>
 
       {/* Mobile Menu Toggle */}
@@ -106,11 +105,11 @@ function Navbar({ onShowTaskPerformer }) {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ y: -30, opacity: 0 }}
+            initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -20, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="absolute top-20 left-0 w-full bg-white/95 backdrop-blur-lg shadow-lg flex flex-col items-center py-6 space-y-5 md:hidden"
+            exit={{ y: -50, opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="absolute top-20 left-0 w-full bg-white/95 backdrop-blur-lg shadow-lg flex flex-col items-center py-6 space-y-6 md:hidden"
           >
             {centerNavItems.map((item, index) => (
               <button
@@ -121,24 +120,27 @@ function Navbar({ onShowTaskPerformer }) {
                 {item.name}
               </button>
             ))}
-            <button
-              onClick={() => {
-                setMenuOpen(false);
-                onShowTaskPerformer();
-              }}
-              className="text-lg font-bold text-white text-bold bg-green-600 hover:bg-green-700 px-6 py-2 rounded-full transition"
-            >
-              Add as Task Performer
-            </button>
-            
-     <a
-  href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="bg-green-500 text-white text-[1rem] px-5 py-2 rounded-full hover:bg-black hover:text-white transition"
->
-  Become a Tester
-</a>
+
+            <div className="flex flex-col gap-3 w-[80%]">
+              <button
+                onClick={() => {
+                  setMenuOpen(false);
+                  onShowTaskPerformer();
+                }}
+                className="text-lg font-bold text-white bg-green-600 hover:bg-green-700 px-6 py-3 rounded-full transition w-full"
+              >
+                Add as Task Performer
+              </button>
+
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-lg font-bold text-white bg-green-600 hover:bg-green-700 px-6 py-3 rounded-full transition w-full text-center"
+              >
+                Become a Tester
+              </a>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
