@@ -21,17 +21,7 @@ function Footer({ onShowPrivacyPolicy }) {
         body: JSON.stringify({ email }),
       });
 
-      const result = await response.json();
-      if (response.ok) {
-        alert("✅ Email saved successfully!");
-        setEmail("");
-      } else {
-        alert(result.message || "Something went wrong!");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("❌ Failed to send email");
-    }
+      
   };
 
   return (
