@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { UserPlus, Briefcase, Search, DollarSign } from "react-feather";
+import { useNavigate } from "react-router-dom";
+import { UserPlus, Briefcase, Search, DollarSign, ArrowLeft } from "react-feather";
 
 const cards = [
   {
@@ -30,10 +31,21 @@ const cards = [
 ];
 
 function Task_Performers() {
+  const navigate = useNavigate();
+
   return (
-    <div className="w-full px-4 mt-15 sm:px-8 md:px-20 bg-[#f3f4f6] py-14 sm:py-20">
+    <div className="w-full px-4 mt-15 sm:px-8 md:px-20 bg-[#f3f4f6] py-14 sm:py-20 relative min-h-screen">
+      {/* 🔙 Back Button */}
+      <button
+        onClick={() => navigate('/')}
+        className="absolute top-6 left-6 flex items-center gap-2 bg-black text-white px-4 py-2 
+                  rounded-full text-sm sm:text-base font-semibold hover:bg-green-600 transition duration-300"
+      >
+        <ArrowLeft size={18} /> Back
+      </button>
+
       {/* Section Heading */}
-      <div className="text-center mb-12 sm:mb-16">
+      <div className="text-center mb-12 sm:mb-16 mt-10 sm:mt-12">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black font-['Neue Montreal']">
           Find Work Nearby You!
         </h1>
@@ -42,7 +54,7 @@ function Task_Performers() {
         </p>
       </div>
 
-      {/* Cards Section */}
+      {/* Cards */}
       <div className="flex flex-wrap justify-center gap-5 sm:gap-6">
         {cards.map((card, index) => (
           <motion.div
@@ -54,14 +66,12 @@ function Task_Performers() {
                        flex flex-col justify-between p-5 sm:p-6 md:p-8
                        w-[45%] sm:w-[45%] md:w-[22%]
                        h-[220px] sm:h-[260px] md:h-[320px]
-                       cursor-pointer"
+                       cursor-pointer -mb-8"
           >
-            {/* Background Number */}
             <span className="absolute text-[5rem] sm:text-[6rem] md:text-[8rem] font-bold text-black/10 top-30 left-5 select-none leading-none">
               {card.number}
             </span>
 
-            {/* Card Content */}
             <div className="relative z-10">
               <div className="flex justify-between items-start">
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-black font-['Neue Montreal']">
@@ -91,11 +101,18 @@ function Task_Performers() {
         ))}
       </div>
 
-      {/* Subtext */}
-      <div className="text-center mt-10 sm:mt-14">
-        <p className="text-base sm:text-lg text-gray-700 italic">
-          “Be your own boss. Start earning from the people around you.”
-        </p>
+      {/* Register Button */}
+      <div className="text-center -mt-3 sm:mt-14">
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block  -mt-32 bg-green-500 text-white text-[1rem] px-8 py-3 
+                     rounded-full hover:bg-black hover:text-white transition-all 
+                     duration-300 shadow-md"
+        >
+          Register
+        </a>
       </div>
     </div>
   );

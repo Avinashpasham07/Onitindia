@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "react-feather";
+import { useNavigate } from "react-router-dom";
 import logoImage from "../assets/logo.png";
 
-function Navbar({ onShowTaskPerformer }) {
+function Navbar() {
+  const navigate = useNavigate();
+  
   const centerNavItems = [
     { name: "Domain", target: "domain" },
     { name: "About Us", target: "whychooseus" },
@@ -30,8 +33,23 @@ function Navbar({ onShowTaskPerformer }) {
   };
 
   const handleScrollTo = (targetId) => {
-    const el = document.getElementById(targetId);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    // First navigate to home if not already there
+    if (window.location.pathname !== '/') {
+      navigate('/');
+      // Wait for navigation then scroll
+      setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    } else {
+      const el = document.getElementById(targetId);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    setMenuOpen(false);
+  };
+
+  const handleTaskPerformer = () => {
+    navigate('/task-performers');
     setMenuOpen(false);
   };
 
@@ -47,7 +65,7 @@ function Navbar({ onShowTaskPerformer }) {
           src={logoImage}
           alt="OnIT Logo"
           className="w-40 sm:w-60 object-contain cursor-pointer"
-          onClick={() => handleScrollTo("home")}
+          onClick={() => navigate('/')}
         />
       </div>
 
@@ -78,14 +96,14 @@ function Navbar({ onShowTaskPerformer }) {
       {/* Right Buttons (Desktop) */}
       <div className="hidden md:flex items-center gap-4 mr-10">
         <button
-          onClick={onShowTaskPerformer}
+          onClick={handleTaskPerformer}
           className="bg-green-500 text-white text-[1rem] px-5 py-2 rounded-full hover:bg-black hover:text-white transition"
         >
           Add as Task Performer
         </button>
 
         <a
-          href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSficoFZuEjd-wSprJEyWhjVS2p3EdeakiOUEnxNjFZoBowLPw/viewform"
           target="_blank"
           rel="noopener noreferrer"
           className="bg-green-500 text-white text-[1rem] px-5 py-2 rounded-full hover:bg-black hover:text-white transition"
@@ -94,7 +112,6 @@ function Navbar({ onShowTaskPerformer }) {
         </a>
       </div>
 
-      {/* Mobile Menu Toggle */}
       <div className="md:hidden z-[1000]">
         <button onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X size={28} className="text-black" /> : <Menu size={28} className="text-black" />}
@@ -123,10 +140,7 @@ function Navbar({ onShowTaskPerformer }) {
 
             <div className="flex flex-col gap-3 w-[80%]">
               <button
-                onClick={() => {
-                  setMenuOpen(false);
-                  onShowTaskPerformer();
-                }}
+                onClick={handleTaskPerformer}
                 className="text-lg font-bold text-white bg-green-600 hover:bg-green-700 px-6 py-3 rounded-full transition w-full"
               >
                 Add as Task Performer
