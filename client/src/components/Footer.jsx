@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import.meta.env.MODE === "development"
     ? "http://localhost:5000"
-    : "https://onit-server-iqlq.onrender.com";
+    : "https://onitindia.onrender.com";
 
 function Footer({ onShowPrivacyPolicy }) {
   const [email, setEmail] = useState("");

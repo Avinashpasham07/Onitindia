@@ -130,12 +130,15 @@ function Navbar({ onShowTaskPerformer }) {
             >
               Add as Task Performer
             </button>
-            <button
-              onClick={() => handleScrollTo("footer")}
-              className="text-lg font-medium text-gray-800 hover:text-green-700 transition"
-            >
-              Contact
-            </button>
+            
+     <a
+  href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="bg-green-500 text-white text-[1rem] px-5 py-2 rounded-full hover:bg-black hover:text-white transition"
+>
+  Become a Tester
+</a>
           </motion.div>
         )}
       </AnimatePresence>
