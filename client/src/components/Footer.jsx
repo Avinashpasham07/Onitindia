@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
+import.meta.env.MODE === "development"
+    ? "http://localhost:5000"
+    : "https://onit-server-iqlq.onrender.com";
 
 function Footer({ onShowPrivacyPolicy }) {
   const [email, setEmail] = useState("");
@@ -12,7 +15,7 @@ function Footer({ onShowPrivacyPolicy }) {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/subscribe", {
+      const response = await fetch(`${BASE_URL}/api/subscribe`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
