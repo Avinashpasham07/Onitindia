@@ -21,7 +21,17 @@ function Footer({ onShowPrivacyPolicy }) {
         body: JSON.stringify({ email }),
       });
 
+      const result = await response.json();
+      if (response.ok) {
+  
+        setEmail("");
+      } else {
+       
+      }
+    } catch (error) {
+      console.error("Error:", error);
       
+    }
   };
 
   return (
