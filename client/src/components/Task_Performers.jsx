@@ -1,7 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { UserPlus, Briefcase, Search, DollarSign, ArrowLeft } from "react-feather";
+import { UserPlus, Search, Briefcase, DollarSign, ArrowLeft } from "react-feather";
+import Footer from "./Footer"; // ✅ Import Footer
+
 
 const cards = [
   {
@@ -34,85 +36,81 @@ function Task_Performers() {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full px-4 sm:px-6 md:px-20 bg-[#f3f4f6] py-14 sm:py-20 relative min-h-screen">
-      {/* 🔙 Back Button */}
-      <button
-        onClick={() => navigate("/")}
-        className="absolute top-4 left-4 flex items-center gap-2 bg-black text-white px-3 sm:px-4 py-2 
-                  rounded-full text-xs sm:text-sm md:text-base font-semibold hover:bg-green-600 transition duration-300 z-50"
-      >
-        <ArrowLeft size={16} className="sm:size-18 md:size-20" /> Back
-      </button>
-
-      {/* Section Heading */}
-      <div className="text-center mb-10 sm:mb-14 mt-12 sm:mt-16">
-        <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-black font-['Neue Montreal'] leading-snug">
-          Find Work Nearby You!
-        </h1>
-        <p className="text-gray-600 mt-3 sm:mt-4 text-sm sm:text-lg">
-          Work When You Want. Earn What You Deserve.
-        </p>
-      </div>
-
-      {/* Cards Section */}
-      <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8">
-        {cards.map((card, index) => (
-          <motion.div
-            key={index}
-            whileHover={{ y: -6 }}
-            transition={{ duration: 0.3 }}
-            className="relative overflow-hidden rounded-2xl shadow-md bg-gradient-to-br from-[#e3eafc] to-[#D9EEE3]
-                       flex flex-col justify-between p-5 sm:p-6 md:p-8
-                       w-full sm:w-[45%] md:w-[22%] h-[200px] sm:h-[250px] md:h-[320px]
-                       cursor-pointer hover:shadow-lg transition-all"
-          >
-            {/* Background Number */}
-            <span className="absolute text-[4rem] sm:text-[6rem] md:text-[8rem] font-bold text-black/10 top-6 left-5 select-none leading-none">
-              {card.number}
-            </span>
-
-            {/* Card Content */}
-            <div className="relative z-10">
-              <div className="flex justify-between items-start">
-                <h2 className="text-lg sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-black font-['Neue Montreal']">
-                  {card.title}
-                </h2>
-                <motion.div
-                  className="p-1"
-                  initial={{ scale: 1 }}
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {React.cloneElement(card.icon, {
-                    size:
-                      window.innerWidth < 640
-                        ? 26
-                        : window.innerWidth < 1024
-                        ? 38
-                        : 48,
-                  })}
-                </motion.div>
-              </div>
-              <p className="text-gray-700 mt-2 sm:mt-3 text-sm sm:text-base leading-relaxed">
-                {card.description}
-              </p>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Register Button */}
-      <div className="text-center mt-10 sm:mt-14">
-        <a
-          href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block bg-green-500 text-white text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3 
-                     rounded-full hover:bg-black hover:text-white transition-all duration-300 shadow-md"
+    <div className="flex flex-col min-h-screen bg-[#f3f4f6]">
+      {/* Main Content */}
+      <div className="flex-grow px-4 sm:px-8 md:px-20 py-14 sm:py-20 relative">
+        {/* 🔙 Back Button */}
+        <button
+          onClick={() => navigate("/")}
+          className="absolute top-20 sm:top-20 left-6 flex items-center gap-2 text-black
+                    px-4 py-2 rounded-full text-sm sm:text-base font-semibold border border-gray-300
+                    hover:bg-black hover:text-white transition duration-300 z-[9999] shadow-lg"
         >
-          Register
-        </a>
+          <ArrowLeft size={18} /> Back
+        </button>
+
+        {/* Section Heading */}
+        <div className="text-center mb-10 sm:mb-14 mt-24 sm:mt-20">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black font-['Neue Montreal'] leading-snug">
+            Find Work Nearby You!
+          </h1>
+          <p className="text-gray-600 mt-3 sm:mt-4 text-base sm:text-lg">
+            Work When You Want. Earn What You Deserve.
+          </p>
+        </div>
+
+        {/* Cards Section */}
+        <div className="flex flex-wrap justify-center gap-6 w-full max-w-7xl mx-auto">
+          {cards.map((card, index) => (
+            <motion.div
+              key={index}
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.3 }}
+              className="relative overflow-hidden rounded-3xl p-5 sm:p-6 md:p-8 shadow-md 
+                         bg-gradient-to-br from-[#e3eafc] to-[#D9EEE3]
+                         flex flex-col justify-between
+                         w-[45%] sm:w-[45%] md:w-[22%]
+                         h-[230px] sm:h-[270px] md:h-[320px]"
+            >
+              {/* Background Number */}
+              <span className="absolute text-[5rem] sm:text-[6rem] md:text-[8rem] font-bold text-black/15 top-24 left-6 select-none">
+                {card.number}
+              </span>
+
+              {/* Card Content */}
+              <div className="relative z-10">
+                <div className="flex justify-between items-start">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-black font-['Neue Montreal']">
+                    {card.title}
+                  </h2>
+                  <motion.div transition={{ type: 'spring', stiffness: 200 }}>
+                    {card.icon}
+                  </motion.div>
+                </div>
+                <p className="text-gray-700 mt-2 sm:mt-3 text-sm sm:text-base leading-relaxed">
+                  {card.description}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* ✅ Register Button */}
+        <div className="text-center mt-16 sm:mt-20 md:mt-24">
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-green-500 text-white text-base sm:text-2xl px-8 sm:px-10 py-5
+                       rounded-full hover:bg-black hover:text-white transition-all duration-300 shadow-md"
+          >
+            Register
+          </a>
+        </div>
       </div>
+
+
+      <Footer />
     </div>
   );
 }

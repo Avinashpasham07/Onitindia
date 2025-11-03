@@ -102,14 +102,7 @@ function Navbar() {
           Add as Task Performer
         </button>
 
-        <a
-          href="https://docs.google.com/forms/d/e/1FAIpQLSficoFZuEjd-wSprJEyWhjVS2p3EdeakiOUEnxNjFZoBowLPw/viewform"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-green-500 text-white text-[1rem] px-5 py-2 rounded-full hover:bg-black hover:text-white transition"
-        >
-          Become a Tester
-        </a>
+       
       </div>
 
       <div className="md:hidden z-[1000]">
@@ -146,14 +139,7 @@ function Navbar() {
                 Add as Task Performer
               </button>
 
-              <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-lg font-bold text-white bg-green-600 hover:bg-green-700 px-6 py-3 rounded-full transition w-full text-center"
-              >
-                Become a Tester
-              </a>
+             
             </div>
           </motion.div>
         )}
