@@ -28,3 +28,9 @@ html, body {
 html {
   scroll-behavior: smooth;
 }
+.input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}

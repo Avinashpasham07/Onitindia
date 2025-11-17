@@ -12,6 +12,7 @@
   "dependencies": {
     "@lottiefiles/dotlottie-react": "^0.17.6",
     "@lottiefiles/dotlottie-web": "^0.55.0",
+    "browser-image-compression": "^2.0.2",
     "framer-motion": "^12.23.24",
     "gsap": "^3.13.0",
     "locomotive-scroll": "^5.0.0-beta.21",
