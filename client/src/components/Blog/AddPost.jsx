@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { API_BASE } from "../../config";
 
 function AddPost() {
   const [form, setForm] = useState({
@@ -16,7 +17,7 @@ function AddPost() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/api/add-blog", {
+      const res = await fetch(`${API_BASE}/api/add-blog`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,7 +32,8 @@ function AddPost() {
           image3: form.image3,
           keywords: form.keywords
             .split(",")
-            .map((k) => k.trim().toLowerCase()),
+            .map((k) => k.trim().toLowerCase())
+            .filter(Boolean),
         }),
       });
 
@@ -49,7 +51,7 @@ function AddPost() {
           keywords: "",
         });
       } else {
-        alert("❌ Error: " + data.error);
+        alert("❌ Error: " + (data.error || data.message || "Unknown"));
       }
     } catch (err) {
       console.error("Error:", err);
@@ -67,49 +69,68 @@ function AddPost() {
           Add New Blog Post
         </h1>
 
-        <input type="text" placeholder="Title" required
+        <input
+          type="text"
+          placeholder="Title"
+          required
           value={form.title}
           onChange={(e) => setForm({ ...form, title: e.target.value })}
           className="w-full border border-gray-300 rounded-xl p-3"
         />
 
-        <input type="text" placeholder="Author" required
+        <input
+          type="text"
+          placeholder="Author"
+          required
           value={form.author}
           onChange={(e) => setForm({ ...form, author: e.target.value })}
           className="w-full border border-gray-300 rounded-xl p-3"
         />
 
-        <input type="text" placeholder="Category"
+        <input
+          type="text"
+          placeholder="Category"
           value={form.category}
           onChange={(e) => setForm({ ...form, category: e.target.value })}
           className="w-full border border-gray-300 rounded-xl p-3"
         />
 
-        <input type="text" placeholder="Main Image URL" required
+        <input
+          type="text"
+          placeholder="Main Image URL"
+          required
           value={form.image}
           onChange={(e) => setForm({ ...form, image: e.target.value })}
           className="w-full border border-gray-300 rounded-xl p-3"
         />
 
-        <input type="text" placeholder="Second Image URL (optional)"
+        <input
+          type="text"
+          placeholder="Second Image URL (optional)"
           value={form.image2}
           onChange={(e) => setForm({ ...form, image2: e.target.value })}
           className="w-full border border-gray-300 rounded-xl p-3"
         />
 
-        <input type="text" placeholder="Third Image URL (optional)"
+        <input
+          type="text"
+          placeholder="Third Image URL (optional)"
           value={form.image3}
           onChange={(e) => setForm({ ...form, image3: e.target.value })}
           className="w-full border border-gray-300 rounded-xl p-3"
         />
 
-        <textarea placeholder="Description" required
+        <textarea
+          placeholder="Description"
+          required
           value={form.description}
           onChange={(e) => setForm({ ...form, description: e.target.value })}
           className="w-full border border-gray-300 rounded-xl p-3 h-32"
         ></textarea>
 
-        <input type="text" placeholder="Keywords (comma-separated)"
+        <input
+          type="text"
+          placeholder="Keywords (comma-separated)"
           value={form.keywords}
           onChange={(e) => setForm({ ...form, keywords: e.target.value })}
           className="w-full border border-gray-300 rounded-xl p-3"

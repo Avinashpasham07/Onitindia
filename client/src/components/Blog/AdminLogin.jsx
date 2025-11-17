@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE } from "../../config";
 
 function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -12,7 +13,7 @@ function AdminLogin() {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/admin-login", {
+      const res = await fetch(`${API_BASE}/api/admin-login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -36,8 +37,6 @@ function AdminLogin() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#e3eafc] to-[#D9EEE3] px-4">
       <div className="bg-white/90 backdrop-blur-sm p-8 rounded-3xl shadow-xl w-full max-w-sm transition-all duration-300">
-        
-        {/* Logo + Title */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-extrabold mb-2">
             <span className="text-black">On</span>
@@ -46,7 +45,6 @@ function AdminLogin() {
           <p className="text-gray-600 text-sm">Admin Login Portal</p>
         </div>
 
-        {/* Form */}
         <form onSubmit={handleLogin} className="space-y-5">
           <input
             type="email"

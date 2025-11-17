@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Footer from "../Footer";
 import { Trash2 } from "react-feather";
+import { API_BASE } from "../../config";
 
 function BlogList() {
   const navigate = useNavigate();
@@ -10,11 +11,10 @@ function BlogList() {
   const [activeCategory, setActiveCategory] = useState("All");
   const isAdmin = localStorage.getItem("onit_admin") === "true";
 
-  // Fetch blogs
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/blogs");
+        const res = await fetch(`${API_BASE}/api/blogs`);
         const data = await res.json();
         setBlogs(data);
       } catch (err) {
@@ -24,22 +24,23 @@ function BlogList() {
     fetchBlogs();
   }, []);
 
-  // Delete blog
   const handleDelete = async (id) => {
     if (!window.confirm("⚠️ Delete this blog?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/delete-blog/${id}`, {
+      const res = await fetch(`${API_BASE}/api/delete-blog/${id}`, {
         method: "DELETE",
       });
       if (res.ok) {
         setBlogs((prev) => prev.filter((b) => b._id !== id));
+      } else {
+        const d = await res.json();
+        alert(d.message || "Delete failed");
       }
     } catch (err) {
       console.error("Error deleting blog:", err);
     }
   };
 
-  // Sort & category filter
   const sortedBlogs = [...blogs].sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   );
@@ -57,8 +58,6 @@ function BlogList() {
     <>
       <div className="bg-white min-h-screen w-full flex justify-center">
         <div className="w-full max-w-6xl px-6 md:px-12 py-20 text-gray-800">
-
-          {/* FEATURED BLOG */}
           {featuredBlog && (
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -67,7 +66,6 @@ function BlogList() {
               className="relative flex flex-col md:flex-row justify-between items-start gap-10 mb-28 border-b border-gray-200 pb-16"
             >
               <div className="flex-1 space-y-5">
-
                 <p className="text-sm font-semibold text-green-600">
                   {featuredBlog.category}
                 </p>
@@ -80,15 +78,15 @@ function BlogList() {
                 </h2>
 
                 <p className="text-gray-500 text-sm">
-                  by <span className="text-green-600">{featuredBlog.author}</span> •{" "}
-                  {new Date(featuredBlog.date).toLocaleDateString()}
+                  by{" "}
+                  <span className="text-green-600">{featuredBlog.author}</span>{" "}
+                  • {new Date(featuredBlog.date).toLocaleDateString()}
                 </p>
 
                 <p className="text-gray-600 text-lg max-w-xl leading-relaxed">
                   {featuredBlog.description?.slice(0, 250) + "..."}
                 </p>
 
-                {/* READ MORE */}
                 <p
                   onClick={() => navigate(`/blog/${featuredBlog._id}`)}
                   className="text-green-600 font-semibold text-sm hover:underline cursor-pointer"
@@ -96,7 +94,6 @@ function BlogList() {
                   Read More →
                 </p>
 
-                {/* DELETE BELOW READ MORE */}
                 {isAdmin && (
                   <button
                     onClick={() => handleDelete(featuredBlog._id)}
@@ -111,12 +108,12 @@ function BlogList() {
                 <img
                   src={featuredBlog.image}
                   className="w-full h-full object-cover rounded-2xl"
+                  alt={featuredBlog.title}
                 />
               </div>
             </motion.div>
           )}
 
-          {/* CATEGORY FILTER */}
           <div className="mb-16">
             <h3 className="text-2xl font-bold mb-6">Browse by Category</h3>
 
@@ -137,7 +134,6 @@ function BlogList() {
             </div>
           </div>
 
-          {/* BLOGLIST */}
           <motion.div className="flex-1 space-y-24">
             {filtered.map((post) => (
               <div
@@ -145,9 +141,7 @@ function BlogList() {
                 className="relative group grid grid-cols-1 md:grid-cols-[1.8fr_1.2fr] gap-8 border-b border-gray-200 pb-16 cursor-pointer"
                 onClick={() => navigate(`/blog/${post._id}`)}
               >
-                {/* LEFT */}
                 <div className="pl-4 border-l-2 border-transparent group-hover:border-green-500 transition">
-
                   <p className="text-sm font-semibold text-green-600 uppercase">
                     {post.category}
                   </p>
@@ -160,7 +154,6 @@ function BlogList() {
                     {post.description?.slice(0, 220) + "..."}
                   </p>
 
-                  {/* READ MORE */}
                   <p
                     onClick={(e) => {
                       e.stopPropagation();
@@ -171,7 +164,6 @@ function BlogList() {
                     Read More →
                   </p>
 
-                  {/* DELETE BUTTON */}
                   {isAdmin && (
                     <button
                       onClick={(e) => {
@@ -185,7 +177,6 @@ function BlogList() {
                   )}
                 </div>
 
-                {/* RIGHT — AUTHOR + IMAGE */}
                 <div className="flex flex-col items-end gap-4">
                   <div className="flex items-center gap-3 text-gray-600">
                     <img
@@ -194,6 +185,7 @@ function BlogList() {
                         "https://api.dicebear.com/7.x/avataaars/svg?seed=" + post.author
                       }
                       className="w-10 h-10 rounded-full border"
+                      alt={post.author}
                     />
                     <div className="text-right">
                       <p className="font-semibold">{post.author}</p>
@@ -207,6 +199,7 @@ function BlogList() {
                     <img
                       src={post.image}
                       className="w-full h-full object-cover rounded-2xl"
+                      alt={post.title}
                     />
                   </div>
                 </div>

@@ -4,7 +4,11 @@ import cors from "cors";
 import xlsx from "xlsx";
 import fs from "fs";
 import path from "path";
+import dotenv from "dotenv";
 import { fileURLToPath } from "url";
+
+// Load .env
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,16 +17,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-/* --------------------------- 🔹 MONGODB CONNECTION --------------------------- */
+// Debug print
+console.log("Loaded URI:", process.env.MONGO_URI);
+
+/* --------------------------- MONGODB CONNECTION --------------------------- */
 mongoose
-  .connect("mongodb://127.0.0.1:27017/onit_blog", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-/* --------------------------- 🔹 BLOG MODEL UPDATED (3 IMAGES) --------------------------- */
+/* --------------------------- BLOG MODEL --------------------------- */
 const Blog = mongoose.model("Blog", {
   title: String,
   author: String,
@@ -35,7 +39,7 @@ const Blog = mongoose.model("Blog", {
   date: { type: Date, default: Date.now },
 });
 
-/* --------------------------- 🔹 ADD BLOG ROUTE (UPDATED) --------------------------- */
+/* --------------------------- ADD BLOG --------------------------- */
 app.post("/api/add-blog", async (req, res) => {
   try {
     const blog = new Blog({
@@ -50,37 +54,33 @@ app.post("/api/add-blog", async (req, res) => {
     });
 
     await blog.save();
-    res.json({ message: "✅ Blog saved successfully!" });
+    res.json({ message: "Blog added successfully!" });
   } catch (error) {
-    console.error("❌ Error adding blog:", error);
     res.status(500).json({ error: "Failed to save blog" });
   }
 });
 
-/* --------------------------- 🔹 GET ALL BLOGS --------------------------- */
+/* --------------------------- GET BLOGS --------------------------- */
 app.get("/api/blogs", async (req, res) => {
   try {
     const blogs = await Blog.find().sort({ date: -1 });
     res.json(blogs);
-  } catch (error) {
-    console.error("❌ Error fetching blogs:", error);
+  } catch {
     res.status(500).json({ error: "Failed to fetch blogs" });
   }
 });
 
-/* --------------------------- 🔹 DELETE BLOG --------------------------- */
+/* --------------------------- DELETE BLOG --------------------------- */
 app.delete("/api/delete-blog/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    await Blog.findByIdAndDelete(id);
-    res.json({ message: "Blog deleted successfully!" });
-  } catch (error) {
-    console.error("❌ Error deleting blog:", error);
-    res.status(500).json({ error: "Failed to delete blog" });
+    await Blog.findByIdAndDelete(req.params.id);
+    res.json({ message: "Blog deleted" });
+  } catch {
+    res.status(500).json({ error: "Failed to delete" });
   }
 });
 
-/* --------------------------- 🔹 EMAIL SUBSCRIBER EXCEL --------------------------- */
+/* --------------------------- SUBSCRIBERS EXCEL --------------------------- */
 const filePath = path.join(__dirname, "subscribers.xlsx");
 
 const ensureExcelFile = () => {
@@ -94,29 +94,24 @@ const ensureExcelFile = () => {
 
 app.post("/api/subscribe", (req, res) => {
   const { email } = req.body;
-  if (!email) return res.status(400).json({ message: "Email is required" });
+  if (!email) return res.status(400).json({ message: "Email required" });
 
   ensureExcelFile();
-
   const workbook = xlsx.readFile(filePath);
   const worksheet = workbook.Sheets["Subscribers"];
   const data = xlsx.utils.sheet_to_json(worksheet);
 
-  const exists = data.some(
-    (entry) => entry.Email?.toLowerCase() === email.toLowerCase()
-  );
-
-  if (exists) return res.json({ message: "Email already exists" });
+  if (data.some((entry) => entry.Email === email))
+    return res.json({ message: "Email already exists" });
 
   data.push({ Email: email, Date: new Date().toLocaleString() });
-
   workbook.Sheets["Subscribers"] = xlsx.utils.json_to_sheet(data);
   xlsx.writeFile(workbook, filePath);
 
-  res.json({ message: "Email saved successfully!" });
+  res.json({ message: "Email saved!" });
 });
 
-/* --------------------------- 🔹 ADMIN LOGIN --------------------------- */
+/* --------------------------- ADMIN LOGIN --------------------------- */
 const Admin = mongoose.model("Admin", {
   email: String,
   password: String,
@@ -129,18 +124,18 @@ app.post("/api/admin-login", async (req, res) => {
       password: req.body.password,
     });
 
-    if (!admin) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
+    if (!admin)
+      return res.status(401).json({ message: "Invalid credentials" });
 
     res.json({ message: "Login successful" });
-  } catch (err) {
+  } catch {
     res.status(500).json({ message: "Server error" });
   }
 });
 
-/* --------------------------- 🔹 START SERVER --------------------------- */
-const PORT = 5000;
-app.listen(PORT, () =>
-  console.log(`🚀 Server running at http://localhost:${PORT}`)
-);
+/* --------------------------- START SERVER --------------------------- */
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
+});
