@@ -6,7 +6,7 @@ import logoImage from "../assets/logo.png";
 
 function Navbar() {
   const navigate = useNavigate();
-  
+
   const centerNavItems = [
     { name: "Domain", target: "domain" },
     { name: "About Us", target: "whychooseus" },
@@ -33,10 +33,8 @@ function Navbar() {
   };
 
   const handleScrollTo = (targetId) => {
-    // First navigate to home if not already there
-    if (window.location.pathname !== '/') {
-      navigate('/');
-      // Wait for navigation then scroll
+    if (window.location.pathname !== "/") {
+      navigate("/");
       setTimeout(() => {
         const el = document.getElementById(targetId);
         if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -49,7 +47,12 @@ function Navbar() {
   };
 
   const handleTaskPerformer = () => {
-    navigate('/task-performers');
+    navigate("/task-performers");
+    setMenuOpen(false);
+  };
+
+  const handleBlogClick = () => {
+    navigate("/blog");
     setMenuOpen(false);
   };
 
@@ -65,11 +68,11 @@ function Navbar() {
           src={logoImage}
           alt="OnIT Logo"
           className="w-40 sm:w-60 object-contain cursor-pointer"
-          onClick={() => navigate('/')}
+          onClick={() => navigate("/")}
         />
       </div>
 
-      {/* Desktop Nav */}
+      {/* Desktop Navigation */}
       <div className="hidden md:flex gap-8 absolute left-1/2 transform -translate-x-1/2">
         {centerNavItems.map((item, index) => (
           <motion.div
@@ -91,9 +94,28 @@ function Navbar() {
             ))}
           </motion.div>
         ))}
+
+        {/* Blog Link */}
+        <motion.div
+          className="relative pb-1 overflow-hidden cursor-pointer inline-block"
+          onClick={handleBlogClick}
+          variants={containerVariants}
+          initial="hidden"
+          whileHover="visible"
+        >
+          {"Blog".split("").map((char, idx) => (
+            <motion.span
+              key={idx}
+              variants={letterVariants}
+              className="inline-block text-md font-light text-black"
+            >
+              {char === " " ? "\u00A0" : char}
+            </motion.span>
+          ))}
+        </motion.div>
       </div>
 
-      {/* Right Buttons (Desktop) */}
+      {/* Desktop Buttons */}
       <div className="hidden md:flex items-center gap-4 mr-10">
         <button
           onClick={handleTaskPerformer}
@@ -101,17 +123,16 @@ function Navbar() {
         >
           Add as Task Performer
         </button>
-
-       
       </div>
 
+      {/* Mobile Menu Button */}
       <div className="md:hidden z-[1000]">
         <button onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X size={28} className="text-black" /> : <Menu size={28} className="text-black" />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Dropdown */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -131,6 +152,15 @@ function Navbar() {
               </button>
             ))}
 
+            {/* Blog Link (Mobile) */}
+            <button
+              onClick={handleBlogClick}
+              className="text-lg font-medium text-gray-800 hover:text-green-700 transition"
+            >
+              Blog
+            </button>
+
+            {/* Add as Task Performer */}
             <div className="flex flex-col gap-3 w-[80%]">
               <button
                 onClick={handleTaskPerformer}
@@ -138,8 +168,6 @@ function Navbar() {
               >
                 Add as Task Performer
               </button>
-
-             
             </div>
           </motion.div>
         )}

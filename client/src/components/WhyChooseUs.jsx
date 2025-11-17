@@ -22,7 +22,7 @@ const features = [
   {
       icon: <FiCheckCircle size={38} className="text-[#1a1a1a]" />,
       title: "Verified Community",
-      desc: "Every seeker and performer is verified for authenticity — building trust in every transaction.",
+      desc: "Every seeker and performer is verified for authenticity.",
     },
   {
     icon: <FiShield size={38} className="text-[#1a1a1a]" />,

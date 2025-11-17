@@ -12,6 +12,11 @@ import WhyChooseUs from "./components/WhyChooseUs";
 import KnowAboutUs from "./components/KnowAboutUs";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import TermsAndConditions from "./components/TermsAndConditions";
+import AdminLogin from "./components/Blog/AdminLogin";
+import AdminDashboard from "./components/Blog/AdminDashboard";
+import AddPost from "./components/Blog/AddPost";
+import BlogList from "./components/Blog/BlogList";
+import BlogPost from "./components/Blog/BlogPost";
 
 function Home() {
   return (
@@ -53,6 +58,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/task-performers" element={<Task_Performers />} />
+          <Route path="/blog" element={<BlogList />} />
+  <Route path="/blog/:id" element={<BlogPost />} />
+  <Route path="/admin-login" element={<AdminLogin />} />
+  <Route path="/admin-dashboard" element={<AdminDashboard />} />
+  <Route path="/add-post" element={<AddPost />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         </Routes>
