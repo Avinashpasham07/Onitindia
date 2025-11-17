@@ -14,18 +14,35 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-app.use(cors());
-app.use(express.json());
 
-/* --------------------------------------------------
-   CLOUDINARY SETUP
--------------------------------------------------- */
+/* ----------------------------------------
+    GLOBAL MIDDLEWARE
+---------------------------------------- */
+app.use(
+  cors({
+    origin: "*",
+  })
+);
+
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
+/* ----------------------------------------
+    CLOUDINARY SETUP
+---------------------------------------- */
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD,
   api_key: process.env.CLOUDINARY_KEY,
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
+console.log("Cloudinary Loaded:", {
+  cloud: process.env.CLOUDINARY_CLOUD,
+});
+
+/* ----------------------------------------
+    MULTER + CLOUDINARY STORAGE
+---------------------------------------- */
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
@@ -36,22 +53,32 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage });
 
-/* UPLOAD IMAGE API */
+/* ----------------------------------------
+    IMAGE UPLOAD API
+---------------------------------------- */
 app.post("/api/upload-image", upload.single("image"), (req, res) => {
+  console.log("UPLOAD API HIT…");
+
+  if (!req.file) {
+    console.log("❌ Upload failed — file missing");
+    return res.status(400).json({ error: "Upload failed" });
+  }
+
+  console.log("✔ Uploaded Image URL:", req.file.path);
   return res.json({ url: req.file.path });
 });
 
-/* --------------------------------------------------
-   MONGODB CONNECTION
--------------------------------------------------- */
+/* ----------------------------------------
+    MONGODB CONNECTION
+---------------------------------------- */
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.log("❌ DB Error:", err));
 
-/* --------------------------------------------------
-   MODELS
--------------------------------------------------- */
+/* ----------------------------------------
+    MODELS
+---------------------------------------- */
 const Blog = mongoose.model("Blog", {
   title: String,
   author: String,
@@ -69,47 +96,55 @@ const Admin = mongoose.model("Admin", {
   password: String,
 });
 
-/* --------------------------------------------------
-   ADD BLOG
--------------------------------------------------- */
+/* ----------------------------------------
+    ADD BLOG
+---------------------------------------- */
 app.post("/api/add-blog", async (req, res) => {
   try {
+    console.log("📥 BLOG RECEIVED:", req.body);
+
     const blog = new Blog(req.body);
     await blog.save();
+
     res.json({ message: "Blog added successfully!" });
   } catch (err) {
+    console.log("❌ Add blog error:", err);
     res.status(500).json({ error: "Failed to save blog" });
   }
 });
 
-/* --------------------------------------------------
-   GET BLOGS
--------------------------------------------------- */
+/* ----------------------------------------
+    GET BLOGS
+---------------------------------------- */
 app.get("/api/blogs", async (req, res) => {
   const blogs = await Blog.find().sort({ date: -1 });
   res.json(blogs);
 });
 
-/* --------------------------------------------------
-   DELETE BLOG
--------------------------------------------------- */
+/* ----------------------------------------
+    DELETE BLOG
+---------------------------------------- */
 app.delete("/api/delete-blog/:id", async (req, res) => {
   await Blog.findByIdAndDelete(req.params.id);
   res.json({ message: "Blog deleted" });
 });
 
-/* --------------------------------------------------
-   ADMIN LOGIN
--------------------------------------------------- */
+/* ----------------------------------------
+    ADMIN LOGIN
+---------------------------------------- */
 app.post("/api/admin-login", async (req, res) => {
   const admin = await Admin.findOne(req.body);
-  if (!admin) return res.status(401).json({ message: "Invalid login" });
+
+  if (!admin) {
+    return res.status(401).json({ message: "Invalid login" });
+  }
+
   res.json({ message: "Login success" });
 });
 
-/* --------------------------------------------------
-   START SERVER
--------------------------------------------------- */
+/* ----------------------------------------
+    START SERVER
+---------------------------------------- */
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
   console.log(`🚀 Server running on http://localhost:${PORT}`)
