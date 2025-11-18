@@ -36,10 +36,6 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-console.log("Cloudinary Loaded:", {
-  cloud: process.env.CLOUDINARY_CLOUD,
-});
-
 /* ----------------------------------------
     MULTER + CLOUDINARY STORAGE
 ---------------------------------------- */
@@ -57,14 +53,10 @@ const upload = multer({ storage });
     IMAGE UPLOAD API
 ---------------------------------------- */
 app.post("/api/upload-image", upload.single("image"), (req, res) => {
-  console.log("UPLOAD API HIT…");
-
   if (!req.file) {
-    console.log("❌ Upload failed — file missing");
     return res.status(400).json({ error: "Upload failed" });
   }
 
-  console.log("✔ Uploaded Image URL:", req.file.path);
   return res.json({ url: req.file.path });
 });
 
@@ -101,14 +93,11 @@ const Admin = mongoose.model("Admin", {
 ---------------------------------------- */
 app.post("/api/add-blog", async (req, res) => {
   try {
-    console.log("📥 BLOG RECEIVED:", req.body);
-
     const blog = new Blog(req.body);
     await blog.save();
 
     res.json({ message: "Blog added successfully!" });
   } catch (err) {
-    console.log("❌ Add blog error:", err);
     res.status(500).json({ error: "Failed to save blog" });
   }
 });

@@ -47,6 +47,7 @@ function AddPost() {
       const data = await res.json();
 
       setUploading((prev) => ({ ...prev, [field]: false }));
+
       return data.url;
     } catch (err) {
       console.error("Upload Error:", err);
@@ -61,6 +62,19 @@ function AddPost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
+
+    // ⭐ STRONG CHECK — prevent null image
+    if (uploading.image) {
+      alert("⏳ Please wait… Main image is still uploading");
+      setSaving(false);
+      return;
+    }
+
+    if (!form.image) {
+      alert("❌ Main image missing. Upload again!");
+      setSaving(false);
+      return;
+    }
 
     const payload = {
       ...form,
@@ -130,7 +144,7 @@ function AddPost() {
           placeholder="Tech, Business, AI..."
         />
 
-        {/* IMAGE UPLOADS */}
+        {/* MAIN IMAGE */}
         <ImageUploader
           label="Main Image *"
           required
@@ -142,6 +156,7 @@ function AddPost() {
           }}
         />
 
+        {/* SECOND IMAGE */}
         <ImageUploader
           label="Second Image"
           uploading={uploading.image2}
@@ -152,6 +167,7 @@ function AddPost() {
           }}
         />
 
+        {/* THIRD IMAGE */}
         <ImageUploader
           label="Third Image"
           uploading={uploading.image3}
@@ -171,7 +187,9 @@ function AddPost() {
             className="w-full p-4 rounded-xl border bg-white/60 h-32 focus:ring-2 focus:ring-blue-400"
             required
             value={form.description}
-            onChange={(e) => setForm({ ...form, description: e.target.value })}
+            onChange={(e) =>
+              setForm({ ...form, description: e.target.value })
+            }
             placeholder="Write the blog content..."
           />
         </div>
@@ -184,7 +202,7 @@ function AddPost() {
           placeholder="ai, ui, design..."
         />
 
-        {/* BUTTON */}
+        {/* SUBMIT */}
         <button
           type="submit"
           disabled={saving}
@@ -206,7 +224,6 @@ export default AddPost;
 /* -----------------------------------------------------------
    REUSABLE INPUT COMPONENT
 ------------------------------------------------------------ */
-
 function InputField({ label, value, onChange, placeholder }) {
   return (
     <div>
@@ -224,7 +241,6 @@ function InputField({ label, value, onChange, placeholder }) {
 /* -----------------------------------------------------------
    REUSABLE IMAGE UPLOADER COMPONENT
 ------------------------------------------------------------ */
-
 function ImageUploader({ label, required, uploading, url, onUpload }) {
   return (
     <div>
