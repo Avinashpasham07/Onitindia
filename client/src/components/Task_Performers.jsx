@@ -96,17 +96,30 @@ function Task_Performers() {
         </div>
 
         {/* ✅ Register Button */}
-        <div className="text-center mt-16 sm:mt-20 md:mt-24">
-          <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-green-500 text-white text-base sm:text-2xl px-8 sm:px-10 py-5
-                       rounded-full hover:bg-black hover:text-white transition-all duration-300 shadow-md"
-          >
-            Register
-          </a>
-        </div>
+       <div className="flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-10 mt-16 sm:mt-20 md:mt-24">
+
+  <a
+    href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-block bg-green-500 text-white text-base sm:text-1xl px-8 sm:px-10 py-5
+               rounded-full hover:bg-black hover:text-white transition-all duration-300 shadow-md"
+  >
+    Register
+  </a>
+
+  <a
+    href="https://chat.whatsapp.com/KXVDlz7PlJ7E4uyWOrZhOo"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-block bg-green-500 text-white text-base sm:text-1xl px-8 sm:px-10 py-5
+               rounded-full hover:bg-black hover:text-white transition-all duration-300 shadow-md"
+  >
+    Join WhatsApp Our Community
+  </a>
+
+</div>
+
       </div>
 
 

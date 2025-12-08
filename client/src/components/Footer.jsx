@@ -95,6 +95,11 @@ function Footer({ onShowPrivacyPolicy }) {
                   Domains
                 </a>
               </li>
+               <li>
+                <a href="#Campus" className="hover:text-white transition">
+                  ONIT Campus
+                </a>
+                </li>
             </ul>
           </div>
 

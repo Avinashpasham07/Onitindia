@@ -21,6 +21,7 @@
     "mongoose": "^8.20.0",
     "multer": "^2.0.2",
     "multer-storage-cloudinary": "^4.0.0",
+    "react-feather": "^2.0.10",
     "xlsx": "^0.18.5"
   }
 }

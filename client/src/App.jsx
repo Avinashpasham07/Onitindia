@@ -17,6 +17,7 @@ import AdminDashboard from "./components/Blog/AdminDashboard";
 import AddPost from "./components/Blog/AddPost";
 import BlogList from "./components/Blog/BlogList";
 import BlogPost from "./components/Blog/BlogPost";
+import Campus from "./components/Campus.jsx";
 
 function Home() {
   return (
@@ -26,9 +27,11 @@ function Home() {
       <section id="tasksee"><Task_see /></section>
       <section id="domain"><Domain /></section>
       <section id="whychooseus"><WhyChooseUs /></section>
+            <section id="Campus"><Campus /></section>
       <section id="marquee"><Marquee /></section>
       <section id="testimonials"><Testimonials /></section>
       <section id="footer"><Footer /></section>
+
     </>
   );
 }

@@ -7,43 +7,67 @@ import logoImage from "../assets/logo.png";
 function Navbar() {
   const navigate = useNavigate();
 
+  // Navigation Items
   const centerNavItems = [
     { name: "Domain", target: "domain" },
     { name: "About Us", target: "whychooseus" },
+    { name: "ONIT Campus", target: "OnitCampus", highlight: true }, // ⭐ Highlighted Item
     { name: "Contact", target: "footer" },
   ];
 
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Scroll effect
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => setScrolled(window.scrollY > 30);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Animation Variants
   const containerVariants = {
     hidden: {},
     visible: { transition: { staggerChildren: 0.03 } },
   };
 
   const letterVariants = {
-    hidden: { y: 5, opacity: 1 },
-    visible: { y: 1, opacity: 1, transition: { duration: 0.1, ease: "easeOut" } },
+    hidden: { y: 4, opacity: 1 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.2, ease: "easeOut" } },
+  };
+
+  // Robust Scroll To Element Logic
+  const tryFindElement = (id) => {
+    if (!id) return null;
+    const candidates = [
+      id,
+      "Campus",
+      "OnitCampus",
+      "ONITCampus",
+      "onit-campus",
+      id.replace(/\s+/g, ""), // remove spaces
+      id.toLowerCase(),
+    ];
+    for (const c of candidates) {
+      const el = document.getElementById(c);
+      if (el) return el;
+    }
+    return document.querySelector(`[id*="${id.toLowerCase().replace(/\s/g, "")}"]`);
   };
 
   const handleScrollTo = (targetId) => {
+    setMenuOpen(false);
+    
     if (window.location.pathname !== "/") {
       navigate("/");
       setTimeout(() => {
-        const el = document.getElementById(targetId);
+        const el = tryFindElement(targetId);
         if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 100);
+      }, 300);
     } else {
-      const el = document.getElementById(targetId);
+      const el = tryFindElement(targetId);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    setMenuOpen(false);
   };
 
   const handleTaskPerformer = () => {
@@ -57,122 +81,179 @@ function Navbar() {
   };
 
   return (
-    <div
-      className={`fixed top-0 left-0 w-full flex justify-between items-center px-6 sm:px-8 h-20 z-[999]
-      transition-all duration-500 ease-in-out
-      ${scrolled ? "bg-white shadow-md backdrop-blur-md" : "bg-white/10 backdrop-blur-lg"}`}
-    >
-      {/* Logo */}
-      <div className="flex items-center">
-        <img
-          src={logoImage}
-          alt="OnIT Logo"
-          className="w-40 sm:w-60 object-contain cursor-pointer"
-          onClick={() => navigate("/")}
-        />
-      </div>
+    <>
+      <div
+        className={`fixed top-0 left-0 w-full flex justify-between items-center px-6 sm:px-10 h-20 z-[9999] transition-all duration-300 ease-in-out font-sans ${
+          scrolled || menuOpen
+            ? "bg-white/90 backdrop-blur-3xl shadow-sm border-b border-gray-100"
+            : "bg-transparent backdrop-blur-[2px]"
+        }`}
+      >
+        {/* ================= LOGO ================= */}
+        <div className="flex items-center shrink-0">
+          <img
+            src={logoImage}
+            alt="OnIT Logo"
+            className="w-32 sm:w-40 md:w-48 object-contain cursor-pointer transition-transform "
+            onClick={() => navigate("/")}
+          />
+        </div>
 
-      {/* Desktop Navigation */}
-      <div className="hidden md:flex gap-8 absolute left-1/2 transform -translate-x-1/2">
-        {centerNavItems.map((item, index) => (
+        {/* ================= DESKTOP NAV ================= */}
+        <div className="hidden md:flex gap-8 absolute left-1/2 transform -translate-x-1/2 items-center">
+          {centerNavItems.map((item, index) => {
+            const isHighlighted = !!item.highlight;
+            
+            return (
+              <motion.div
+                key={index}
+                className="relative cursor-pointer flex flex-col items-center group"
+                onClick={() => handleScrollTo(item.target)}
+                variants={containerVariants}
+                initial="hidden"
+                whileHover="visible"
+              >
+                {/* --- Highlighted Item (ONIT Campus) --- */}
+                {isHighlighted ? (
+                  <div className="relative flex flex-col items-center mt-2">
+                    {/* NEW Badge */}
+                    <span className="absolute -ml-20 mb-2 -top-[10px] px-1 py-[2px] rounded text-[6px] font-bold tracking-wide uppercase bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-sm animate-pulse-slow">
+                      NEW
+                    </span>
+                    
+                    {/* Text with Gradient Glow */}
+                    <span 
+                      className="text-[17px] font-bold "
+                    >
+                      {item.name}
+                    </span>
+                    
+                    
+                  </div>
+                ) : (
+                  // --- Regular Item ---
+                  <div className="relative">
+                    <div className="flex">
+                      {item.name.split("").map((char, idx) => (
+                        <motion.span
+                          key={idx}
+                          variants={letterVariants}
+                          className="inline-block text-[16px] font-medium text-gray-700 group-hover:text-black transition-colors"
+                        >
+                          {char === " " ? "\u00A0" : char}
+                        </motion.span>
+                      ))}
+                    </div>
+                   
+                  </div>
+                )}
+              </motion.div>
+            );
+          })}
+
+          {/* Blog Link */}
           <motion.div
-            key={index}
-            className="relative pb-1 overflow-hidden cursor-pointer inline-block"
-            onClick={() => handleScrollTo(item.target)}
+            className="relative cursor-pointer group"
+            onClick={handleBlogClick}
             variants={containerVariants}
             initial="hidden"
             whileHover="visible"
           >
-            {item.name.split("").map((char, idx) => (
-              <motion.span
-                key={idx}
-                variants={letterVariants}
-                className="inline-block text-md font-light text-black"
-              >
-                {char === " " ? "\u00A0" : char}
-              </motion.span>
-            ))}
-          </motion.div>
-        ))}
-
-        {/* Blog Link */}
-        <motion.div
-          className="relative pb-1 overflow-hidden cursor-pointer inline-block"
-          onClick={handleBlogClick}
-          variants={containerVariants}
-          initial="hidden"
-          whileHover="visible"
-        >
-          {"Blog".split("").map((char, idx) => (
-            <motion.span
-              key={idx}
-              variants={letterVariants}
-              className="inline-block text-md font-light text-black"
-            >
-              {char === " " ? "\u00A0" : char}
-            </motion.span>
-          ))}
-        </motion.div>
-      </div>
-
-      {/* Desktop Buttons */}
-      <div className="hidden md:flex items-center gap-4 mr-10">
-        <button
-          onClick={handleTaskPerformer}
-          className="bg-green-500 text-white text-[1rem] px-5 py-2 rounded-full hover:bg-black hover:text-white transition"
-        >
-          Add as Task Performer
-        </button>
-      </div>
-
-      {/* Mobile Menu Button */}
-      <div className="md:hidden z-[1000]">
-        <button onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? <X size={28} className="text-black" /> : <Menu size={28} className="text-black" />}
-        </button>
-      </div>
-
-      {/* Mobile Menu Dropdown */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ y: -50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -50, opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="absolute top-20 left-0 w-full bg-white/95 backdrop-blur-lg shadow-lg flex flex-col items-center py-6 space-y-6 md:hidden"
-          >
-            {centerNavItems.map((item, index) => (
-              <button
-                key={index}
-                onClick={() => handleScrollTo(item.target)}
-                className="text-lg font-medium text-gray-800 hover:text-green-700 transition"
-              >
-                {item.name}
-              </button>
-            ))}
-
-            {/* Blog Link (Mobile) */}
-            <button
-              onClick={handleBlogClick}
-              className="text-lg font-medium text-gray-800 hover:text-green-700 transition"
-            >
-              Blog
-            </button>
-
-            {/* Add as Task Performer */}
-            <div className="flex flex-col gap-3 w-[80%]">
-              <button
-                onClick={handleTaskPerformer}
-                className="text-lg font-bold text-white bg-green-600 hover:bg-green-700 px-6 py-3 rounded-full transition w-full"
-              >
-                Add as Task Performer
-              </button>
+            <div className="flex">
+              {"Blog".split("").map((char, idx) => (
+                <motion.span
+                  key={idx}
+                  variants={letterVariants}
+                  className="inline-block text-[16px] font-medium text-gray-700 group-hover:text-black"
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
             </div>
+            <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-gray-200 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
           </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+        </div>
+
+        {/* ================= DESKTOP BUTTONS ================= */}
+        <div className="hidden md:flex items-center gap-4">
+          <button
+            onClick={handleTaskPerformer}
+            className="bg-green-500 text-white text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-black hover:shadow-lg  "
+          >
+            Join as Task Performer
+          </button>
+        </div>
+
+        {/* ================= MOBILE MENU BUTTON ================= */}
+        <div className="md:hidden z-[1000]">
+          <button 
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="p-2 rounded-md hover:bg-gray-100 transition"
+          >
+            {menuOpen ? <X size={28} className="text-black" /> : <Menu size={28} className="text-black" />}
+          </button>
+        </div>
+
+        {/* ================= MOBILE DROPDOWN ================= */}
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="absolute top-20 left-0 w-full bg-white shadow-xl border-t border-gray-100 flex flex-col items-center py-8 space-y-6 md:hidden overflow-hidden"
+            >
+              {centerNavItems.map((item, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleScrollTo(item.target)}
+                  className={`relative text-xl font-medium transition-all ${
+                    item.highlight 
+                      ? "text-green-700 font-bold bg-green-50 px-6 py-2 rounded-full" 
+                      : "text-gray-700 hover:text-black"
+                  }`}
+                >
+                  {item.name}
+                  {item.highlight && (
+                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-sm">
+                      NEW
+                    </span>
+                  )}
+                </button>
+              ))}
+
+              <button
+                onClick={handleBlogClick}
+                className="text-xl font-medium text-gray-700 hover:text-black transition"
+              >
+                Blog
+              </button>
+
+              <div className="w-full px-8 pt-4 border-t border-gray-100">
+                <button
+                  onClick={handleTaskPerformer}
+                  className="w-full text-lg font-bold text-white bg-green-600 hover:bg-green-700 px-6 py-3.5 rounded-xl shadow-md transition active:scale-95"
+                >
+                  Join as Task Performer
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Styles for slow pulse animation */}
+      <style>{`
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 2s infinite ease-in-out;
+        }
+      `}</style>
+    </>
   );
 }
 

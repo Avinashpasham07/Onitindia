@@ -18,12 +18,7 @@ const app = express();
 /* ----------------------------------------
     GLOBAL MIDDLEWARE
 ---------------------------------------- */
-app.use(
-  cors({
-    origin: "*",
-  })
-);
-
+app.use(cors({ origin: "*" }));
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
@@ -53,10 +48,7 @@ const upload = multer({ storage });
     IMAGE UPLOAD API
 ---------------------------------------- */
 app.post("/api/upload-image", upload.single("image"), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: "Upload failed" });
-  }
-
+  if (!req.file) return res.status(400).json({ error: "Upload failed" });
   return res.json({ url: req.file.path });
 });
 
@@ -95,7 +87,6 @@ app.post("/api/add-blog", async (req, res) => {
   try {
     const blog = new Blog(req.body);
     await blog.save();
-
     res.json({ message: "Blog added successfully!" });
   } catch (err) {
     res.status(500).json({ error: "Failed to save blog" });
@@ -103,11 +94,27 @@ app.post("/api/add-blog", async (req, res) => {
 });
 
 /* ----------------------------------------
-    GET BLOGS
+    GET BLOGS WITH PAGINATION + OPTIMIZED FIELDS
 ---------------------------------------- */
 app.get("/api/blogs", async (req, res) => {
-  const blogs = await Blog.find().sort({ date: -1 });
+  const page = Number(req.query.page) || 1;
+  const limit = 10;
+  const skip = (page - 1) * limit;
+
+  const blogs = await Blog.find({}, "title author category description image date")
+    .sort({ date: -1 })
+    .skip(skip)
+    .limit(limit);
+
   res.json(blogs);
+});
+
+/* ----------------------------------------
+    GET SINGLE BLOG (FULL DATA)
+---------------------------------------- */
+app.get("/api/blog/:id", async (req, res) => {
+  const blog = await Blog.findById(req.params.id);
+  res.json(blog);
 });
 
 /* ----------------------------------------
@@ -123,11 +130,7 @@ app.delete("/api/delete-blog/:id", async (req, res) => {
 ---------------------------------------- */
 app.post("/api/admin-login", async (req, res) => {
   const admin = await Admin.findOne(req.body);
-
-  if (!admin) {
-    return res.status(401).json({ message: "Invalid login" });
-  }
-
+  if (!admin) return res.status(401).json({ message: "Invalid login" });
   res.json({ message: "Login success" });
 });
 
