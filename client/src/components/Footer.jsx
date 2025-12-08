@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaInstagram, FaLinkedin, FaEnvelope } from "react-icons/fa";
+
 const BASE_URL =
   import.meta.env.MODE === "development"
     ? "http://localhost:5000"
@@ -127,28 +128,47 @@ function Footer({ onShowPrivacyPolicy }) {
       <div className="border-t border-zinc-600 my-10"></div>
 
       {/* Bottom Row */}
-      <div className="flex flex-col md:flex-row justify-between items-center text-sm text-zinc-400 gap-6 relative z-10">
-        <p className="font-semibold">
-          © {new Date().getFullYear()}{" "}
-          <span className="text-black font-semibold">On</span>
-          <span className="text-green-500 font-semibold">IT</span> Technologies Pvt. Ltd.
-        </p>
+     {/* Bottom Row */}
+<div className="flex flex-col md:flex-row justify-between items-center text-sm text-zinc-400 gap-6 relative z-10">
 
-        <div className="flex gap-5 text-2xl">
-          <a
-            href="https://www.linkedin.com/company/onitindia/?viewAsMember=true"
-            className="hover:text-white transition"
-          >
-            <FaLinkedin />
-          </a>
-          <a
-            href="https://www.instagram.com/onitplatform/"
-            className="hover:text-white transition"
-          >
-            <FaInstagram />
-          </a>
-        </div>
-      </div>
+  {/* Left side copyright */}
+  <p className="font-semibold">
+    © {new Date().getFullYear()}{" "}
+    <span className="text-black font-semibold">On</span>
+    <span className="text-green-500 font-semibold">IT</span> Technologies Pvt. Ltd.
+  </p>
+
+  {/* Right side icons + email */}
+  <div className="flex items-center gap-6">
+
+    {/* Email */}
+    <a
+      href="mailto:support@onitindia.com"
+      className="flex items-center gap-2 text-white  transition text-base"
+    >
+      <FaEnvelope className="text-lg" />
+      support@onitindia.com
+    </a>
+
+    {/* Social icons */}
+    <div className="flex gap-5 text-2xl">
+      <a
+        href="https://www.linkedin.com/company/onitindia/?viewAsMember=true"
+        className="hover:text-white transition"
+      >
+        <FaLinkedin />
+      </a>
+      <a
+        href="https://www.instagram.com/onitplatform/"
+        className="hover:text-white transition"
+      >
+        <FaInstagram />
+      </a>
+    </div>
+
+  </div>
+</div>
+
     </footer>
   );
 }

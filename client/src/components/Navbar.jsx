@@ -11,7 +11,7 @@ function Navbar() {
   const centerNavItems = [
     { name: "Domain", target: "domain" },
     { name: "About Us", target: "whychooseus" },
-    { name: "ONIT Campus", target: "OnitCampus", highlight: true }, // ⭐ Highlighted Item
+    { name: "OnIT Campus", target: "OnitCampus", highlight: true }, // ⭐ Highlighted Item
     { name: "Contact", target: "footer" },
   ];
 
@@ -114,23 +114,25 @@ function Navbar() {
                 whileHover="visible"
               >
                 {/* --- Highlighted Item (ONIT Campus) --- */}
-                {isHighlighted ? (
-                  <div className="relative flex flex-col items-center mt-2">
-                    {/* NEW Badge */}
-                    <span className="absolute -ml-20 mb-2 -top-[10px] px-1 py-[2px] rounded text-[6px] font-bold tracking-wide uppercase bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-sm animate-pulse-slow">
-                      NEW
-                    </span>
-                    
-                    {/* Text with Gradient Glow */}
-                    <span 
-                      className="text-[17px] font-bold "
-                    >
-                      {item.name}
-                    </span>
-                    
-                    
-                  </div>
-                ) : (
+               {isHighlighted ? (
+  <div className="relative flex flex-col items-center mt-2">
+
+    {/* NEW Badge */}
+    <span className="absolute -top-[12px] right-0 px-1 py-[2px] rounded text-[7px] font-bold tracking-wide uppercase bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-sm animate-pulse-slow">
+      NEW
+    </span>
+
+    {/* OnIT Campus (Stylized) */}
+    <div className="text-[17px] font-bold flex items-center ">
+
+      <span className="text-black">On</span>
+      <span className="text-green-600">IT </span>
+      <span className="text-black ml-1">    Campus</span>
+
+    </div>
+
+  </div>
+) : (
                   // --- Regular Item ---
                   <div className="relative">
                     <div className="flex">
