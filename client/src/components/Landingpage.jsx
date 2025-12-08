@@ -164,8 +164,8 @@ function Landingpage() {
     target="_blank"
     rel="noopener noreferrer"
     className="group border border-zinc-700 rounded-full px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm md:text-base 
-               font-medium text-zinc-900 flex items-center gap-2 transition-all duration-300 
-               hover:bg-zinc-900 hover:text-white"
+               font-medium bg-zinc-900 text-white flex items-center gap-2 transition-all duration-300 
+               hover:bg-green-500 hover:text-white"
   >
     Post a Task
   </a>
@@ -175,8 +175,8 @@ function Landingpage() {
     target="_blank"
     rel="noopener noreferrer"
     className="group border border-zinc-700 rounded-full px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm md:text-base 
-               font-medium text-zinc-900 flex items-center gap-2 transition-all duration-300 
-               hover:bg-zinc-900 hover:text-white"
+               font-medium bg-zinc-900 text-white flex items-center gap-2 transition-all duration-300 
+               hover:bg-green-500 hover:text-white"
   >
     Start Earning
   </a>
@@ -184,7 +184,7 @@ function Landingpage() {
 </div>
 
 
-          <div className="w-8 h-8 sm:w-9 sm:h-9 border border-zinc-700 rounded-full flex justify-center items-center text-zinc-900 transition-all duration-300 hover:bg-zinc-900 hover:text-white">
+          <div className="w-8 h-8 sm:w-9 sm:h-9  rounded-full flex justify-center items-center bg-green-500 text-white transition-all duration-300 hover:bg-zinc-900 hover:text-white">
             <FaArrowUpLong className="rotate-45" />
           </div>
         </div>
