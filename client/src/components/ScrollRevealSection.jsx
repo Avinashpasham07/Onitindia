@@ -10,6 +10,7 @@ import {
 import realTasksImage from "../assets/realtask.png";
 
 import verifiedImage from "../assets/securepayment.png";
+import inter from "../assets/interaction.png"
 
 // Content adapted for the "OnIT Campus" intro, but in the requested tabbed format
 const features = [
@@ -27,7 +28,7 @@ const features = [
         title: "Industry Connect",
         heading: "Direct pipeline to top tech giants",
         desc: "Startups and major companies like Google and Amazon post needs directly here. Skip the resume black hole.",
-        image: "https://images.unsplash.com/photo-1559136555-930b723040bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+        image: inter
     },
     {
         id: "verified",
