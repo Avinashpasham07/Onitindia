@@ -1,42 +1,51 @@
 import React from "react";
 import { motion } from "framer-motion";
+import t1 from "../assets/t1.png";
+import t2 from "../assets/t2.png";
+import t3 from "../assets/t3.png";
+import t4 from "../assets/t4.png";
+import t5 from "../assets/t5.png";
+import t6 from "../assets/t6.png";
+
+
+
 
 const knowAboutUsCards = [
   {
     seekerQ: "I need someone to fix my leaking tap quickly.",
     performerA: "I’m a local plumber who can help you right away.",
-    seekerAvatar: "https://cdn-icons-png.flaticon.com/512/4333/4333609.png",
-    performerAvatar: "https://cdn-icons-png.flaticon.com/512/4333/4333629.png", // plumber avatar
+    seekerAvatar: t3,
+    performerAvatar: t1, // plumber avatar
   },
   {
     seekerQ: "I’m shifting apartments and need help with packing.",
     performerA: "I can assist with packing and moving your stuff safely.",
-    seekerAvatar: "https://cdn-icons-png.flaticon.com/512/4333/4333609.png",
-    performerAvatar: "https://cdn-icons-png.flaticon.com/512/4333/4333629.png", // mover avatar
+    seekerAvatar: t4,
+    performerAvatar: t2, // mover avatar
   },
   {
     seekerQ: "Can someone help me set up my new smart TV?",
-    performerA: "I’ve experience with installing smart devices — I can help!",
-    seekerAvatar: "https://cdn-icons-png.flaticon.com/512/4333/4333609.png",
-    performerAvatar: "https://cdn-icons-png.flaticon.com/512/4333/4333629.png", // tech installer
+    performerA: "I’ve experience with installing smart devices - I can help!",
+    seekerAvatar: t6,
+    performerAvatar: t5, // tech installer
   },
   {
     seekerQ: "I’m busy with work, and my plants need daily watering.",
     performerA: "I live nearby and can take care of your plants every day.",
-    seekerAvatar: "https://cdn-icons-png.flaticon.com/512/4333/4333609.png",
-    performerAvatar: "https://cdn-icons-png.flaticon.com/512/4333/4333629.png", // gardener
+    seekerAvatar: t5,
+    performerAvatar: t2, // gardener
   },
   {
     seekerQ: "I need a tutor to help my kid with math homework.",
     performerA: "I’m a student teacher and can teach math after school hours.",
-    seekerAvatar: "https://cdn-icons-png.flaticon.com/512/4333/4333609.png",
-    performerAvatar: "https://cdn-icons-png.flaticon.com/512/4333/4333629.png", // teacher
+    seekerAvatar: t6,
+    performerAvatar: t4, // teacher
   },
   {
-    seekerQ: "I have guests coming — can anyone clean my house today?",
+    seekerQ: "I have guests coming - can anyone clean my house today?",
     performerA: "I offer same-day house cleaning services in your area.",
-    seekerAvatar: "https://cdn-icons-png.flaticon.com/512/4333/4333609.png",
-    performerAvatar: "https://cdn-icons-png.flaticon.com/512/4333/4333629.png", // cleaner
+    seekerAvatar: t1,
+    performerAvatar: t6, // cleaner
   },
 ];
 
@@ -65,31 +74,31 @@ const KnowUserSection = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: idx * 0.1 }}
-            className="bg-gradient-to-b from-indigo-100 mb-5 to-blue-200 rounded-3xl p-6 flex flex-col gap-4 items-center"
+            className="bg-gradient-to-br from-zinc-50 to-green-50 border-2 border-green-200 rounded-2xl p-6 flex flex-col gap-4 items-center shadow-sm hover:shadow-md transition-all duration-300"
           >
             {/* Task Seeker */}
             <div className="flex items-start w-full">
               <img
                 src={card.seekerAvatar}
                 alt="Task Seeker"
-                className="w-10 h-10 rounded-full mr-3"
+                className="w-10 h-10 rounded-full mr-3 border-2 border-[#004d43]"
               />
-              <div className="bg-white text-black rounded-2xl px-4 py-2 w-full">
-                <p className="font-semibold text-sm mb-1">Task Seeker</p>
-                <p>{card.seekerQ}</p>
+              <div className="bg-white/80 border border-zinc-200 text-black rounded-2xl rounded-tl-none px-4 py-3 w-full shadow-sm">
+                <p className="font-bold text-xs mb-1 text-[#004d43] uppercase tracking-wide">Task Seeker</p>
+                <p className="text-sm text-zinc-800 leading-relaxed">{card.seekerQ}</p>
               </div>
             </div>
 
             {/* Task Performer */}
             <div className="flex items-start w-full justify-end">
-              <div className="bg-green-400 text-white rounded-2xl px-4 py-2 w-full">
-                <p className="font-semibold text-sm mb-1">Task Performer</p>
-                <p>{card.performerA}</p>
+              <div className="bg-[#004d43] text-white rounded-2xl rounded-tr-none px-4 py-3 w-full shadow-sm">
+                <p className="font-bold text-xs mb-1 text-green-300 uppercase tracking-wide">Task Performer</p>
+                <p className="text-sm leading-relaxed">{card.performerA}</p>
               </div>
               <img
                 src={card.performerAvatar}
                 alt="Task Performer"
-                className="w-10 h-10 rounded-full ml-3"
+                className="w-10 h-10 rounded-full ml-3 border-2 border-green-500"
               />
             </div>
           </motion.div>
@@ -97,7 +106,7 @@ const KnowUserSection = () => {
       </div>
 
       {/* Flaticon Credit */}
-      
+
     </div>
   );
 };

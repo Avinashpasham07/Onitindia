@@ -93,8 +93,8 @@ function Landingpage() {
           </div>
 
           {/* --- THIRD LINE --- */}
-          <div className="flex items-end gap-3 leading-none">
-            <span className="text-[10vw] sm:text-[8vw] md:text-[6.5vw] font-bold text-zinc-800">
+          <div className="flex items-end gap-3 leading-none ">
+            <span className="text-[13vw] sm:text-[10vw] md:text-[7vw] font-bold text-zinc-800">
               We’re{" "}
               <span className="text-zinc-800 font-bold">On</span>
               <span className="text-green-400 font-bold leading-none">IT</span>
@@ -103,8 +103,11 @@ function Landingpage() {
         </div>
 
         {/* --- Description --- */}
-        <p className="mt-3 sm:mt-5 text-[3.5vw] sm:text-[2vw] md:text-base text-zinc-600 w-[90%] md:w-[60%] leading-relaxed">
-          Connecting people who need help with those ready to help – instantly,
+        <p className="mt-3 sm:mt-5 ml-2 -mb-7 text-[3.5vw] sm:text-[3vw] md:text-base text-zinc-600 w-[90%] md:w-[60%] leading-relaxed">
+          Connecting people who need help with those ready to help
+        </p>
+        <p className="mt-3 sm:mt-5 ml-2 -mb-7 text-[3.5vw] sm:text-[3vw] md:text-base text-zinc-600 w-[90%] md:w-[60%] leading-relaxed">
+          instantly,
           locally, and with zero commission.
         </p>
       </div>
@@ -112,7 +115,7 @@ function Landingpage() {
       {/* ===== RIGHT SIDE LOTTIE (Desktop) ===== */}
       <div className="absolute hidden md:flex justify-center items-center right-36 top-1/2 transform -translate-y-1/2">
         <iframe
-          src="https://lottie.host/embed/3909c829-e89e-4a59-8a97-a016a3595327/UvFYMKy71T.lottie"
+          src="https://lottie.host/embed/b3802199-d96b-4dff-becc-82708e459d9a/UxlUIQgqqD.lottie"
           style={{ width: "420px", height: "420px", border: "none" }}
           title="Connecting People Animation"
         ></iframe>
@@ -121,7 +124,7 @@ function Landingpage() {
       {/* ===== MOBILE LOTTIE ===== */}
       <div className="flex md:hidden justify-center mt-8">
         <iframe
-          src="https://lottie.host/embed/3909c829-e89e-4a59-8a97-a016a3595327/UvFYMKy71T.lottie"
+          src="https://lottie.host/embed/b3802199-d96b-4dff-becc-82708e459d9a/UxlUIQgqqD.lottie"
           style={{ width: "220px", height: "220px", border: "none" }}
           title="Connecting People Animation Mobile"
         ></iframe>
@@ -159,29 +162,29 @@ function Landingpage() {
         <div className="flex flex-wrap justify-center md:justify-end items-center gap-2 sm:gap-3 mt-4 md:mt-0">
           <div className="flex flex-wrap justify-center md:justify-end items-center gap-2 sm:gap-3 mt-4 md:mt-0">
 
-  <a
-    href="https://docs.google.com/forms/d/e/1FAIpQLSeD90sDCZFts-uu_g_FgfVfG4Qmb1Ixyf0rJI7f-I4y9L6hgA/viewform"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="group border border-zinc-700 rounded-full px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm md:text-base 
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeD90sDCZFts-uu_g_FgfVfG4Qmb1Ixyf0rJI7f-I4y9L6hgA/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group border border-zinc-700 rounded-full px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm md:text-base 
                font-medium bg-zinc-900 text-white flex items-center gap-2 transition-all duration-300 
                hover:bg-green-500 hover:text-white"
-  >
-    Post a Task
-  </a>
+            >
+              Post a Task
+            </a>
 
-  <a
-    href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="group border border-zinc-700 rounded-full px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm md:text-base 
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group border border-zinc-700 rounded-full px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm md:text-base 
                font-medium bg-zinc-900 text-white flex items-center gap-2 transition-all duration-300 
                hover:bg-green-500 hover:text-white"
-  >
-    Start Earning
-  </a>
+            >
+              Start Earning
+            </a>
 
-</div>
+          </div>
 
 
           <div className="w-8 h-8 sm:w-9 sm:h-9  rounded-full flex justify-center items-center bg-green-500 text-white transition-all duration-300 hover:bg-zinc-900 hover:text-white">

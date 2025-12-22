@@ -1,224 +1,377 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../Footer";
-import { Trash2 } from "react-feather";
+import { Trash2, Search, ArrowUpRight, Clock, ChevronRight } from "react-feather";
 import { API_BASE } from "../../config";
+
+/* -------------------------------------------------------------------------- */
+/*                                  UTILS                                     */
+/* -------------------------------------------------------------------------- */
+
+const formatDate = (dateString) => {
+  return new Date(dateString).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+};
+
+const calculateReadingTime = (text) => {
+  if (!text) return 1;
+  const words = text.trim().split(/\s+/).length;
+  return Math.ceil(words / 225);
+};
+
+const cloudImg = (url) =>
+  url?.includes("/upload/")
+    ? url.replace("/upload/", "/upload/f_auto,q_auto,w_1200/") // Optimized for high DPI
+    : url;
+
+/* -------------------------------------------------------------------------- */
+/*                                SKELETONS                                   */
+/* -------------------------------------------------------------------------- */
+
+const SkeletonHero = () => (
+  <div className="w-full bg-zinc-50 rounded-[2rem] p-8 md:p-12 animate-pulse flex flex-col md:flex-row gap-12 min-h-[500px]">
+    <div className="flex-1 flex flex-col justify-center space-y-6">
+      <div className="w-32 h-6 bg-zinc-200 rounded-full" />
+      <div className="w-full h-16 bg-zinc-200 rounded-xl" />
+      <div className="w-3/4 h-16 bg-zinc-200 rounded-xl" />
+      <div className="w-full h-24 bg-zinc-200 rounded-xl mt-4" />
+    </div>
+    <div className="flex-1 bg-zinc-200 rounded-xl h-64 md:h-auto" />
+  </div>
+);
+
+const SkeletonCard = () => (
+  <div className="flex flex-col space-y-4">
+    <div className="aspect-[4/3] bg-zinc-100 rounded-2xl animate-pulse" />
+    <div className="h-6 bg-zinc-100 rounded w-3/4 animate-pulse" />
+    <div className="h-4 bg-zinc-100 rounded w-full animate-pulse" />
+    <div className="h-4 bg-zinc-100 rounded w-1/2 animate-pulse" />
+  </div>
+);
+
+/* -------------------------------------------------------------------------- */
+/*                                COMPONENTS                                  */
+/* -------------------------------------------------------------------------- */
+
+const CategoryPill = ({ label, active, onClick }) => (
+  <button
+    onClick={onClick}
+    className={`
+      relative px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300
+      ${active ? "text-white" : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"}
+    `}
+  >
+    {active && (
+      <motion.div
+        layoutId="activePill"
+        className="absolute inset-0 bg-zinc-900 rounded-full"
+        initial={false}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      />
+    )}
+    <span className="relative z-10">{label}</span>
+  </button>
+);
+
+const SearchInput = ({ value, onChange }) => (
+  <div className="relative group w-full md:w-80">
+    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+      <Search className="h-4 w-4 text-zinc-400 group-focus-within:text-zinc-800 transition-colors" />
+    </div>
+    <input
+      type="text"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder="Search articles..."
+      className="
+        block w-full pl-11 pr-4 py-3 bg-zinc-50 border border-zinc-200 rounded-xl
+        text-sm font-medium text-zinc-900 placeholder-zinc-400
+        focus:bg-white focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-300
+        transition-all duration-200 outline-none
+      "
+    />
+  </div>
+);
+
+const BlogCard = ({ post, onClick, isAdmin, onDelete }) => (
+  <motion.article
+    layout
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, scale: 0.95 }}
+    whileHover={{ y: -4 }}
+    className="group cursor-pointer flex flex-col h-full"
+    onClick={onClick}
+  >
+    <div className="relative aspect-[4/3] mb-6 overflow-hidden rounded-2xl bg-zinc-100">
+      <motion.img
+        src={cloudImg(post.image)}
+        alt={post.title}
+        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+      />
+      <div className="absolute top-4 left-4">
+        <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-sm text-zinc-900 shadow-sm">
+          {post.category}
+        </span>
+      </div>
+    </div>
+
+    <div className="flex flex-col flex-1">
+      <div className="flex items-center gap-3 text-xs font-semibold text-zinc-400 mb-3 uppercase tracking-wider">
+        <span>{formatDate(post.date)}</span>
+        <span className="w-1 h-1 rounded-full bg-zinc-300" />
+        <span className="flex items-center gap-1">
+          <Clock size={12} /> {calculateReadingTime(post.description)} min read
+        </span>
+      </div>
+
+      <h3 className="text-xl md:text-2xl font-bold text-zinc-900 mb-3 leading-tight group-hover:text-zinc-700 transition-colors">
+        {post.title}
+      </h3>
+
+      <p className="text-zinc-500 line-clamp-2 md:line-clamp-3 mb-6 text-base leading-relaxed flex-1">
+        {post.description}
+      </p>
+
+      <div className="flex items-center justify-between mt-auto">
+        <div className="flex items-center gap-3">
+          <img
+            src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${post.author}`}
+            alt={post.author}
+            className="w-8 h-8 rounded-full bg-zinc-100"
+          />
+          <span className="text-sm font-semibold text-zinc-700">{post.author}</span>
+        </div>
+
+        {isAdmin ? (
+          <button
+            onClick={(e) => onDelete(e, post._id)}
+            className="p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
+          >
+            <Trash2 size={16} />
+          </button>
+        ) : (
+          <div className="w-8 h-8 rounded-full border border-zinc-200 flex items-center justify-center text-zinc-400 group-hover:border-zinc-900 group-hover:text-zinc-900 transition-colors">
+            <ArrowUpRight size={16} />
+          </div>
+        )}
+      </div>
+    </div>
+  </motion.article>
+);
+
+/* -------------------------------------------------------------------------- */
+/*                                MAIN SCREEN                                 */
+/* -------------------------------------------------------------------------- */
 
 function BlogList() {
   const navigate = useNavigate();
   const [blogs, setBlogs] = useState([]);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
   const isAdmin = localStorage.getItem("onit_admin") === "true";
 
-  // Fetch blogs with pagination
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
+        setLoading(true);
         const res = await fetch(`${API_BASE}/api/blogs?page=${page}`);
         const data = await res.json();
-        setBlogs((prev) => [...prev, ...data]); // Append new blogs
+        setBlogs((prev) => (page === 1 ? data : [...prev, ...data]));
       } catch (err) {
         console.error("❌ Error fetching blogs:", err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchBlogs();
   }, [page]);
 
-  const loadMore = () => setPage((p) => p + 1);
-
-  const handleDelete = async (id) => {
-    if (!window.confirm("⚠️ Delete this blog?")) return;
+  const handleDelete = async (e, id) => {
+    e.stopPropagation();
+    if (!window.confirm("Are you sure you want to remove this story?")) return;
     try {
       const res = await fetch(`${API_BASE}/api/delete-blog/${id}`, { method: "DELETE" });
       if (res.ok) setBlogs((prev) => prev.filter((b) => b._id !== id));
     } catch (err) {
-      console.error("Error deleting blog:", err);
+      console.error("Error deleting:", err);
     }
   };
 
-  const cloudImg = (url) =>
-    url?.includes("/upload/")
-      ? url.replace("/upload/", "/upload/f_auto,q_auto,w_900/") // optimized
-      : url;
+  // Logic
+  const sortedBlogs = useMemo(() => [...blogs].sort((a, b) => new Date(b.date) - new Date(a.date)), [blogs]);
+  const categories = useMemo(() => ["All", ...new Set(blogs.map((b) => b.category))], [blogs]);
 
-  const sortedBlogs = [...blogs].sort((a, b) => new Date(b.date) - new Date(a.date));
+  const filteredBlogs = useMemo(() => {
+    let result = sortedBlogs;
+    if (activeCategory !== "All") {
+      result = result.filter((b) => b.category === activeCategory);
+    }
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter((b) => b.title.toLowerCase().includes(q) || b.description.toLowerCase().includes(q));
+    }
+    return result;
+  }, [sortedBlogs, activeCategory, searchQuery]);
 
-  const featuredBlog = sortedBlogs[0];
-  const remainingBlogs = sortedBlogs.slice(1);
-
-  const categories = ["All", ...new Set(blogs.map((b) => b.category))];
-
-  const filtered =
-    activeCategory === "All"
-      ? remainingBlogs
-      : remainingBlogs.filter((b) => b.category === activeCategory);
+  const featuredBlog = activeCategory === "All" && !searchQuery ? filteredBlogs[0] : null;
+  const gridBlogs = featuredBlog ? filteredBlogs.slice(1) : filteredBlogs;
 
   return (
-    <>
-      <div className="bg-white min-h-screen w-full flex justify-center">
-        <div className="w-full max-w-6xl px-6 md:px-12 py-20 text-gray-800">
+    <div className="bg-white min-h-screen text-zinc-900 font-sans selection:bg-zinc-900 selection:text-white">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 pt-24 pb-32">
 
-          {/* FEATURED BLOG */}
-          {featuredBlog && (
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-              className="relative flex flex-col md:flex-row justify-between items-start gap-10 mb-20 border-b border-gray-200 pb-16"
-            >
-              <div className="flex-1 space-y-5">
-                <p className="text-sm font-semibold text-green-600">
-                  {featuredBlog.category}
-                </p>
-
-                <h2
-                  onClick={() => navigate(`/blog/${featuredBlog._id}`)}
-                  className="text-4xl md:text-5xl font-extrabold cursor-pointer hover:text-green-600"
-                >
-                  {featuredBlog.title}
-                </h2>
-
-                <p className="text-gray-500 text-sm">
-                  by{" "}
-                  <span className="text-green-600">{featuredBlog.author}</span>{" "}
-                  • {new Date(featuredBlog.date).toLocaleDateString()}
-                </p>
-
-                <p className="text-gray-600 text-lg max-w-xl leading-relaxed">
-                  {featuredBlog.description?.slice(0, 250) + "..."}
-                </p>
-
-                <p
-                  onClick={() => navigate(`/blog/${featuredBlog._id}`)}
-                  className="text-green-600 font-semibold text-sm hover:underline cursor-pointer"
-                >
-                  Read More →
-                </p>
-
-                {isAdmin && (
-                  <button
-                    onClick={() => handleDelete(featuredBlog._id)}
-                    className="mt-3 bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-red-600 transition-all"
-                  >
-                    Delete Post
-                  </button>
-                )}
-              </div>
-
-              <div className="relative w-full md:w-[480px] h-[280px] rounded-2xl overflow-hidden">
-                <img
-                  loading="lazy"
-                  src={cloudImg(featuredBlog.image)}
-                  className="w-full h-full object-cover rounded-2xl"
-                  alt={featuredBlog.title}
-                />
-              </div>
-            </motion.div>
-          )}
-
-          {/* CATEGORY FILTER */}
-          <div className="mb-12">
-            <h3 className="text-2xl font-bold mb-6">Browse by Category</h3>
-
-            <div className="flex flex-wrap gap-4">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-5 py-2.5 rounded-full text-sm border transition ${
-                    activeCategory === cat
-                      ? "bg-green-500 text-white"
-                      : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
+        {/* Header */}
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
+          <div className="max-w-2xl">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+              The <span className="text-green-600">Journal</span>.
+            </h1>
+            <p className="text-xl text-zinc-500 font-medium max-w-lg leading-relaxed">
+              Insights, updates, and stories from the Onit team.
+            </p>
           </div>
+          <SearchInput value={searchQuery} onChange={setSearchQuery} />
+        </header>
 
-          {/* BLOG LIST */}
-          <motion.div className="space-y-20">
-            {filtered.map((post) => (
-              <div
-                key={post._id}
-                className="group grid grid-cols-1 md:grid-cols-[1.8fr_1.2fr] gap-8 border-b border-gray-200 pb-12 cursor-pointer"
-                onClick={() => navigate(`/blog/${post._id}`)}
-              >
-                <div className="pl-4 border-l-2 border-transparent group-hover:border-green-500 transition">
+        {/* Categories */}
+        <div className="flex items-center gap-2 mb-16 overflow-x-auto pb-4 no-scrollbar">
+          {categories.map((cat) => (
+            <CategoryPill
+              key={cat}
+              label={cat}
+              active={activeCategory === cat}
+              onClick={() => setActiveCategory(cat)}
+            />
+          ))}
+        </div>
 
-                  <p className="text-sm font-semibold text-green-600 uppercase">
-                    {post.category}
-                  </p>
+        {/* Hero Section */}
+        {loading && page === 1 ? (
+          <SkeletonHero />
+        ) : (
+          featuredBlog && (
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-24 group cursor-pointer"
+              onClick={() => navigate(`/blog/${featuredBlog._id}`)}
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-zinc-50 rounded-[3rem] p-8 md:p-16 transition-all duration-500 hover:bg-[#F4F4F5]"> {/* Slight darken on hover */}
+                <div className="order-2 lg:order-1 flex flex-col justify-center">
+                  <div className="flex items-center gap-4 mb-8">
+                    <span className="px-3 py-1 bg-zinc-900 text-white text-[10px] font-bold uppercase tracking-widest rounded-full">
+                      Featured
+                    </span>
+                    <span className="text-zinc-500 text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                      {calculateReadingTime(featuredBlog.description)} min read
+                    </span>
+                  </div>
 
-                  <h2 className="text-3xl font-bold mt-2 group-hover:text-green-600">
-                    {post.title}
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-zinc-900 mb-8 leading-[1.05] group-hover:text-zinc-700 transition-colors">
+                    {featuredBlog.title}
                   </h2>
-
-                  <p className="text-gray-600 text-lg mt-4 max-w-md leading-relaxed">
-                    {post.description?.slice(0, 220) + "..."}
+                  <p className="text-xl text-zinc-500 leading-relaxed mb-10 line-clamp-3">
+                    {featuredBlog.description}
                   </p>
 
-                  <p
-                    className="mt-5 text-green-600 font-semibold text-sm cursor-pointer hover:underline"
-                  >
-                    Read More →
-                  </p>
+                  <div className="flex items-center gap-4">
+                    <div className="flex -space-x-2">
+                      <img
+                        src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${featuredBlog.author}`}
+                        alt={featuredBlog.author}
+                        className="w-12 h-12 rounded-full border-2 border-white bg-zinc-100"
+                      />
+                    </div>
+                    <div className="text-sm">
+                      <p className="font-bold text-zinc-900">{featuredBlog.author}</p>
+                      <p className="text-zinc-400 font-medium">{formatDate(featuredBlog.date)}</p>
+                    </div>
 
-                  {isAdmin && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDelete(post._id);
-                      }}
-                      className="mt-3 bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-red-600 transition-all"
-                    >
-                      Delete Post
-                    </button>
-                  )}
+                    {isAdmin && (
+                      <button
+                        onClick={(e) => handleDelete(e, featuredBlog._id)}
+                        className="ml-auto p-3 text-zinc-300 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
+                      >
+                        <Trash2 size={20} />
+                      </button>
+                    )}
+                  </div>
                 </div>
 
-                <div className="flex flex-col items-end gap-4">
-                  <div className="flex items-center gap-3 text-gray-600">
-                    <img
-                      loading="lazy"
-                      src={
-                        post.authorImage ||
-                        "https://api.dicebear.com/7.x/avataaars/svg?seed=" + post.author
-                      }
-                      className="w-10 h-10 rounded-full border"
-                      alt={post.author}
-                    />
-                    <div className="text-right">
-                      <p className="font-semibold">{post.author}</p>
-                      <p className="text-sm text-gray-500">
-                        {new Date(post.date).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="w-full md:w-[350px] h-[220px] rounded-xl border border-gray-200 overflow-hidden">
-                    <img
-                      loading="lazy"
-                      src={cloudImg(post.image)}
-                      className="w-full h-full object-cover"
-                      alt={post.title}
-                    />
-                  </div>
+                <div className="order-1 lg:order-2 relative aspect-square lg:aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl shadow-zinc-200">
+                  <img
+                    src={cloudImg(featuredBlog.image)}
+                    alt={featuredBlog.title}
+                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                  />
+                  {/* Subtle overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
                 </div>
               </div>
-            ))}
-          </motion.div>
+            </motion.section>
+          )
+        )}
 
-          {/* LOAD MORE BUTTON */}
-          
-        </div>
+        {/* Grid Section */}
+        {gridBlogs.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
+            <AnimatePresence mode="popLayout">
+              {gridBlogs.map((post) => (
+                <BlogCard
+                  key={post._id}
+                  post={post}
+                  onClick={() => navigate(`/blog/${post._id}`)}
+                  isAdmin={isAdmin}
+                  onDelete={handleDelete}
+                />
+              ))}
+            </AnimatePresence>
+
+            {/* Load More Trigger (Simplistic for senior vibe) */}
+            {filteredBlogs.length > filteredBlogs.length && (
+              <div ref={() => setPage(p => p + 1)} className="h-10 w-full" />
+            )}
+          </div>
+        ) : (
+          !loading && (
+            <div className="py-20 text-center">
+              <div className="w-16 h-16 bg-zinc-50 rounded-full flex items-center justify-center mx-auto mb-6 text-zinc-300">
+                <Search />
+              </div>
+              <h3 className="text-lg font-bold text-zinc-900">No articles found</h3>
+              <p className="text-zinc-500 mt-2">Try adjusting your search or category.</p>
+              <button
+                onClick={() => { setSearchQuery(""); setActiveCategory("All") }}
+                className="mt-6 text-green-600 font-bold hover:underline"
+              >
+                Clear all filters
+              </button>
+            </div>
+          )
+        )}
+
+        {/* Infinite Scroll / Load More */}
+        {(!searchQuery && blogs.length > 0) && (
+          <div className="mt-32 flex justify-center">
+            <button
+              onClick={() => setPage(prev => prev + 1)}
+              className="group flex items-center gap-3 px-8 py-4 bg-zinc-900 text-white rounded-full font-bold transition-all hover:bg-zinc-800 active:scale-95"
+            >
+              Load more stories
+              <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        )}
       </div>
-
       <Footer />
-    </>
+    </div>
   );
 }
 

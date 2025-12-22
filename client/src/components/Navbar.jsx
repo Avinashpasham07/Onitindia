@@ -11,7 +11,7 @@ function Navbar() {
   const centerNavItems = [
     { name: "Domain", target: "domain" },
     { name: "About Us", target: "whychooseus" },
-    { name: "OnIT Campus", target: "OnitCampus", highlight: true }, // ⭐ Highlighted Item
+    { name: "OnIT Campus", target: "OnitCampus", highlight: true },
     { name: "Contact", target: "footer" },
   ];
 
@@ -57,7 +57,7 @@ function Navbar() {
 
   const handleScrollTo = (targetId) => {
     setMenuOpen(false);
-    
+
     if (window.location.pathname !== "/") {
       navigate("/");
       setTimeout(() => {
@@ -83,11 +83,10 @@ function Navbar() {
   return (
     <>
       <div
-        className={`fixed top-0 left-0 w-full flex justify-between items-center px-6 sm:px-10 h-20 z-[9999] transition-all duration-300 ease-in-out font-sans ${
-          scrolled || menuOpen
-            ? "bg-white/90 backdrop-blur-3xl shadow-sm border-b border-gray-100"
-            : "bg-transparent backdrop-blur-[2px]"
-        }`}
+        className={`fixed top-0 left-0 w-full flex justify-between items-center px-6 sm:px-10 h-20 z-[9999] transition-all duration-300 ease-in-out font-sans ${scrolled || menuOpen
+          ? "bg-white/90 backdrop-blur-3xl shadow-sm border-b border-gray-100"
+          : "bg-transparent backdrop-blur-[2px]"
+          }`}
       >
         {/* ================= LOGO ================= */}
         <div className="flex items-center shrink-0">
@@ -103,7 +102,7 @@ function Navbar() {
         <div className="hidden md:flex gap-8 absolute left-1/2 transform -translate-x-1/2 items-center">
           {centerNavItems.map((item, index) => {
             const isHighlighted = !!item.highlight;
-            
+
             return (
               <motion.div
                 key={index}
@@ -114,25 +113,23 @@ function Navbar() {
                 whileHover="visible"
               >
                 {/* --- Highlighted Item (ONIT Campus) --- */}
-               {isHighlighted ? (
-  <div className="relative flex flex-col items-center mt-2">
+                {isHighlighted ? (
+                  <div className="relative flex flex-col items-center mt-2">
 
-    {/* NEW Badge */}
-    <span className="absolute -top-[12px] right-0 px-1 py-[2px] rounded text-[7px] font-bold tracking-wide uppercase bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-sm animate-pulse-slow">
-      NEW
-    </span>
+                    {/* NEW Badge */}
+                    <span className="absolute -top-[12px] right-0 px-1 py-[2px] rounded text-[7px] font-bold tracking-wide uppercase bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-sm animate-pulse-slow">
+                      NEW
+                    </span>
 
-    {/* OnIT Campus (Stylized) */}
-    <div className="text-[17px] font-bold flex items-center ">
+                    {/* OnIT Campus (Stylized) */}
+                    <div className="text-[17px] font-bold flex items-center ">
 
-      <span className="text-black">On</span>
-      <span className="text-green-600">IT </span>
-      <span className="text-black ml-1">    Campus</span>
-
-    </div>
-
-  </div>
-) : (
+                      <span className="text-black">On</span>
+                      <span className="text-green-600">IT</span>
+                      <span className="text-black ml-1">Campus</span>
+                    </div>
+                  </div>
+                ) : (
                   // --- Regular Item ---
                   <div className="relative">
                     <div className="flex">
@@ -146,7 +143,7 @@ function Navbar() {
                         </motion.span>
                       ))}
                     </div>
-                   
+
                   </div>
                 )}
               </motion.div>
@@ -188,7 +185,7 @@ function Navbar() {
 
         {/* ================= MOBILE MENU BUTTON ================= */}
         <div className="md:hidden z-[1000]">
-          <button 
+          <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="p-2 rounded-md hover:bg-gray-100 transition"
           >
@@ -210,11 +207,10 @@ function Navbar() {
                 <button
                   key={index}
                   onClick={() => handleScrollTo(item.target)}
-                  className={`relative text-xl font-medium transition-all ${
-                    item.highlight 
-                      ? "text-green-700 font-bold bg-green-50 px-6 py-2 rounded-full" 
-                      : "text-gray-700 hover:text-black"
-                  }`}
+                  className={`relative text-xl font-medium transition-all ${item.highlight
+                    ? "text-green-700 font-bold bg-green-50 px-6 py-2 rounded-full"
+                    : "text-gray-700 hover:text-black"
+                    }`}
                 >
                   {item.name}
                   {item.highlight && (

@@ -1,267 +1,244 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowUp, User, Calendar, Tag, Clock, AlertCircle } from "react-feather";
+import { motion } from "framer-motion";
+import { ArrowLeft, Clock, Calendar, Check, ArrowUp, Share2, Copy, Twitter, Linkedin, ChevronRight } from "react-feather";
 import { API_BASE } from "../../config";
+import Footer from "../Footer";
+
+/* -------------------------------------------------------------------------- */
+/*                            STRIPE-STYLE COMPONENTS                         */
+/* -------------------------------------------------------------------------- */
+
+// The "Blurple" Accent: #635bff
+const AccentText = ({ children, className = "" }) => (
+  <span className={`text-[#635bff] font-semibold ${className}`}>{children}</span>
+);
+
+const Pill = ({ children }) => (
+  <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#f6f9fc] text-[#425466] border border-[#e3e8ee]">
+    {children}
+  </span>
+);
+
+const SectionHeading = ({ children }) => (
+  <h3 className="text-[11px] font-bold text-[#425466] uppercase tracking-widest mb-4 border-b border-[#e3e8ee] pb-2">
+    {children}
+  </h3>
+);
+
+const AuthorCard = ({ author, date }) => (
+  <div className="flex items-center gap-3">
+    <div className="w-10 h-10 rounded-full bg-[#f6f9fc] border border-[#e3e8ee] overflow-hidden">
+      <img
+        src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${author}`}
+        alt={author}
+        className="w-full h-full object-cover"
+      />
+    </div>
+    <div className="flex flex-col">
+      <span className="text-sm font-bold text-[#0a2540] leading-tight">{author}</span>
+      <span className="text-xs font-medium text-[#425466]">{date}</span>
+    </div>
+  </div>
+);
+
+const Callout = ({ children }) => (
+  <div className="my-10 p-6 bg-[#f6f9fc] border-l-4 border-green-500 rounded-r-lg">
+    <h4 className="flex items-center gap-2 text-sm font-bold text-[#0a2540] mb-3 uppercase tracking-wide">
+      <Check size={14} className="text-green-500" strokeWidth={3} />
+      Key Highlight
+    </h4>
+    <div className="text-[#425466] font-medium leading-relaxed">
+      {children}
+    </div>
+  </div>
+);
+
+/* -------------------------------------------------------------------------- */
+/*                                MAIN SCREEN                                 */
+/* -------------------------------------------------------------------------- */
 
 function BlogPost() {
   const { id } = useParams();
   const navigate = useNavigate();
-  
+
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showScroll, setShowScroll] = useState(false);
   const [readingTime, setReadingTime] = useState(0);
 
-  // Calculate reading time based on word count
-  const calculateReadingTime = (text) => {
-    const wordsPerMinute = 200;
-    const words = text?.trim().split(/\s+/).length || 0;
-    return Math.ceil(words / wordsPerMinute);
-  };
-
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchPost = async () => {
       try {
-        setLoading(true);
-        // Note: Ideally, fetch by ID directly: `${API_BASE}/api/blogs/${id}`
-        // Keeping your logic of fetching all and filtering:
-        const res = await fetch(`${API_BASE}/api/blogs`);
-        
-        if (!res.ok) throw new Error("Failed to fetch data");
-
+        const res = await fetch(`${API_BASE}/api/blog/${id}`);
+        if (!res.ok) throw new Error("Article not found");
         const data = await res.json();
-        const selected = data.find((p) => p._id === id);
-
-        if (!selected) {
-          setError("Post not found");
-        } else {
-          setPost(selected);
-          setReadingTime(calculateReadingTime(selected.description));
-        }
+        setPost(data);
+        // Calc reading time
+        const words = data?.description?.split(/\s+/).length || 0;
+        setReadingTime(Math.ceil(words / 225));
       } catch (err) {
-        console.error("❌ Error fetching post:", err);
-        setError("Something went wrong. Please try again later.");
+        // Fallback fetch
+        try {
+          const all = await fetch(`${API_BASE}/api/blogs`).then(r => r.json());
+          const found = all.find(p => p._id === id);
+          if (found) {
+            setPost(found);
+            const words = found.description?.split(/\s+/).length || 0;
+            setReadingTime(Math.ceil(words / 225));
+          } else throw err;
+        } catch (finalErr) {
+          setError("We couldn't find that article.");
+        }
       } finally {
         setLoading(false);
       }
     };
-
     fetchPost();
-
-    const handleScroll = () => setShowScroll(window.scrollY > 300);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, [id]);
 
-  // --- LOADING STATE ---
-  if (loading) {
-    return (
-      <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-[#e6fff4] to-[#eaf8ff]">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-          className="w-12 h-12 border-4 border-green-200 border-t-green-600 rounded-full mb-4"
-        />
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-gray-500 font-medium tracking-wide animate-pulse"
-        >
-          Loading your story...
-        </motion.p>
-      </div>
-    );
-  }
+  const formattedDate = useMemo(() => post?.date ? new Date(post.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }) : "", [post]);
 
-  // --- ERROR / NOT FOUND STATE ---
-  if (error || !post) {
-    return (
-      <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-[#e6fff4] via-[#f8faff] to-[#eaf8ff] px-4 text-center">
-        <motion.div 
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="bg-white/50 backdrop-blur-md p-8 rounded-3xl shadow-xl border border-white/60"
-        >
-          <div className="text-red-400 mb-4 flex justify-center">
-             <AlertCircle size={48} />
-          </div>
-          <h1 className="text-2xl font-bold text-gray-700 mb-2">
-            {error || "Post not found"}
-          </h1>
-          <p className="text-gray-500 mb-6 max-w-md">
-            We couldn't find the article you were looking for. It may have been removed or the link is incorrect.
-          </p>
-          <button
-            onClick={() => navigate(-1)}
-            className="flex items-center justify-center gap-2 text-white bg-green-500 hover:bg-green-600 px-6 py-3 rounded-full font-medium shadow-lg hover:shadow-green-500/30 transition-all duration-300 w-full sm:w-auto"
-          >
-            <ArrowLeft size={18} /> Go Back
-          </button>
-        </motion.div>
-      </div>
-    );
-  }
+  // Loading / Error
+  if (loading || error) return (
+    <div className="min-h-screen bg-white flex items-center justify-center">
+      {loading ? (
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-8 h-8 border-2 border-green-500 border-t-transparent rounded-full animate-spin" />
+          <p className="text-xs font-bold uppercase tracking-widest text-green-500">Loading Article</p>
+        </div>
+      ) : (
+        <div className="text-center">
+          <h1 className="text-xl font-bold text-green-500 mb-4">{error}</h1>
+          <button onClick={() => navigate("/blogs")} className="text-green-500 font-bold hover:underline">Return to Journal</button>
+        </div>
+      )}
+    </div>
+  );
 
-  // --- MAIN CONTENT ---
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-[#e6fff4] via-[#f5fbff] to-[#eaf8ff] text-gray-800 overflow-hidden font-sans">
-      
-      {/* Decorative Background Blobs */}
-      <div className="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] bg-green-300/20 rounded-full blur-[100px] animate-pulse pointer-events-none"></div>
-      <div className="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-blue-300/20 rounded-full blur-[100px] animate-pulse pointer-events-none delay-1000"></div>
+    <div className="min-h-screen bg-[#f3f4f6] text-[#0a2540] font-sans selection:bg-[#635bff] selection:text-white">
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6 sm:px-8 py-16 sm:py-24">
-        
-        {/* Header Section */}
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center mb-12"
-        >
-          {/* Category Pill */}
-          {post.category && (
-            <motion.span 
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-wider text-green-700 uppercase bg-green-100/80 backdrop-blur-sm rounded-full border border-green-200"
+      {/* NAV BAR */}
+
+
+      <main className="max-w-[1040px] mx-auto px-6 py-12 lg:py-20">
+
+        {/* HEADER GRID */}
+        <header className="mb-16">
+          <div className="flex flex-col gap-6 max-w-3xl">
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3">
+              <Pill>{post.category}</Pill>
+              <span className="text-xs font-bold text-green-500 uppercase tracking-wider">{readingTime} min read</span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+              className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] text-[#0a2540]"
             >
-              {post.category}
-            </motion.span>
-          )}
+              {post.title}
+            </motion.h1>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 leading-[1.15] mb-8 tracking-tight">
-            {post.title}
-          </h1>
-
-          {/* Metadata Bar */}
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-8 text-sm text-gray-500 font-medium">
-            <div className="flex items-center gap-2">
-              <User size={16} className="text-green-500" />
-              <span>{post.author || "Admin"}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Calendar size={16} className="text-blue-500" />
-              <span>{new Date(post.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Clock size={16} className="text-orange-400" />
-              <span>{readingTime} min read</span>
-            </div>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+              className="text-xl md:text-2xl text-[#425466] leading-relaxed max-w-2xl font-medium"
+            >
+              {post.description?.slice(0, 150)}...
+            </motion.p>
           </div>
-        </motion.div>
+        </header>
 
-        {/* Featured Image */}
+        {/* HERO IMAGE */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="relative group rounded-[2.5rem] overflow-hidden shadow-2xl mb-16 border-[6px] border-green-500"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
+          className="w-full aspect-[2/1] md:aspect-[2.4/1] bg-[#f6f9fc] rounded-xl overflow-hidden mb-16 border border-[#e3e8ee]"
         >
           <img
-            src={post.image || "https://images.unsplash.com/photo-1499750310159-5b5f38e31638"}
+            src={post.image?.replace("/upload/", "/upload/f_auto,q_auto,w_1200/") || "https://images.unsplash.com/photo-1556761175-5973dc0f32e7"}
             alt={post.title}
-            onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e"; }} // Fallback image
-            className="w-full h-[300px] sm:h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
         </motion.div>
 
-        {/* Content Container - Glassmorphism */}
-        <motion.article
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          {/* Description / Content */}
-          <div className="mb-12">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="h-8 w-1.5 bg-green-500 rounded-full"></div>
-              <h2 className="text-2xl font-bold text-gray-800">Key Highlights</h2>
+        {/* CONTENT GRID */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+
+          {/* SIDEBAR (METADATA) */}
+          <aside className="lg:col-span-3 lg:sticky lg:top-32 h-fit space-y-8 order-2 lg:order-1">
+            <div>
+              <SectionHeading>Written By</SectionHeading>
+              <AuthorCard author={post.author} date={formattedDate} />
             </div>
 
-            <div className="space-y-4">
-              {post.description
-                ?.split("\n")
-                .filter((line) => line.trim() !== "")
-                .map((line, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex gap-4 p-5 bg-white/70 backdrop-blur-md rounded-2xl shadow-sm border border-white/50 hover:shadow-md hover:bg-white/90 transition-all duration-300"
-                  >
-                     <div className="shrink-0 mt-1">
-                        <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xs">
-                           {index + 1}
-                        </div>
-                     </div>
-                    <p className="text-lg text-gray-700 leading-relaxed">
-                      {line}
-                    </p>
-                  </motion.div>
-                ))}
+            <div>
+              <SectionHeading>Share</SectionHeading>
+              <div className="flex flex-col gap-2 items-start">
+                <button onClick={() => navigator.clipboard.writeText(window.location.href)} className="flex items-center gap-2 text-sm font-bold text-green-500 hover:text-[#0a2540] transition-colors">
+                  <Copy size={14} /> Copy Link
+                </button>
+                <button className="flex items-center gap-2 text-sm font-bold text-green-500 hover:text-[#0a2540] transition-colors">
+                  <Share2 size={14} /> Share Article
+                </button>
+              </div>
             </div>
+
+            {post.keywords && (
+              <div>
+                <SectionHeading>Topics</SectionHeading>
+                <div className="flex flex-wrap gap-2">
+                  {post.keywords.map((kw, i) => (
+                    <span key={i} className="text-xs font-bold text-[#425466] bg-[#f6f9fc] px-2 py-1 rounded hover:bg-[#e3e8ee] transition-colors cursor-pointer">
+                      {kw}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </aside>
+
+          {/* MAIN CONTENT */}
+          <article className="lg:col-span-9 lg:pl-12 order-1 lg:order-2">
+            {/* Intro Paragraph */}
+            <div className="prose prose-lg prose-slate max-w-none 
+                    prose-headings:text-[#0a2540] prose-headings:font-bold prose-headings:tracking-tight
+                    prose-p:text-[#425466] prose-p:leading-8 prose-p:font-medium
+                    prose-a:text-[#635bff] prose-a:no-underline prose-a:font-semibold hover:prose-a:underline
+                    prose-img:rounded-lg prose-img:border prose-img:border-[#e3e8ee]
+                 ">
+              {/* Render Highlights First */}
+              {post.description?.length > 300 && (
+                <Callout>
+                  {post.description.split("\n").find(l => l.length > 50 && l.length < 200) || "The Stripe platform helps you build and scale your business online."}
+                </Callout>
+              )}
+
+              {post.description?.split("\n").map((para, i) => (
+                para.length > 0 && <p key={i}>{para}</p>
+              ))}
+            </div>
+          </article>
+
+        </div>
+
+      </main>
+
+      {/* FOOTER CTA */}
+      <section className="bg-[#f3f4f6] border-t border-[#e3e8ee] py-20 mt-20">
+        <div className="max-w-[1040px] mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold text-[#0a2540] mb-6">Ready to get started?</h2>
+          <p className="text-[#425466] mb-8 max-w-xl mx-auto">Explore more insights and stories from our team to help you navigate your journey.</p>
+          <div className="flex justify-center gap-4">
+            <button onClick={() => navigate("/blog")} className="px-6 py-3 bg-green-500 text-white rounded-full font-bold text-sm hover:bg-[#0a2540] transition-colors shadow-lg shadow-indigo-200">
+              Read More Stories
+            </button>
+            <button className="px-6 py-3 bg-white text-green-500 border border-[#e3e8ee] rounded-full font-bold text-sm hover:border-[#0a2540] transition-colors">
+              Subscribe
+            </button>
           </div>
-
-          {/* Tags Section */}
-          {post.keywords?.length > 0 && (
-            <div className="mb-16">
-              <div className="flex items-center gap-2 mb-4 text-gray-400 uppercase text-xs font-bold tracking-widest">
-                <Tag size={14} />
-                <span>Related Topics</span>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                {post.keywords.map((word, i) => (
-                  <span
-                    key={i}
-                    className="px-4 py-2 bg-white/80 border border-green-100 text-green-700 rounded-xl text-sm font-medium shadow-sm hover:shadow hover:bg-green-50 hover:-translate-y-0.5 transition-all duration-200 cursor-default"
-                  >
-                    #{word.trim()}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-        </motion.article>
-
-        {/* Footer / Back Button */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="flex justify-center border-t border-gray-200/60 pt-12"
-        >
-          <button
-            onClick={() => navigate(-1)}
-            className="group flex items-center gap-3 bg-green-500 text-white px-8 py-3.5 rounded-full font-semibold shadow-md hover:shadow-xl hover:text-green-500 hover:bg-white transition-all duration-300 border border-black"
-          >
-            <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-            Back to All Blogs
-          </button>
-        </motion.div>
-      </div>
-
-      {/* Scroll to Top Button */}
-      <AnimatePresence>
-        {showScroll && (
-          <motion.button
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.5 }}
-            whileHover={{ scale: 1.1 }}
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="fixed bottom-8 right-8 z-50 bg-green-500/90 backdrop-blur text-white p-3.5 rounded-2xl shadow-lg hover:shadow-green-500/40 hover:bg-green-600 transition-all"
-          >
-            <ArrowUp size={24} />
-          </motion.button>
-        )}
-      </AnimatePresence>
+        </div>
+      </section>
+      <Footer />
     </div>
   );
 }

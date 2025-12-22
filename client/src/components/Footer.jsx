@@ -25,152 +25,141 @@ function Footer({ onShowPrivacyPolicy }) {
 
       const result = await response.json();
       if (response.ok) {
-  
+
         setEmail("");
       } else {
-       
+
       }
     } catch (error) {
       console.error("Error:", error);
-      
     }
   };
 
   return (
-    <footer className="w-full bg-[#004d43] text-white px-10 md:px-20 py-16 relative overflow-hidden rounded-t-3xl">
-      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+    <footer className="w-full bg-[#004d43] text-white pt-20 pb-10 px-6 md:px-20 relative overflow-hidden rounded-t-[3rem]">
+      {/* Subtle overlay for depth */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20 pointer-events-none"></div>
 
-      <div className="flex flex-col md:flex-row justify-between items-start gap-10 relative z-10">
-        {/* Left Section */}
-        <div className="w-full md:w-1/2">
-          <h1 className="text-[8vw] md:text-[3vw] font-bold leading-tight mb-6">
-            <span className="text-black">On</span>
-            <span className="text-green-500">IT</span>
-          </h1>
-
-          <p className="text-base md:text-lg text-zinc-300 w-[95%] md:w-[80%] leading-relaxed">
-            Simplify your life or start earning from it — all with one click.
-            OnIt connects people who need help with those ready to help —
-            instantly, locally, and securely.
-          </p>
-
-          {/* Input + Button Row */}
-          <div className="flex flex-col sm:flex-row items-center gap-3 mt-6 w-full md:w-[80%]">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-50 sm:flex-1 px-5 py-3 rounded-full bg-white/90 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-zinc-600"
-            />
-
-            <button
-              onClick={handleSubmit}
-              className="group relative px-8 py-3 rounded-full font-semibold 
-                        bg-gradient-to-r from-[#0a0a0a] via-black to-[#0a0a0a] 
-                        text-white shadow-lg overflow-hidden 
-                        transition-all duration-500 ease-out 
-                        hover:-translate-y-1 active:translate-y-0 active:scale-95"
-            >
-              <span className="absolute inset-0 bg-white translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></span>
-              <span className="relative z-10 text-white group-hover:text-black transition-colors duration-500 ease-in-out">
-                Get Started
-              </span>
-            </button>
+      <div className="flex flex-col lg:flex-row justify-between items-start gap-12 relative z-10">
+        {/* Left Section: Brand & Newsletter */}
+        <div className="w-full lg:w-5/12 space-y-8">
+          {/* Brand Tagline */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 leading-tight">
+              Simplify your life,<br />
+              <span className="text-green-300">Start earning.</span>
+            </h2>
+            <p className="text-zinc-300 text-base leading-relaxed max-w-md">
+              OnIt connects people who need help with those ready to help  instantly, locally, and securely.
+            </p>
           </div>
+
+          {/* Newsletter */}
+          <div className="w-full max-w-md">
+            <div className="flex flex-col sm:flex-row items-center gap-3">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-6 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-green-400 focus:bg-white/10 backdrop-blur-sm transition-all"
+              />
+              <button
+                onClick={handleSubmit}
+                className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-[#004d43] font-bold hover:bg-green-400 hover:text-white transition-all duration-300 shadow-lg shrink-0 whitespace-nowrap"
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
+
+          {/* Big Text Element */}
+
         </div>
 
-        {/* Right Section */}
-        <div className="w-full md:w-1/2 flex flex-wrap justify-between md:justify-end gap-12 md:gap-20">
+        {/* Right Section: Links */}
+        <div className="w-full lg:w-6/12 flex flex-wrap justify-start lg:justify-end gap-x-16 gap-y-10">
           {/* Company */}
-          <div>
-            <h3 className="text-xl font-semibold mb-3 text-green-400">Company</h3>
-            <ul className="space-y-2 text-zinc-300">
+          <div className="min-w-[140px]">
+            <h3 className="text-lg font-semibold text-green-300 mb-6 uppercase tracking-wider">Company</h3>
+            <ul className="space-y-4">
               <li>
-                <a href="#whychooseus" className="hover:text-white transition">
+                <a href="/#whychooseus" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 inline-block">
                   About Us
                 </a>
               </li>
               <li>
-                <a href="#domain" className="hover:text-white transition">
+                <a href="/#domain" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 inline-block">
                   Domains
                 </a>
               </li>
-               <li>
-                <a href="#Campus" className="hover:text-white transition">
+              <li>
+                <a href="/#Campus" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 inline-block">
                   ONIT Campus
                 </a>
-                </li>
+              </li>
             </ul>
           </div>
 
           {/* Support */}
-          <div>
-            <h3 className="text-xl font-semibold mb-3 text-green-400">Support</h3>
- <ul className="space-y-2 text-zinc-300">
-    <li>
-      <Link to="/privacy-policy" className="hover:text-white transition">
-        Privacy Policy
-      </Link>
-    </li>
-    <li>
-      <Link to="/terms-and-conditions" className="hover:text-white transition">
-        Terms of Use
-      </Link>
-    </li>
-  </ul>
+          <div className="min-w-[140px]">
+            <h3 className="text-lg font-semibold text-green-300 mb-6 uppercase tracking-wider">Support</h3>
+            <ul className="space-y-4 text-zinc-300">
+              <li>
+                <Link to="/privacy-policy" className="hover:text-white hover:translate-x-1 transition-all duration-300 inline-block">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms-and-conditions" className="hover:text-white hover:translate-x-1 transition-all duration-300 inline-block">
+                  Terms of Use
+                </Link>
+              </li>
+            </ul>
+          </div>
 
+          {/* Contact Us */}
+          <div className="min-w-[140px]">
+            <h3 className="text-lg font-semibold text-green-300 mb-6 uppercase tracking-wider">Contact Us</h3>
+            <ul className="space-y-4">
+              <li>
+                <a href="mailto:support@onitindia.com" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2">
+                  <span className="text-lg"><FaEnvelope /></span> support@onitindia.com
+                </a>
+              </li>
+              <li>
+                <a href="https://www.linkedin.com/company/onitindia/?viewAsMember=true" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2">
+                  <span className="text-lg"><FaLinkedin /></span> LinkedIn
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/onitindia?igsh=MXA0emY2MzYybGY4aw==" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2">
+                  <span className="text-lg"><FaInstagram /></span> Instagram
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
 
-      {/* Divider Line */}
-      <div className="border-t border-zinc-600 my-10"></div>
+      {/* Divider */}
+      <div className="border-t border-white/10 my-10 relative z-10"></div>
 
-      {/* Bottom Row */}
-     {/* Bottom Row */}
-<div className="flex flex-col md:flex-row justify-between items-center text-sm text-zinc-400 gap-6 relative z-10">
+      {/* Footer Bottom */}
+      {/* Footer Bottom */}
+      <div className="flex flex-col md:flex-row justify-between items-center gap-6 relative z-10 text-sm text-zinc-400 w-full">
+        <h1 className="hidden md:block text-[5rem] lg:text-[7rem] font-black text-white/5 tracking-tighter select-none pointer-events-none leading-none -ml-4">
+          #HyperLocal
+        </h1>
+        <p className="font-medium text-center md:text-right mt-17">
+          © 2025 <span className="text-black font-bold">On</span>
+          <span className="text-green-400 font-bold">IT</span> Technologies Pvt. Ltd.
+        </p>
+      </div>
 
-  {/* Left side copyright */}
-  <p className="font-semibold">
-    © {new Date().getFullYear()}{" "}
-    <span className="text-black font-semibold">On</span>
-    <span className="text-green-500 font-semibold">IT</span> Technologies Pvt. Ltd.
-  </p>
 
-  {/* Right side icons + email */}
-  <div className="flex items-center gap-6">
-
-    {/* Email */}
-    <a
-      href="mailto:support@onitindia.com"
-      className="flex items-center gap-2 text-white  transition text-base"
-    >
-      <FaEnvelope className="text-lg" />
-      support@onitindia.com
-    </a>
-
-    {/* Social icons */}
-    <div className="flex gap-5 text-2xl">
-      <a
-        href="https://www.linkedin.com/company/onitindia/?viewAsMember=true"
-        className="hover:text-white transition"
-      >
-        <FaLinkedin />
-      </a>
-      <a
-        href="https://www.instagram.com/onitplatform/"
-        className="hover:text-white transition"
-      >
-        <FaInstagram />
-      </a>
-    </div>
-
-  </div>
-</div>
 
     </footer>
   );
 }
-
 export default Footer;

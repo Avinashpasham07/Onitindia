@@ -1,32 +1,36 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { CheckCircle } from "react-feather";
+import { CheckCircle, ChevronLeft, ChevronRight } from "react-feather";
+import homeHelpVideo from "../assets/3.mp4";
+import tutoringVideo from "../assets/1.mp4";
+import food from "../assets/2.mp4"
+import tutoringGif from "../assets/4.gif";
 
 const domains = [
   {
     title: "Home Help",
     description: "Get expert help for home chores, cleaning, and organizing tasks.",
-    animation: "https://lottie.host/embed/01142de6-3381-4036-931d-0194c55a466b/Qd6XYrJ9lh.lottie",
+    video: homeHelpVideo,
   },
   {
     title: "Car & Driver",
     description: "Find trusted drivers or get your car serviced without hassle.",
-    animation: "https://lottie.host/embed/f9e6ef44-bed5-47ae-9cec-c352383d9ac4/H93E4LWF2A.lottie",
+    animation: "https://lottie.host/embed/54336a68-cddc-412f-99da-89c110433d84/kGnwtsznZI.lottie",
   },
   {
     title: "Food & Grocery",
     description: "Order groceries, food delivery, or get quick local errands done.",
-    animation: "https://lottie.host/embed/ccb7e519-73a8-450a-9b77-f20ff00c49ca/QqPoV5IXZj.lottie",
+    video: food,
   },
   {
     title: "Project",
     description: "Get your projects done — from ideas to execution.",
-    animation: "https://lottie.host/embed/4320ba84-f6e1-49ca-9b18-e8966671a74c/92fI0PG82n.lottie",
+    video: tutoringVideo,
   },
   {
     title: "Tutoring",
     description: "Find local tutors for any subject or skill you want to learn.",
-    animation: "https://lottie.host/embed/4908c437-499b-4a65-b634-fe8d846032c3/U6s9eSwRWD.lottie",
+    img: tutoringGif,
   },
 ];
 
@@ -45,71 +49,110 @@ function Domains() {
       </div>
 
       {/* Cards Section */}
-      <div
-        className="
-        grid
-        grid-cols-1
-        sm:grid-cols-2
-        lg:grid-cols-5
-        gap-2 sm:gap-3 md:gap-3
-        justify-items-center
-      "
-      >
-        {domains.map((domain, index) => (
-          <motion.div
-            key={index}
-            whileHover={{ scale: 1, y: -2 }}
-            transition={{ duration: 0.3 }}
-            className="
-              relative rounded-2xl sm:rounded-3xl shadow-md
-              bg-gradient-to-br from-[#e3eafc] via-[#e3eafc] to-[#D9EEE3]
-              flex flex-col justify-between
-              w-[70%] sm:w-[80%] md:w-[90%] lg:w-full
-              h-[240px] sm:h-[280px] md:h-[320px] lg:h-[370px]
-              p-4 sm:p-5 md:p-6
-              hover:shadow-xl
-            "
-          >
-            {/* Subtle Background Accent */}
-            <div className="absolute inset-0 opacity-20 bg-gradient-to-br from-green-100 to-transparent rounded-3xl pointer-events-none" />
+      <div className="relative group/domain-scroll">
+        {/* Left Scroll Button (Mobile Only) */}
+        <button
+          onClick={() => {
+            const container = document.getElementById('domains-container');
+            if (container) container.scrollBy({ left: -240, behavior: 'smooth' });
+          }}
+          className="absolute left-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-slate-100 flex items-center justify-center text-slate-700 lg:hidden"
+          aria-label="Scroll left"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
 
-            {/* Content */}
-            <div className="relative z-10 flex flex-col h-full justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-3 md:mb-4">
-                  <h2 className="text-lg sm:text-xl font-bold text-gray-900 font-['Neue Montreal']">
-                    {domain.title}
-                  </h2>
-                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-green-500" />
+        {/* Right Scroll Button (Mobile Only) */}
+        <button
+          onClick={() => {
+            const container = document.getElementById('domains-container');
+            if (container) container.scrollBy({ left: 240, behavior: 'smooth' });
+          }}
+          className="absolute right-1 top-1/2 -translate-y-1/2 z-20 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-slate-100 flex items-center justify-center text-slate-700 lg:hidden"
+          aria-label="Scroll right"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+
+        <div
+          id="domains-container"
+          className="
+            flex lg:grid
+            lg:grid-cols-5
+            overflow-x-auto lg:overflow-visible
+            gap-4 sm:gap-6 md:gap-8
+            pb-8 lg:pb-0
+            scrollbar-hide
+            snap-x
+          "
+        >
+          {domains.map((domain, index) => (
+            <motion.div
+              key={index}
+              whileHover={{ scale: 1, y: -2 }}
+              transition={{ duration: 0.3 }}
+              className="
+                  relative rounded-2xl sm:rounded-3xl shadow-md
+                  bg-gradient-to-br from-[#e3eafc] via-[#D9EEE3] to-[#D9EEE3]
+                  flex flex-col justify-between
+                  flex-shrink-0 lg:flex-shrink
+                  min-w-[220px] w-[220px] sm:w-auto lg:w-full
+                  h-[240px] sm:h-[280px] md:h-[320px] lg:h-[370px]
+                  p-4 sm:p-5 md:p-6
+                  hover:shadow-xl border border-green-300
+                  snap-center
+                "
+            >
+              {/* Subtle Background Accent */}
+              <div className="absolute inset-0 opacity-20 bg-gradient-to-br from-green-100 to-transparent rounded-3xl pointer-events-none" />
+
+              {/* Content */}
+              <div className="relative z-10 flex flex-col h-full justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-2 md:mb-4">
+                    <h2 className="text-base sm:text-xl font-bold text-gray-900 font-['Neue Montreal'] leading-tight">
+                      {domain.title}
+                    </h2>
+                    <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-green-500 flex-shrink-0" />
+                  </div>
+                  <p className="text-gray-700 text-xs sm:text-base leading-relaxed mb-2 sm:mb-3 line-clamp-3 lg:line-clamp-none">
+                    {domain.description}
+                  </p>
                 </div>
-                <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-2 sm:mb-3">
-                  {domain.description}
-                </p>
+
+                {/* Animation or Image */}
+                {domain.animation ? (
+                  <div className="w-full h-20 sm:h-28 md:h-32 lg:h-36 rounded-xl sm:rounded-2xl overflow-hidden mt-auto">
+                    <iframe
+                      src={domain.animation}
+                      className="w-full h-full border-0 scale-110"
+                      title={domain.title}
+                    ></iframe>
+                  </div>
+                ) : domain.video ? (
+                  <div className="w-full h-20 sm:h-28 md:h-32 lg:h-36 rounded-xl sm:rounded-2xl overflow-hidden mt-auto">
+                    <video
+                      src={domain.video}
+                      className="w-full h-full object-cover"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                    />
+                  </div>
+                ) : (
+                  <img
+                    src={domain.img}
+                    alt={domain.title}
+                    className="w-full h-20 sm:h-28 md:h-32 lg:h-36 object-cover rounded-xl sm:rounded-2xl mt-auto"
+                  />
+                )}
               </div>
-
-              {/* Animation or Image */}
-              {domain.animation ? (
-                <div className="w-full h-24 sm:h-28 md:h-32 lg:h-36 rounded-2xl overflow-hidden">
-                  <iframe
-                    src={domain.animation}
-                    className="w-full h-full border-0 scale-110"
-                    title={domain.title}
-                  ></iframe>
-                </div>
-              ) : (
-                <img
-                  src={domain.img}
-                  alt={domain.title}
-                  className="w-full h-24 sm:h-28 md:h-32 lg:h-36 object-cover rounded-2xl"
-                />
-              )}
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          ))}
+        </div>
       </div>
 
-      {/* Subtext */}
-    
     </div>
   );
 }

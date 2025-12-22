@@ -18,6 +18,7 @@ import AddPost from "./components/Blog/AddPost";
 import BlogList from "./components/Blog/BlogList";
 import BlogPost from "./components/Blog/BlogPost";
 import Campus from "./components/Campus.jsx";
+import CampusDetail from "./components/CampusDetail";
 
 function Home() {
   return (
@@ -27,7 +28,7 @@ function Home() {
       <section id="tasksee"><Task_see /></section>
       <section id="domain"><Domain /></section>
       <section id="whychooseus"><WhyChooseUs /></section>
-            <section id="Campus"><Campus /></section>
+      <section id="Campus"><Campus /></section>
       <section id="marquee"><Marquee /></section>
       <section id="testimonials"><Testimonials /></section>
       <section id="footer"><Footer /></section>
@@ -35,6 +36,8 @@ function Home() {
     </>
   );
 }
+
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   // ✅ Google Analytics setup inside useEffect
@@ -56,16 +59,18 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <div className="min-h-screen w-full bg-gray-100 overflow-hidden">
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/task-performers" element={<Task_Performers />} />
+          <Route path="/campus-detail" element={<CampusDetail />} />
           <Route path="/blog" element={<BlogList />} />
-  <Route path="/blog/:id" element={<BlogPost />} />
-  <Route path="/admin-login" element={<AdminLogin />} />
-  <Route path="/admin-dashboard" element={<AdminDashboard />} />
-  <Route path="/add-post" element={<AddPost />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/add-post" element={<AddPost />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         </Routes>
