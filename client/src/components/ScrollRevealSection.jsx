@@ -71,13 +71,13 @@ const ScrollRevealSection = () => {
                 </div>
 
                 {/* Navigation Tabs */}
-                <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6 sm:mb-8">
+                <div className="flex flex-nowrap overflow-x-auto sm:overflow-visible justify-start sm:justify-center gap-2 sm:gap-3 mb-6 sm:mb-8 px-1 pb-2 sm:pb-0 scrollbar-hide">
                     {features.map((feature) => (
                         <button
                             key={feature.id}
                             onClick={() => setActiveTab(feature.id)}
                             className={`
-                                flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-[10px] sm:text-xs md:text-sm font-bold tracking-wide transition-all duration-300 border
+                                flex items-center gap-1 sm:gap-2 px-2.5 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-[9px] sm:text-xs md:text-sm font-bold tracking-wide transition-all duration-300 border whitespace-nowrap flex-shrink-0
                                 ${activeTab === feature.id
                                     ? "bg-green-600 text-white border-green-600 shadow-md scale-105"
                                     : "bg-white text-slate-500 border-slate-200 hover:bg-green-50 hover:text-green-700 hover:border-green-200"}

@@ -159,35 +159,30 @@ function Landingpage() {
         </div>
 
         {/* --- BUTTONS --- */}
-        <div className="flex flex-wrap justify-center md:justify-end items-center gap-2 sm:gap-3 mt-4 md:mt-0">
-          <div className="flex flex-wrap justify-center md:justify-end items-center gap-2 sm:gap-3 mt-4 md:mt-0">
-
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSeD90sDCZFts-uu_g_FgfVfG4Qmb1Ixyf0rJI7f-I4y9L6hgA/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group border border-zinc-700 rounded-full px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm md:text-base 
+        <div className="flex flex-wrap justify-center md:justify-end items-center gap-3 sm:gap-4 mt-6 md:mt-0 w-full md:w-auto">
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSeD90sDCZFts-uu_g_FgfVfG4Qmb1Ixyf0rJI7f-I4y9L6hgA/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group border border-zinc-700 rounded-full px-6 py-2.5 sm:px-5 sm:py-2 text-sm sm:text-sm md:text-base 
                font-medium bg-zinc-900 text-white flex items-center gap-2 transition-all duration-300 
-               hover:bg-green-500 hover:text-white"
-            >
-              Post a Task
-            </a>
+               hover:bg-green-500 hover:text-white hover:border-green-500 shadow-md md:shadow-none"
+          >
+            Post a Task
+          </a>
 
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group border border-zinc-700 rounded-full px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm md:text-base 
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group border border-zinc-700 rounded-full px-6 py-2.5 sm:px-5 sm:py-2 text-sm sm:text-sm md:text-base 
                font-medium bg-zinc-900 text-white flex items-center gap-2 transition-all duration-300 
-               hover:bg-green-500 hover:text-white"
-            >
-              Start Earning
-            </a>
+               hover:bg-green-500 hover:text-white hover:border-green-500 shadow-md md:shadow-none"
+          >
+            Start Earning
+          </a>
 
-          </div>
-
-
-          <div className="w-8 h-8 sm:w-9 sm:h-9  rounded-full flex justify-center items-center bg-green-500 text-white transition-all duration-300 hover:bg-zinc-900 hover:text-white">
+          <div className="w-10 h-10 sm:w-9 sm:h-9 rounded-full flex justify-center items-center bg-green-500 text-white transition-all duration-300 hover:bg-zinc-900 hover:text-white shadow-lg md:shadow-none">
             <FaArrowUpLong className="rotate-45" />
           </div>
         </div>

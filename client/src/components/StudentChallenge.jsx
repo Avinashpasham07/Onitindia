@@ -105,13 +105,13 @@ const StudentChallenge = () => {
                         <div className="flex gap-4 sm:gap-6 pb-8 pt-4">
                             {challenges.map((challenge, index) => {
                                 // Responsive width and varied heights for visual interest
-                                const width = 'w-[280px] sm:w-[350px] md:w-[450px]';
+                                const width = 'w-[220px] sm:w-[350px] md:w-[450px]';
                                 const heights = [
-                                    'h-[380px] sm:h-[420px] md:h-[480px]',
-                                    'h-[350px] sm:h-[380px] md:h-[430px]',
-                                    'h-[380px] sm:h-[420px] md:h-[480px]',
-                                    'h-[350px] sm:h-[380px] md:h-[430px]',
-                                    'h-[380px] sm:h-[420px] md:h-[480px]'
+                                    'h-[300px] sm:h-[420px] md:h-[480px]',  // Medium
+                                    'h-[240px] sm:h-[320px] md:h-[380px]',  // Small
+                                    'h-[300px] sm:h-[420px] md:h-[480px]',  // Tall
+                                    'h-[240px] sm:h-[320px] md:h-[380px]',  // Small
+                                    'h-[300px] sm:h-[420px] md:h-[480px]'   // Medium
                                 ];
                                 const height = heights[index % heights.length];
 
@@ -148,11 +148,11 @@ const StudentChallenge = () => {
                                         </div>
 
                                         {/* Content Card */}
-                                        <div className="absolute inset-0 p-4 sm:p-5 md:p-6 flex flex-col justify-end">
+                                        <div className="absolute inset-0 p-3 sm:p-5 md:p-6 flex flex-col justify-end">
                                             {/* Icon Badge */}
                                             <motion.div
                                                 transition={{ duration: 0.6, ease: "easeOut" }}
-                                                className="mb-3 sm:mb-4 inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-green-400 to-green-600 shadow-2xl"
+                                                className="mb-2 sm:mb-4 inline-flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-lg sm:rounded-2xl bg-gradient-to-br from-green-400 to-green-600 shadow-2xl"
                                             >
                                                 <div className="text-white scale-75 sm:scale-90 md:scale-100">
                                                     {challenge.icon}
@@ -160,17 +160,17 @@ const StudentChallenge = () => {
                                             </motion.div>
 
                                             {/* Title Badge */}
-                                            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/30 mb-3 sm:mb-4 w-fit">
-                                                <span className="text-[10px] sm:text-xs font-bold text-white uppercase tracking-wider">
+                                            <div className="inline-flex items-center gap-2 px-2.5 py-1 sm:px-4 sm:py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/30 mb-2 sm:mb-4 w-fit">
+                                                <span className="text-[9px] sm:text-xs font-bold text-white uppercase tracking-wider">
                                                     {challenge.title}
                                                 </span>
                                             </div>
 
                                             {/* Text Content */}
-                                            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black text-white mb-2 sm:mb-3 leading-tight drop-shadow-2xl">
+                                            <h3 className="text-base sm:text-xl md:text-2xl lg:text-3xl font-black text-white mb-1.5 sm:mb-3 leading-tight drop-shadow-2xl">
                                                 {challenge.heading}
                                             </h3>
-                                            <p className="text-white/95 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-5 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
+                                            <p className="text-white/95 text-[10px] sm:text-sm leading-relaxed mb-2 sm:mb-5 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
                                                 {challenge.desc}
                                             </p>
 

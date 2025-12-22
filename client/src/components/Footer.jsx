@@ -56,17 +56,17 @@ function Footer({ onShowPrivacyPolicy }) {
 
           {/* Newsletter */}
           <div className="w-full max-w-md">
-            <div className="flex flex-col sm:flex-row items-center gap-3">
+            <div className="flex flex-row items-center gap-2 sm:gap-3">
               <input
                 type="email"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-6 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-green-400 focus:bg-white/10 backdrop-blur-sm transition-all"
+                className="w-full px-4 py-3 sm:px-6 sm:py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-green-400 focus:bg-white/10 backdrop-blur-sm transition-all text-sm sm:text-base min-w-0"
               />
               <button
                 onClick={handleSubmit}
-                className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-[#004d43] font-bold hover:bg-green-400 hover:text-white transition-all duration-300 shadow-lg shrink-0 whitespace-nowrap"
+                className="px-6 py-3 sm:px-8 sm:py-4 rounded-full bg-white text-[#004d43] font-bold hover:bg-green-400 hover:text-white transition-all duration-300 shadow-lg shrink-0 whitespace-nowrap text-sm sm:text-base"
               >
                 Get Started
               </button>
@@ -78,23 +78,23 @@ function Footer({ onShowPrivacyPolicy }) {
         </div>
 
         {/* Right Section: Links */}
-        <div className="w-full lg:w-6/12 flex flex-wrap justify-start lg:justify-end gap-x-16 gap-y-10">
+        <div className="w-full lg:w-6/12 grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-x-16 justify-items-start lg:justify-items-end">
           {/* Company */}
-          <div className="min-w-[140px]">
-            <h3 className="text-lg font-semibold text-green-300 mb-6 uppercase tracking-wider">Company</h3>
-            <ul className="space-y-4">
+          <div className="w-full text-left lg:text-right">
+            <h3 className="text-sm md:text-lg font-semibold text-green-300 mb-4 md:mb-6 uppercase tracking-wider">Company</h3>
+            <ul className="space-y-3 md:space-y-4">
               <li>
-                <a href="/#whychooseus" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 inline-block">
+                <a href="/#whychooseus" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 inline-block text-sm md:text-base">
                   About Us
                 </a>
               </li>
               <li>
-                <a href="/#domain" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 inline-block">
+                <a href="/#domain" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 inline-block text-sm md:text-base">
                   Domains
                 </a>
               </li>
               <li>
-                <a href="/#Campus" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 inline-block">
+                <a href="/#Campus" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 inline-block text-sm md:text-base">
                   ONIT Campus
                 </a>
               </li>
@@ -102,16 +102,16 @@ function Footer({ onShowPrivacyPolicy }) {
           </div>
 
           {/* Support */}
-          <div className="min-w-[140px]">
-            <h3 className="text-lg font-semibold text-green-300 mb-6 uppercase tracking-wider">Support</h3>
-            <ul className="space-y-4 text-zinc-300">
+          <div className="w-full text-left lg:text-right">
+            <h3 className="text-sm md:text-lg font-semibold text-green-300 mb-4 md:mb-6 uppercase tracking-wider">Support</h3>
+            <ul className="space-y-3 md:space-y-4 text-zinc-300">
               <li>
-                <Link to="/privacy-policy" className="hover:text-white hover:translate-x-1 transition-all duration-300 inline-block">
+                <Link to="/privacy-policy" className="hover:text-white hover:translate-x-1 transition-all duration-300 inline-block text-sm md:text-base">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/terms-and-conditions" className="hover:text-white hover:translate-x-1 transition-all duration-300 inline-block">
+                <Link to="/terms-and-conditions" className="hover:text-white hover:translate-x-1 transition-all duration-300 inline-block text-sm md:text-base">
                   Terms of Use
                 </Link>
               </li>
@@ -119,21 +119,21 @@ function Footer({ onShowPrivacyPolicy }) {
           </div>
 
           {/* Contact Us */}
-          <div className="min-w-[140px]">
-            <h3 className="text-lg font-semibold text-green-300 mb-6 uppercase tracking-wider">Contact Us</h3>
-            <ul className="space-y-4">
+          <div className="w-full text-left lg:text-right col-span-2 md:col-span-1">
+            <h3 className="text-sm md:text-lg font-semibold text-green-300 mb-4 md:mb-6 uppercase tracking-wider">Contact Us</h3>
+            <ul className="space-y-3 md:space-y-4">
               <li>
-                <a href="mailto:support@onitindia.com" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2">
+                <a href="mailto:support@onitindia.com" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2 text-sm md:text-base justify-start lg:justify-end">
                   <span className="text-lg"><FaEnvelope /></span> support@onitindia.com
                 </a>
               </li>
               <li>
-                <a href="https://www.linkedin.com/company/onitindia/?viewAsMember=true" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2">
+                <a href="https://www.linkedin.com/company/onitindia/?viewAsMember=true" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2 text-sm md:text-base justify-start lg:justify-end">
                   <span className="text-lg"><FaLinkedin /></span> LinkedIn
                 </a>
               </li>
               <li>
-                <a href="https://www.instagram.com/onitindia?igsh=MXA0emY2MzYybGY4aw==" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2">
+                <a href="https://www.instagram.com/onitindia?igsh=MXA0emY2MzYybGY4aw==" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2 text-sm md:text-base justify-start lg:justify-end">
                   <span className="text-lg"><FaInstagram /></span> Instagram
                 </a>
               </li>
