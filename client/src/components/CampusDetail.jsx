@@ -161,10 +161,10 @@ export default function CampusDetail() {
                             grow before graduation.
                         </p>
 
-                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8 md:mt-0 mb-16">
+                        <div className="flex flex-row items-center justify-center gap-4 mt-8 md:mt-0 mb-16">
                             <Link
                                 to="/task-performers"
-                                className="px-6 py-2.5 md:px-8 md:py-3.5 bg-green-600 text-white rounded-full font-bold text-lg md:text-xl shadow-xl hover:bg-green-700 hover:shadow-2xl w-auto"
+                                className="px-4 py-2 md:px-8 md:py-3.5 bg-green-600 text-white rounded-full font-bold text-sm md:text-xl shadow-xl hover:bg-green-700 hover:shadow-2xl w-auto"
                             >
                                 Get Started
                             </Link>
@@ -174,7 +174,7 @@ export default function CampusDetail() {
                                         .getElementById("introduction")
                                         .scrollIntoView({ behavior: "smooth" })
                                 }
-                                className="px-6 py-2.5 md:px-8 md:py-3.5 bg-white border border-slate-200 text-slate-700 rounded-full font-bold text-lg md:text-xl shadow-sm hover:bg-black hover:text-white hover:border-slate-300 transition-all duration-300 w-auto"
+                                className="px-4 py-2 md:px-8 md:py-3.5 bg-white border border-slate-200 text-slate-700 rounded-full font-bold text-sm md:text-xl shadow-sm hover:bg-black hover:text-white hover:border-slate-300 transition-all duration-300 w-auto"
                             >
                                 Learn More
                             </button>
@@ -296,7 +296,7 @@ export default function CampusDetail() {
                             {[
                                 {
                                     step: 1,
-                                    title: "Build your private profile.",
+                                    title: "Build your profile.",
                                     desc: "Create a verified student profile highlighting your skills, academic year, and interests.",
                                     visual: (
                                         <div className="bg-white p-4 md:p-6 rounded-2xl shadow-xl border border-slate-100 w-full max-w-sm mx-auto relative transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
@@ -493,11 +493,12 @@ export default function CampusDetail() {
                                                 </span>
                                                 <Zap className="w-4 h-4" />
                                             </div>
-                                            <div className="h-8 w-3/4 bg-slate-100 rounded mb-3"></div>
+                                            <div className="h-8 w-3/4 bg-slate-100 rounded mb-3"> Need An Landing Page</div>
+
                                             <div className="h-4 w-1/2 bg-slate-50 rounded mb-6"></div>
                                             <div className="flex gap-2">
                                                 <div className="px-3 py-1 rounded bg-green-50 text-green-700 text-xs font-bold">
-                                                    ₹ Budget
+                                                    ₹ 6000
                                                 </div>
                                                 <div className="px-3 py-1 rounded bg-slate-50 text-slate-600 text-xs font-bold">
                                                     Urgent
@@ -508,7 +509,7 @@ export default function CampusDetail() {
                                 },
                                 {
                                     step: 2,
-                                    title: "Find nearby heroes.",
+                                    title: "Find nearby Task Performers.",
                                     desc: "Your task is broadcasted to verified students on campus who match your requirements.",
                                     visual: (
                                         <div className="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 w-full max-w-sm mx-auto relative transform rotate-[2deg] hover:rotate-0 transition-transform duration-500">
@@ -518,10 +519,10 @@ export default function CampusDetail() {
                                                     <Search className="w-6 h-6" />
                                                 </div>
                                                 <div className="text-sm font-bold text-slate-700">
-                                                    Searching Campus...
+                                                    Searching...
                                                 </div>
                                                 <div className="text-xs text-slate-400 mt-1">
-                                                    24 students nearby
+                                                    24 nearby
                                                 </div>
                                             </div>
                                         </div>
@@ -570,7 +571,7 @@ export default function CampusDetail() {
                                                 <Check className="w-8 h-8" />
                                             </div>
                                             <div className="text-xl font-bold text-slate-900  mb-1">
-                                                Great Job!
+                                                Success Your Task Done!
                                             </div>
                                             <div className="flex justify-center gap-1 text-yellow-400 mb-4">
                                                 <Star className="w-4 h-4 fill-current" />

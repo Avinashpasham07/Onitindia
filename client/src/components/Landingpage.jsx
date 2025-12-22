@@ -182,7 +182,7 @@ function Landingpage() {
             Start Earning
           </a>
 
-          <div className="w-10 h-10 sm:w-9 sm:h-9 rounded-full flex justify-center items-center bg-green-500 text-white transition-all duration-300 hover:bg-zinc-900 hover:text-white shadow-lg md:shadow-none">
+          <div className="hidden md:flex w-10 h-10 sm:w-9 sm:h-9 rounded-full justify-center items-center bg-green-500 text-white transition-all duration-300 hover:bg-zinc-900 hover:text-white shadow-lg md:shadow-none">
             <FaArrowUpLong className="rotate-45" />
           </div>
         </div>

@@ -77,7 +77,7 @@ const ScrollRevealSection = () => {
                             key={feature.id}
                             onClick={() => setActiveTab(feature.id)}
                             className={`
-                                flex items-center gap-1 sm:gap-2 px-2.5 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-[9px] sm:text-xs md:text-sm font-bold tracking-wide transition-all duration-300 border whitespace-nowrap flex-shrink-0
+                                flex items-center gap-1 sm:gap-2 px-2.5 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-[6px] sm:text-xs md:text-sm font-bold tracking-wide transition-all duration-300 border whitespace-nowrap flex-shrink-0
                                 ${activeTab === feature.id
                                     ? "bg-green-600 text-white border-green-600 shadow-md scale-105"
                                     : "bg-white text-slate-500 border-slate-200 hover:bg-green-50 hover:text-green-700 hover:border-green-200"}
