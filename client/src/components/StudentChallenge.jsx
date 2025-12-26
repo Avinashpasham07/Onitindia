@@ -129,7 +129,7 @@ const StudentChallenge = () => {
     };
 
     return (
-        <section className="bg-white w-full py-16 px-4 md:px-8 overflow-hidden font-sans flex flex-col items-center justify-center min-h-screen">
+        <section className="bg-[#f3f4f6]  w-full py-16 px-4 md:px-8 overflow-hidden font-sans flex flex-col items-center justify-center min-h-screen">
             <div className="max-w-[1400px] mx-auto w-full relative">
 
                 {/* Main Heading */}

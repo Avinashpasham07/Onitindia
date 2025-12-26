@@ -103,15 +103,13 @@ function Landingpage() {
         </div>
 
         {/* --- Description --- */}
-        <p className="mt-3 sm:mt-5 ml-2 -mb-7 text-[3.5vw] sm:text-[3vw] md:text-base text-zinc-600 w-[90%] md:w-[60%] leading-relaxed">
+        <p className="mt-3 sm:mt-5 ml-2 -mb-7 text-[4.5vw] sm:text-[4vw] md:text-xl text-zinc-600 w-[90%] md:w-[60%] leading-relaxed">
           Connecting people who need help with those ready to help
         </p>
-        <p className="mt-3 sm:mt-5 ml-2 -mb-7 text-[3.5vw] sm:text-[3vw] md:text-base text-zinc-600 w-[90%] md:w-[60%] leading-relaxed">
-          instantly,
-          locally, and with zero commission.
+        <p className="mt-3 sm:mt-5 ml-2 -mb-7 text-[4.5vw] sm:text-[4vw] md:text-xl text-zinc-600 w-[90%] md:w-[60%] leading-relaxed">
+          <span className="text-green-500 font-semibold leading-none">instantly,</span> <span className="text-green-500 font-semibold leading-none">locally,</span> and with <span className="text-green-500 font-semibold leading-none">zero commission.</span>
         </p>
       </div>
-
       {/* ===== RIGHT SIDE LOTTIE (Desktop) ===== */}
       <div className="absolute hidden md:flex justify-center items-center right-36 top-1/2 transform -translate-y-1/2">
         <iframe

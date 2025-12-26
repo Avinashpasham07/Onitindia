@@ -159,11 +159,11 @@ export default function CampusDetail() {
                             INITIATIVE
                         </h1>
 
-                        <p className="max-w-2xl mx-auto text-xl md:text-2xl text-slate-500 mb-12 font-medium leading-relaxed">
-                            A student-first task platform where{" "}
-                            <b className="text-slate-900">real work</b> meets{" "}
-                            <b className="text-slate-900">real talent</b>. Earn, learn, and
-                            grow before graduation.
+                        <p className="max-w-2xl mx-auto text-xl md:text-2xl ml-6 text-slate-500 mb-12 font-medium leading-relaxed">
+                            A task platform where real work meets proven talent.{" "}
+                            <b className="text-slate-900">Earn,learn,</b> {" "}
+                            <b className="text-slate-900">and grow  through {" "}</b>meaningful work
+                            and opportunities.
                         </p>
 
                         <div className="flex flex-row items-center justify-center gap-4 mt-8 md:mt-0 mb-16">

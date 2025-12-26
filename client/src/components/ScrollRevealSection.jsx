@@ -17,25 +17,25 @@ const features = [
     {
         id: "real-tasks",
         icon: <Zap className="w-5 h-5" />,
-        title: "Real Tasks",
-        heading: "Real-world experience, not simulations",
-        desc: "Forget dummy data. Work on actual production tasks and internships that build a portfolio employers actually respect.",
+        title: "Real Tasks & Internships",
+        heading: "Real Tasks & Internships",
+        desc: "Students complete short-term tasks and find internship roles across various domains.",
         image: realTasksImage
     },
     {
         id: "industry",
         icon: <Users className="w-5 h-5" />,
-        title: "Industry Connect",
-        heading: "Direct pipeline to top tech giants",
-        desc: "Startups and major companies like Google and Amazon post needs directly here. Skip the resume black hole.",
+        title: "Industry Connection",
+        heading: "Industry Connection",
+        desc: "Startups, freelancers, and professionals post their needs directly to the campus talent pool.",
         image: inter
     },
     {
         id: "verified",
         icon: <Shield className="w-5 h-5" />,
-        title: "Verified & Secure",
-        heading: "Guaranteed payments & clear briefs",
-        desc: "Every task is vetted. Payments are held in escrow. You focus on coding, we handle the security and admin.",
+        title: "Seamless Process",
+        heading: "Seamless Process",
+        desc: "Simple task briefs, clear budget expectations, and realistic timelines for every project.",
         image: verifiedImage
     }
 ];
