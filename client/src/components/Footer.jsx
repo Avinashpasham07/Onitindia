@@ -78,9 +78,9 @@ function Footer({ onShowPrivacyPolicy }) {
         </div>
 
         {/* Right Section: Links */}
-        <div className="w-full lg:w-6/12 grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-x-16 justify-items-start lg:justify-items-end">
+        <div className="w-full lg:w-6/12 grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-x-16 justify-items-start">
           {/* Company */}
-          <div className="w-full text-left lg:text-right">
+          <div className="w-full text-left">
             <h3 className="text-sm md:text-lg font-semibold text-green-300 mb-4 md:mb-6 uppercase tracking-wider">Company</h3>
             <ul className="space-y-3 md:space-y-4">
               <li>
@@ -102,7 +102,7 @@ function Footer({ onShowPrivacyPolicy }) {
           </div>
 
           {/* Support */}
-          <div className="w-full text-left lg:text-right">
+          <div className="w-full text-left">
             <h3 className="text-sm md:text-lg font-semibold text-green-300 mb-4 md:mb-6 uppercase tracking-wider">Support</h3>
             <ul className="space-y-3 md:space-y-4 text-zinc-300">
               <li>
@@ -119,21 +119,21 @@ function Footer({ onShowPrivacyPolicy }) {
           </div>
 
           {/* Contact Us */}
-          <div className="w-full text-left lg:text-right col-span-2 md:col-span-1">
+          <div className="w-full text-left col-span-2 md:col-span-1">
             <h3 className="text-sm md:text-lg font-semibold text-green-300 mb-4 md:mb-6 uppercase tracking-wider">Contact Us</h3>
             <ul className="space-y-3 md:space-y-4">
               <li>
-                <a href="mailto:support@onitindia.com" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2 text-sm md:text-base justify-start lg:justify-end">
+                <a href="mailto:support@onitindia.com" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2 text-sm md:text-base justify-start">
                   <span className="text-lg"><FaEnvelope /></span> support@onitindia.com
                 </a>
               </li>
               <li>
-                <a href="https://www.linkedin.com/company/onitindia/?viewAsMember=true" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2 text-sm md:text-base justify-start lg:justify-end">
+                <a href="https://www.linkedin.com/company/onitindia/?viewAsMember=true" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2 text-sm md:text-base justify-start">
                   <span className="text-lg"><FaLinkedin /></span> LinkedIn
                 </a>
               </li>
               <li>
-                <a href="https://www.instagram.com/onitindia?igsh=MXA0emY2MzYybGY4aw==" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2 text-sm md:text-base justify-start lg:justify-end">
+                <a href="https://www.instagram.com/onitindia?igsh=MXA0emY2MzYybGY4aw==" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 flex items-center gap-2 text-sm md:text-base justify-start">
                   <span className="text-lg"><FaInstagram /></span> Instagram
                 </a>
               </li>
@@ -148,7 +148,7 @@ function Footer({ onShowPrivacyPolicy }) {
       {/* Footer Bottom */}
       {/* Footer Bottom */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-6 relative z-10 text-sm text-zinc-400 w-full">
-        <h1 className="hidden md:block text-[5rem] lg:text-[7rem] font-black text-white/5 tracking-tighter select-none pointer-events-none leading-none -ml-4">
+        <h1 className="block text-[3rem] md:text-[5rem] lg:text-[7rem] font-black text-white/5 tracking-tighter select-none pointer-events-none leading-none -ml-4">
           #HyperLocal
         </h1>
         <p className="font-medium text-center md:text-right mt-17">
@@ -156,9 +156,6 @@ function Footer({ onShowPrivacyPolicy }) {
           <span className="text-green-400 font-bold">IT</span> Technologies Pvt. Ltd.
         </p>
       </div>
-
-
-
     </footer>
   );
 }

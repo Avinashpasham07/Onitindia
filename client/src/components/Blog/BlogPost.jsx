@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock, Calendar, Check, ArrowUp, Share2, Copy, Twitter, Linkedin, ChevronRight } from "react-feather";
-import { API_BASE } from "../../config";
+import { blogs } from "../../data/blogs";
 import Footer from "../Footer";
 
 /* -------------------------------------------------------------------------- */
@@ -69,33 +69,18 @@ function BlogPost() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const fetchPost = async () => {
-      try {
-        const res = await fetch(`${API_BASE}/api/blog/${id}`);
-        if (!res.ok) throw new Error("Article not found");
-        const data = await res.json();
-        setPost(data);
-        // Calc reading time
-        const words = data?.description?.split(/\s+/).length || 0;
-        setReadingTime(Math.ceil(words / 225));
-      } catch (err) {
-        // Fallback fetch
-        try {
-          const all = await fetch(`${API_BASE}/api/blogs`).then(r => r.json());
-          const found = all.find(p => p._id === id);
-          if (found) {
-            setPost(found);
-            const words = found.description?.split(/\s+/).length || 0;
-            setReadingTime(Math.ceil(words / 225));
-          } else throw err;
-        } catch (finalErr) {
-          setError("We couldn't find that article.");
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPost();
+    // Use static data lookup
+    const found = blogs.find(p => p._id === id);
+
+    if (found) {
+      setPost(found);
+      const words = found.description?.split(/\s+/).length || 0;
+      setReadingTime(Math.ceil(words / 225));
+      setLoading(false);
+    } else {
+      setError("We couldn't find that article.");
+      setLoading(false);
+    }
   }, [id]);
 
   const formattedDate = useMemo(() => post?.date ? new Date(post.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }) : "", [post]);
@@ -111,7 +96,7 @@ function BlogPost() {
       ) : (
         <div className="text-center">
           <h1 className="text-xl font-bold text-green-500 mb-4">{error}</h1>
-          <button onClick={() => navigate("/blogs")} className="text-green-500 font-bold hover:underline">Return to Journal</button>
+          <button onClick={() => navigate("/blog")} className="text-green-500 font-bold hover:underline">Return to Journal</button>
         </div>
       )}
     </div>
@@ -120,31 +105,39 @@ function BlogPost() {
   return (
     <div className="min-h-screen bg-[#f3f4f6] text-[#0a2540] font-sans selection:bg-[#635bff] selection:text-white">
 
-      {/* NAV BAR */}
 
 
-      <main className="max-w-[1040px] mx-auto px-6 py-12 lg:py-20">
+      <main className="max-w-[1040px] mx-auto px-4 md:px-6 pt-28 pb-12 md:py-12 lg:py-20">
 
         {/* HEADER GRID */}
-        <header className="mb-16">
-          <div className="flex flex-col gap-6 max-w-3xl">
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3">
+        <header className="mb-8 md:mb-16">
+          <div className="flex flex-col gap-4 md:gap-6 max-w-3xl">
+            <button
+              onClick={() => navigate("/blog")}
+              className="group inline-flex items-center gap-2 text-xs md:text-sm font-bold text-[#425466] hover:text-[#0a2540] transition-colors mb-2"
+            >
+              <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-white border border-[#e3e8ee] flex items-center justify-center group-hover:border-[#635bff] transition-colors shadow-sm">
+                <ArrowLeft size={12} className="group-hover:text-[#635bff]" />
+              </div>
+              Back to Journal
+            </button>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-2 md:gap-3">
               <Pill>{post.category}</Pill>
-              <span className="text-xs font-bold text-green-500 uppercase tracking-wider">{readingTime} min read</span>
+              <span className="text-[10px] md:text-xs font-bold text-green-500 uppercase tracking-wider">{readingTime} min read</span>
             </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] text-[#0a2540]"
+              className="text-xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] text-[#0a2540]"
             >
               {post.title}
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-              className="text-xl md:text-2xl text-[#425466] leading-relaxed max-w-2xl font-medium"
+              className="text-sm md:text-2xl text-[#425466] leading-relaxed max-w-2xl font-medium"
             >
-              {post.description?.slice(0, 150)}...
+              {post.description?.split('.')[0]}.
             </motion.p>
           </div>
         </header>
@@ -152,7 +145,7 @@ function BlogPost() {
         {/* HERO IMAGE */}
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
-          className="w-full aspect-[2/1] md:aspect-[2.4/1] bg-[#f6f9fc] rounded-xl overflow-hidden mb-16 border border-[#e3e8ee]"
+          className="w-full aspect-[2/1] md:aspect-[2.4/1] bg-[#f6f9fc] rounded-lg md:rounded-xl overflow-hidden mb-8 md:mb-16 border border-[#e3e8ee]"
         >
           <img
             src={post.image?.replace("/upload/", "/upload/f_auto,q_auto,w_1200/") || "https://images.unsplash.com/photo-1556761175-5973dc0f32e7"}
@@ -162,10 +155,10 @@ function BlogPost() {
         </motion.div>
 
         {/* CONTENT GRID */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 relative">
 
           {/* SIDEBAR (METADATA) */}
-          <aside className="lg:col-span-3 lg:sticky lg:top-32 h-fit space-y-8 order-2 lg:order-1">
+          <aside className="lg:col-span-3 lg:sticky lg:top-32 h-fit space-y-6 md:space-y-8 order-2 lg:order-1">
             <div>
               <SectionHeading>Written By</SectionHeading>
               <AuthorCard author={post.author} date={formattedDate} />
@@ -174,12 +167,10 @@ function BlogPost() {
             <div>
               <SectionHeading>Share</SectionHeading>
               <div className="flex flex-col gap-2 items-start">
-                <button onClick={() => navigator.clipboard.writeText(window.location.href)} className="flex items-center gap-2 text-sm font-bold text-green-500 hover:text-[#0a2540] transition-colors">
+                <button onClick={() => navigator.clipboard.writeText(window.location.href)} className="flex items-center gap-2 text-xs md:text-sm font-bold text-green-500 hover:text-[#0a2540] transition-colors">
                   <Copy size={14} /> Copy Link
                 </button>
-                <button className="flex items-center gap-2 text-sm font-bold text-green-500 hover:text-[#0a2540] transition-colors">
-                  <Share2 size={14} /> Share Article
-                </button>
+
               </div>
             </div>
 
@@ -188,7 +179,7 @@ function BlogPost() {
                 <SectionHeading>Topics</SectionHeading>
                 <div className="flex flex-wrap gap-2">
                   {post.keywords.map((kw, i) => (
-                    <span key={i} className="text-xs font-bold text-[#425466] bg-[#f6f9fc] px-2 py-1 rounded hover:bg-[#e3e8ee] transition-colors cursor-pointer">
+                    <span key={i} className="text-[10px] md:text-xs font-bold text-white bg-green-500 px-2 py-1 rounded hover:bg-[#e3e8ee] transition-colors cursor-pointer">
                       {kw}
                     </span>
                   ))}
@@ -200,22 +191,96 @@ function BlogPost() {
           {/* MAIN CONTENT */}
           <article className="lg:col-span-9 lg:pl-12 order-1 lg:order-2">
             {/* Intro Paragraph */}
-            <div className="prose prose-lg prose-slate max-w-none 
+            <div className="prose prose-sm md:prose-base lg:prose-lg prose-slate max-w-none 
                     prose-headings:text-[#0a2540] prose-headings:font-bold prose-headings:tracking-tight
                     prose-p:text-[#425466] prose-p:leading-8 prose-p:font-medium
                     prose-a:text-[#635bff] prose-a:no-underline prose-a:font-semibold hover:prose-a:underline
                     prose-img:rounded-lg prose-img:border prose-img:border-[#e3e8ee]
                  ">
-              {/* Render Highlights First */}
-              {post.description?.length > 300 && (
-                <Callout>
-                  {post.description.split("\n").find(l => l.length > 50 && l.length < 200) || "The Stripe platform helps you build and scale your business online."}
-                </Callout>
-              )}
 
-              {post.description?.split("\n").map((para, i) => (
-                para.length > 0 && <p key={i}>{para}</p>
-              ))}
+              {/* Smart Content Rendering */}
+              {(() => {
+                if (!post.description) return null;
+
+                // Identify a good callout sentence (short, impactful, usually early on)
+                const sentences = post.description.match(/[^\.!\?]+[\.!\?]+/g) || [];
+                const highlight = sentences.find(s => s.length > 40 && s.length < 120 && (s.includes("OnIT") || s.includes("lifesaver") || s.includes("empowering")));
+
+                const lines = post.description.split('\n').filter(line => line.trim() !== '');
+                const elements = [];
+                let listBuffer = [];
+
+                let paragraphCount = 0;
+                let imageIndex = 0;
+
+                lines.forEach((line, index) => {
+                  const trimmed = line.trim();
+                  if (highlight && trimmed.includes(highlight.trim())) {
+                    // Skip
+                  }
+
+                  // List Item detection
+                  if (trimmed.startsWith('- ')) {
+                    listBuffer.push(trimmed.substring(2));
+                  } else {
+                    // Flush List
+                    if (listBuffer.length > 0) {
+                      elements.push(
+                        <ul key={`list-${index}`} className="my-6 md:my-8 space-y-3 md:space-y-4">
+                          {listBuffer.map((item, i) => (
+                            <li key={i} className="flex items-start gap-4 text-[#425466]">
+                              <div className="mt-2.5 w-1.5 h-1.5 rounded-full bg-green-500 shrink-0 shadow-sm" />
+                              <span className="leading-relaxed">{item.split(':')[0]}<span className="text-[#0a2540] font-semibold">{item.includes(':') ? ':' : ''}</span>{item.split(':').slice(1).join(':')}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      );
+                      listBuffer = [];
+                    }
+
+                    // Header detection
+                    const isHeader = trimmed.length < 80 && !trimmed.endsWith('.') && (trimmed.endsWith('?') || trimmed.includes("Benefits") || trimmed.includes("Why") || trimmed.includes("Join") || /^[A-Z][a-zA-Z\s]+$/.test(trimmed));
+
+                    // Render
+                    if (isHeader) {
+                      elements.push(<h3 key={`h3-${index}`} className="text-xl md:text-3xl font-bold text-[#0a2540] mt-10 md:mt-16 mb-4 md:mb-6 tracking-tight">{trimmed}</h3>);
+                    } else {
+                      paragraphCount++;
+                      elements.push(<p key={`p-${index}`} className="mb-4 md:mb-6 leading-7 md:leading-8 text-[#425466]">{trimmed.replace(highlight || "xyz_impossible", "").trim() || trimmed}</p>);
+
+                      // Interleave Images (e.g., after 2nd and 5th paragraphs)
+                      if ((paragraphCount === 2 || paragraphCount === 5) && post.additionalImages && post.additionalImages[imageIndex]) {
+                        elements.push(
+                          <div key={`img-${index}`} className="my-6 md:my-10 rounded-xl overflow-hidden border border-[#e3e8ee]">
+                            <img
+                              src={post.additionalImages[imageIndex].replace("/upload/", "/upload/f_auto,q_auto,w_1200/")}
+                              alt="Blog detail"
+                              className="w-full h-[200px] md:h-[450px] object-cover"
+                            />
+                          </div>
+                        );
+                        imageIndex++;
+                      }
+                    }
+                  }
+                });
+
+                // Flush remaining list
+                if (listBuffer.length > 0) {
+                  elements.push(
+                    <ul key={`list-end`} className="my-8 space-y-4">
+                      {listBuffer.map((item, i) => (
+                        <li key={i} className="flex items-start gap-4 text-[#425466]">
+                          <div className="mt-2.5 w-1.5 h-1.5 rounded-full bg-green-500 shrink-0 shadow-sm" />
+                          <span className="leading-relaxed"><strong className="text-[#0a2540]">{item.split(':')[0]}</strong>{item.includes(':') ? ':' : ''} {item.split(':').slice(1).join(':')}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  );
+                }
+
+                return elements;
+              })()}
             </div>
           </article>
 
@@ -223,21 +288,6 @@ function BlogPost() {
 
       </main>
 
-      {/* FOOTER CTA */}
-      <section className="bg-[#f3f4f6] border-t border-[#e3e8ee] py-20 mt-20">
-        <div className="max-w-[1040px] mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-[#0a2540] mb-6">Ready to get started?</h2>
-          <p className="text-[#425466] mb-8 max-w-xl mx-auto">Explore more insights and stories from our team to help you navigate your journey.</p>
-          <div className="flex justify-center gap-4">
-            <button onClick={() => navigate("/blog")} className="px-6 py-3 bg-green-500 text-white rounded-full font-bold text-sm hover:bg-[#0a2540] transition-colors shadow-lg shadow-indigo-200">
-              Read More Stories
-            </button>
-            <button className="px-6 py-3 bg-white text-green-500 border border-[#e3e8ee] rounded-full font-bold text-sm hover:border-[#0a2540] transition-colors">
-              Subscribe
-            </button>
-          </div>
-        </div>
-      </section>
       <Footer />
     </div>
   );

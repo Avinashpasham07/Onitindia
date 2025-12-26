@@ -27,6 +27,11 @@ import s1 from "../assets/s1.png";
 import s2 from "../assets/s2.png";
 import s3 from "../assets/s3.png"
 import s4 from "../assets/s4.png"
+import a1 from "../assets/1.jpeg"
+import a2 from "../assets/2.png"
+import a3 from "../assets/3.jpeg"
+import a4 from "../assets/4.jpeg"
+import a5 from "../assets/7.JPG"
 
 const SectionTitle = ({ title, subtitle }) => (
     <div className="text-center max-w-3xl mx-auto mb-16">
@@ -191,7 +196,42 @@ export default function CampusDetail() {
             <div id="introduction">
                 <ScrollRevealSection />
             </div>
+            {/* Our Journey Section */}
+            <section className="py-24 px-6 mt-5 bg-[#f3f4f6] overflow-hidden">
+                <SectionTitle
+                    title={
+                        <span>
+                            Our <span className="text-green-600">Journey</span>
+                        </span>
+                    }
+                    subtitle="Capturing moments of collaboration, learning, and growth."
+                />
 
+                <div className="max-w-7xl mx-auto mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {/* Image 1 - Large */}
+                    <div className="col-span-2 row-span-2 relative group overflow-hidden rounded-2xl md:rounded-3xl shadow-lg h-[300px] md:h-[400px]">
+                        <img src={a1} alt="Event 1" className="w-full h-full object-cover transition-transform duration-700 " />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 flex items-end p-6">
+
+                        </div>
+                    </div>
+                    {/* Image 2 */}
+                    <div className="relative group overflow-hidden rounded-2xl shadow-lg h-[150px] md:h-[190px]">
+                        <img src={a2} alt="Event 2" className="w-full h-full object-cover transition-transform duration-700" />
+                    </div>
+                    {/* Image 3 */}
+                    <div className="relative group overflow-hidden rounded-2xl shadow-lg h-[150px] md:h-[190px]">
+                        <img src={a3} alt="Event 3" className="w-full h-full object-fill transition-transform duration-700 " />
+                    </div>
+                    {/* Image 4 */}
+                    <div className="relative group overflow-hidden rounded-2xl shadow-lg h-[150px] md:h-[190px]">
+                        <img src={a4} alt="Event 3" className="w-full h-full object-fill transition-transform duration-700 " />
+                    </div>
+                    <div className="relative group overflow-hidden rounded-2xl shadow-lg h-[150px] md:h-[190px]">
+                        <img src={a5} alt="Event 3" className="w-full h-full object-fill transition-transform duration-700" />
+                    </div>
+                </div>
+            </section>
             <section className="py-24 px-6 bg-[#f3f4f6] overflow-hidden">
                 <SectionTitle
                     title={
@@ -282,7 +322,7 @@ export default function CampusDetail() {
                                         </linearGradient>
                                     </defs>
                                     <path
-                                        d="M25,10 C 60,10 50,35 75,35 C 100,35 50,60 25,60 C 25,80 50,80 75,85 70,78 70,78"
+                                        d="M25,10 C 60,10 50,35 75,35 C 100,35 50,60 25,60 C 25,80 50,80 75,85"
                                         fill="none"
                                         stroke="url(#gradientLine)"
                                         strokeWidth="3"
@@ -897,6 +937,7 @@ export default function CampusDetail() {
                     </div>
                 </div>
             </section>
+
             <Footer />
         </div >
     );
@@ -907,7 +948,7 @@ const MarqueeRow = ({ items }) => (
         {items.map((card, index) => (
             <div
                 key={index}
-                className="group/card w-[240px] md:w-[400px] flex-shrink-0 bg-white p-4 md:p-10 rounded-2xl md:rounded-[2.5rem] border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mx-2 md:mx-5 flex flex-col items-start gap-3 md:gap-6 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden"
+                className="group/card w-[240px] md:w-[400px] flex-shrink-0 bg-[#f3f4f6] p-4 md:p-10 rounded-2xl md:rounded-[2.5rem] border border-green-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mx-2 md:mx-5 flex flex-col items-start gap-3 md:gap-6 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden"
             >
                 <div className="absolute top-0 right-0 w-40 h-40 bg-green-50 rounded-full blur-[60px] -mr-20 -mt-20 transition-all opacity-0 group-hover/card:opacity-100"></div>
 

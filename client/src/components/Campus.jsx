@@ -178,61 +178,7 @@ const Campus = () => {
         </Link>
 
         {/* ================= SECTION 2: TASKS (Glass Cards) ================= */}
-        <div className="mb-10">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h3 className="text-3xl font-bold text-gray-800 mb-2">
-              Any task you can post
-            </h3>
-            <p className="text-gray-500">
-              From academic help to professional projects
-            </p>
-          </motion.div>
 
-          <motion.div
-            variants={containerVars}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6"
-          >
-            {taskList.map((task) => (
-              <motion.div
-                key={task.id}
-                variants={itemVars}
-                whileHover={{ y: -5 }}
-                className="group relative bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:border-green-100 transition-all duration-300 flex flex-col items-center text-center overflow-hidden"
-              >
-                {/* Top Green Accent Bar */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-green-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-
-                {/* Icon */}
-                <div
-                  className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-3 md:mb-4 ${task.color} bg-opacity-20 group-hover:scale-110 transition-transform duration-300`}
-                >
-                  {task.icon}
-                </div>
-
-                {/* Content */}
-                <h4 className="text-base md:text-lg font-bold text-gray-800 mb-1 group-hover:text-green-700 transition-colors">
-                  {task.label}
-                </h4>
-                <p className="text-xs md:text-sm text-gray-400 font-medium">
-                  {task.desc}
-                </p>
-
-                {/* Checkmark (Visual decoration) */}
-                <div className="absolute top-3 right-3 md:top-4 md:right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
-                  <CheckCircle size={16} className="text-green-500 md:w-[18px] md:h-[18px]" />
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
       </div>
     </section>
   );

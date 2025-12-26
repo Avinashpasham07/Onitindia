@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../Footer";
 import { Trash2, Search, ArrowUpRight, Clock, ChevronRight } from "react-feather";
-import { API_BASE } from "../../config";
+import { blogs as staticBlogs } from "../../data/blogs";
 
 /* -------------------------------------------------------------------------- */
 /*                                  UTILS                                     */
@@ -97,9 +97,10 @@ const SearchInput = ({ value, onChange }) => (
   </div>
 );
 
-const BlogCard = ({ post, onClick, isAdmin, onDelete }) => (
+const BlogCard = React.forwardRef(({ post, onClick, isAdmin, onDelete }, ref) => (
   <motion.article
     layout
+    ref={ref}
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, scale: 0.95 }}
@@ -107,14 +108,14 @@ const BlogCard = ({ post, onClick, isAdmin, onDelete }) => (
     className="group cursor-pointer flex flex-col h-full"
     onClick={onClick}
   >
-    <div className="relative aspect-[4/3] mb-6 overflow-hidden rounded-2xl bg-zinc-100">
+    <div className="relative aspect-[16/9] md:aspect-[4/3] mb-6 overflow-hidden rounded-2xl bg-zinc-100">
       <motion.img
         src={cloudImg(post.image)}
         alt={post.title}
         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
       />
       <div className="absolute top-4 left-4">
-        <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-sm text-zinc-900 shadow-sm">
+        <span className="inline-flex items-center px-3 py-1 rounded-full text-[10px] md:text-[11px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-sm text-zinc-900 shadow-sm">
           {post.category}
         </span>
       </div>
@@ -133,18 +134,18 @@ const BlogCard = ({ post, onClick, isAdmin, onDelete }) => (
         {post.title}
       </h3>
 
-      <p className="text-zinc-500 line-clamp-2 md:line-clamp-3 mb-6 text-base leading-relaxed flex-1">
+      <p className="text-zinc-500 line-clamp-2 md:line-clamp-3 mb-6 text-sm leading-relaxed md:text-base flex-1">
         {post.description}
       </p>
 
       <div className="flex items-center justify-between mt-auto">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 md:gap-3">
           <img
             src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${post.author}`}
             alt={post.author}
             className="w-8 h-8 rounded-full bg-zinc-100"
           />
-          <span className="text-sm font-semibold text-zinc-700">{post.author}</span>
+          <span className="text-xs md:text-sm font-semibold text-zinc-700">{post.author}</span>
         </div>
 
         {isAdmin ? (
@@ -162,7 +163,7 @@ const BlogCard = ({ post, onClick, isAdmin, onDelete }) => (
       </div>
     </div>
   </motion.article>
-);
+));
 
 /* -------------------------------------------------------------------------- */
 /*                                MAIN SCREEN                                 */
@@ -170,38 +171,21 @@ const BlogCard = ({ post, onClick, isAdmin, onDelete }) => (
 
 function BlogList() {
   const navigate = useNavigate();
-  const [blogs, setBlogs] = useState([]);
+  // Using static data directly
+  const [blogs, setBlogs] = useState(staticBlogs);
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // No loading state needed for static
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const isAdmin = localStorage.getItem("onit_admin") === "true";
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch(`${API_BASE}/api/blogs?page=${page}`);
-        const data = await res.json();
-        setBlogs((prev) => (page === 1 ? data : [...prev, ...data]));
-      } catch (err) {
-        console.error("❌ Error fetching blogs:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchBlogs();
-  }, [page]);
+  // Removed useEffect fetch logic
 
   const handleDelete = async (e, id) => {
     e.stopPropagation();
     if (!window.confirm("Are you sure you want to remove this story?")) return;
-    try {
-      const res = await fetch(`${API_BASE}/api/delete-blog/${id}`, { method: "DELETE" });
-      if (res.ok) setBlogs((prev) => prev.filter((b) => b._id !== id));
-    } catch (err) {
-      console.error("Error deleting:", err);
-    }
+    // Static delete - just filter out from state
+    setBlogs((prev) => prev.filter((b) => b._id !== id));
   };
 
   // Logic
@@ -225,32 +209,20 @@ function BlogList() {
 
   return (
     <div className="bg-white min-h-screen text-zinc-900 font-sans selection:bg-zinc-900 selection:text-white">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 pt-24 pb-32">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-12 pt-28 md:pt-24 pb-32">
 
         {/* Header */}
-        <header className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 md:mb-20">
           <div className="max-w-2xl">
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+            <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-3 md:mb-6">
               The <span className="text-green-600">Journal</span>.
             </h1>
-            <p className="text-xl text-zinc-500 font-medium max-w-lg leading-relaxed">
+            <p className="text-base md:text-xl text-zinc-500 font-medium max-w-lg leading-relaxed">
               Insights, updates, and stories from the Onit team.
             </p>
           </div>
           <SearchInput value={searchQuery} onChange={setSearchQuery} />
         </header>
-
-        {/* Categories */}
-        <div className="flex items-center gap-2 mb-16 overflow-x-auto pb-4 no-scrollbar">
-          {categories.map((cat) => (
-            <CategoryPill
-              key={cat}
-              label={cat}
-              active={activeCategory === cat}
-              onClick={() => setActiveCategory(cat)}
-            />
-          ))}
-        </div>
 
         {/* Hero Section */}
         {loading && page === 1 ? (
@@ -260,24 +232,24 @@ function BlogList() {
             <motion.section
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-24 group cursor-pointer"
+              className="mb-12 md:mb-24 group cursor-pointer"
               onClick={() => navigate(`/blog/${featuredBlog._id}`)}
             >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-zinc-50 rounded-[3rem] p-8 md:p-16 transition-all duration-500 hover:bg-[#F4F4F5]"> {/* Slight darken on hover */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center bg-zinc-50 rounded-[2rem] md:rounded-[3rem] p-6 md:p-16 transition-all duration-500 hover:bg-[#F4F4F5]">
                 <div className="order-2 lg:order-1 flex flex-col justify-center">
-                  <div className="flex items-center gap-4 mb-8">
+                  <div className="flex items-center gap-3 mb-4 md:mb-8">
                     <span className="px-3 py-1 bg-zinc-900 text-white text-[10px] font-bold uppercase tracking-widest rounded-full">
                       Featured
                     </span>
-                    <span className="text-zinc-500 text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                    <span className="text-zinc-500 text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
                       {calculateReadingTime(featuredBlog.description)} min read
                     </span>
                   </div>
 
-                  <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-zinc-900 mb-8 leading-[1.05] group-hover:text-zinc-700 transition-colors">
+                  <h2 className="text-2xl md:text-6xl font-bold tracking-tight text-zinc-900 mb-4 md:mb-8 leading-[1.1] group-hover:text-zinc-700 transition-colors">
                     {featuredBlog.title}
                   </h2>
-                  <p className="text-xl text-zinc-500 leading-relaxed mb-10 line-clamp-3">
+                  <p className="text-sm md:text-xl text-zinc-500 leading-relaxed mb-6 md:mb-10 line-clamp-3">
                     {featuredBlog.description}
                   </p>
 
@@ -286,10 +258,10 @@ function BlogList() {
                       <img
                         src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${featuredBlog.author}`}
                         alt={featuredBlog.author}
-                        className="w-12 h-12 rounded-full border-2 border-white bg-zinc-100"
+                        className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white bg-zinc-100"
                       />
                     </div>
-                    <div className="text-sm">
+                    <div className="text-xs md:text-sm">
                       <p className="font-bold text-zinc-900">{featuredBlog.author}</p>
                       <p className="text-zinc-400 font-medium">{formatDate(featuredBlog.date)}</p>
                     </div>
@@ -305,13 +277,12 @@ function BlogList() {
                   </div>
                 </div>
 
-                <div className="order-1 lg:order-2 relative aspect-square lg:aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl shadow-zinc-200">
+                <div className="order-1 lg:order-2 relative aspect-[16/9] lg:aspect-[4/3] rounded-2xl md:rounded-[2rem] overflow-hidden shadow-xl md:shadow-2xl shadow-zinc-200">
                   <img
                     src={cloudImg(featuredBlog.image)}
                     alt={featuredBlog.title}
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                   />
-                  {/* Subtle overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
                 </div>
               </div>
@@ -319,9 +290,21 @@ function BlogList() {
           )
         )}
 
+        {/* Categories (Moved) */}
+        <div className="flex items-center gap-2 mb-10 md:mb-16 overflow-x-auto pb-4 no-scrollbar">
+          {categories.map((cat) => (
+            <CategoryPill
+              key={cat}
+              label={cat}
+              active={activeCategory === cat}
+              onClick={() => setActiveCategory(cat)}
+            />
+          ))}
+        </div>
+
         {/* Grid Section */}
         {gridBlogs.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 md:gap-x-10 md:gap-y-16">
             <AnimatePresence mode="popLayout">
               {gridBlogs.map((post) => (
                 <BlogCard

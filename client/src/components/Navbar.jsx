@@ -58,6 +58,11 @@ function Navbar() {
   const handleScrollTo = (targetId) => {
     setMenuOpen(false);
 
+    if (targetId === "OnitCampus") {
+      navigate("/campus-detail#campus");
+      return;
+    }
+
     if (window.location.pathname !== "/") {
       navigate("/");
       setTimeout(() => {
