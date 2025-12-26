@@ -948,11 +948,11 @@ const MarqueeRow = ({ items }) => (
         {items.map((card, index) => (
             <div
                 key={index}
-                className="group/card w-[240px] md:w-[400px] flex-shrink-0 bg-[#f3f4f6] p-4 md:p-10 rounded-2xl md:rounded-[2.5rem] border border-green-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mx-2 md:mx-5 flex flex-col items-start gap-3 md:gap-6 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden"
+                className="group/card w-[240px] md:w-[400px] flex-shrink-0 bg-[#f3f4f6] p-4 md:p-10 rounded-2xl md:rounded-[2.5rem] border border-green-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mx-2 md:mx-5 flex flex-col items-start gap-3 md:gap-6 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 relative overflow-hidden"
             >
                 <div className="absolute top-0 right-0 w-40 h-40 bg-green-50 rounded-full blur-[60px] -mr-20 -mt-20 transition-all opacity-0 group-hover/card:opacity-100"></div>
 
-                <div className="w-10 h-10 md:w-16 md:h-16 bg-green-50 text-green-600 rounded-lg md:rounded-2xl flex items-center justify-center shadow-sm group-hover/card:scale-110 group-hover/card:bg-green-600 group-hover/card:text-white transition-all duration-300 relative z-10">
+                <div className="w-10 h-10 md:w-16 md:h-16 bg-green-50 text-green-600 rounded-lg md:rounded-2xl flex items-center justify-center shadow-sm group-hover/card:bg-green-600 group-hover/card:text-white transition-all duration-300 relative z-10">
                     <div className="scale-75 md:scale-100">
                         {card.icon}
                     </div>
