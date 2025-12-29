@@ -15,7 +15,7 @@ const Partner = () => {
                 <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden mb-4 transition-transform duration-300 group-hover:scale-110 border border-zinc-200">
                     <img
                         src={p1}
-                        alt="TechSpace Solutions"
+                        alt="TECH VISTAR"
                         className="w-full h-full object-cover"
                     />
                 </div>

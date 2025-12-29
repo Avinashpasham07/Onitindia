@@ -62,7 +62,7 @@ function Landingpage() {
     >
       {/* ===== HEADLINE AREA ===== */}
       <div className="mt-24 md:mt-36 px-4 sm:px-8 md:px-20">
-        <div className="flex flex-col gap-[0.1rem] sm:gap-[0.2rem] md:gap-[0.3rem]">
+        <h1 className="flex flex-col gap-[0.1rem] sm:gap-[0.2rem] md:gap-[0.3rem]">
           {/* --- FIRST LINE --- */}
           <div className="flex items-end gap-3 leading-none">
             <span className="text-[10vw] sm:text-[8vw] md:text-[6.5vw] uppercase font-bold text-zinc-800">
@@ -100,7 +100,7 @@ function Landingpage() {
               <span className="text-green-400 font-bold leading-none">IT</span>
             </span>
           </div>
-        </div>
+        </h1>
 
         {/* --- Description --- */}
         {/* Mobile Description */}
@@ -195,7 +195,7 @@ function Landingpage() {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

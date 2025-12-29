@@ -19,12 +19,18 @@ import AddPost from "./components/Blog/AddPost";
 import BlogList from "./components/Blog/BlogList";
 import BlogPost from "./components/Blog/BlogPost";
 import Campus from "./components/Campus.jsx";
-import SeoCampusContent from "./components/SeoCampusContent";
 import CampusDetail from "./components/CampusDetail";
+import SEO from "./components/SEO";
 
 function Home() {
   return (
     <>
+      <SEO
+        title="Home"
+        description="OnIT Campus – Flexible, Local Work for Everyone. Connect with people who need help or are ready to help instantly, locally, and with zero commission."
+        keywords="OnIT India, OnIT Campus, campus task platform, campus gig platform, flexible jobs near campus, local freelance work"
+        canonical="https://www.onitindia.com/"
+      />
       <section id="home"><Landingpage /></section>
       <section id="knowaboutus"><KnowAboutUs /></section>
       <section id="tasksee"><Task_see /></section>
@@ -33,21 +39,15 @@ function Home() {
       <section id="partner"><Partner /></section>
       <section id="Campus"><Campus /></section>
 
-      {/* SEO-only content */}
-      <SeoCampusContent />
-
       <section id="marquee"><Marquee /></section>
       <section id="testimonials"><Testimonials /></section>
       <section id="footer"><Footer /></section>
     </>
   );
 }
-
-
 import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
-  // ✅ Google Analytics setup inside useEffect
   useEffect(() => {
     const script1 = document.createElement("script");
     script1.async = true;
