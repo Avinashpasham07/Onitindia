@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../Footer";
+import SEO from "../SEO";
 import { Trash2, Search, ArrowUpRight, Clock, ChevronRight } from "react-feather";
 import { blogs as staticBlogs } from "../../data/blogs";
 
@@ -169,46 +170,19 @@ const BlogCard = React.forwardRef(({ post, onClick, isAdmin, onDelete }, ref) =>
 /*                                MAIN SCREEN                                 */
 /* -------------------------------------------------------------------------- */
 
+
+
 function BlogList() {
-  const navigate = useNavigate();
-  // Using static data directly
-  const [blogs, setBlogs] = useState(staticBlogs);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false); // No loading state needed for static
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [searchQuery, setSearchQuery] = useState("");
-  const isAdmin = localStorage.getItem("onit_admin") === "true";
-
-  // Removed useEffect fetch logic
-
-  const handleDelete = async (e, id) => {
-    e.stopPropagation();
-    if (!window.confirm("Are you sure you want to remove this story?")) return;
-    // Static delete - just filter out from state
-    setBlogs((prev) => prev.filter((b) => b._id !== id));
-  };
-
-  // Logic
-  const sortedBlogs = useMemo(() => [...blogs].sort((a, b) => new Date(b.date) - new Date(a.date)), [blogs]);
-  const categories = useMemo(() => ["All", ...new Set(blogs.map((b) => b.category))], [blogs]);
-
-  const filteredBlogs = useMemo(() => {
-    let result = sortedBlogs;
-    if (activeCategory !== "All") {
-      result = result.filter((b) => b.category === activeCategory);
-    }
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase();
-      result = result.filter((b) => b.title.toLowerCase().includes(q) || b.description.toLowerCase().includes(q));
-    }
-    return result;
-  }, [sortedBlogs, activeCategory, searchQuery]);
-
-  const featuredBlog = activeCategory === "All" && !searchQuery ? filteredBlogs[0] : null;
-  const gridBlogs = featuredBlog ? filteredBlogs.slice(1) : filteredBlogs;
+  // ... existing code ...
 
   return (
     <div className="bg-white min-h-screen text-zinc-900 font-sans selection:bg-zinc-900 selection:text-white">
+      <SEO
+        title="The Journal"
+        description="Insights, updates, and stories from the OnIT team. Read about our latest developments and success stories."
+        keywords="OnIT blog, startup journal, campus stories, gig economy news"
+        canonical="https://onitindia.com/blog"
+      />
       <div className="max-w-[1400px] mx-auto px-4 md:px-12 pt-28 md:pt-24 pb-32">
 
         {/* Header */}

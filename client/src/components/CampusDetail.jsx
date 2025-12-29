@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import SEO from "./SEO";
 import { Link, useLocation } from "react-router-dom";
 import {
     Star,
@@ -42,6 +43,10 @@ const SectionTitle = ({ title, subtitle }) => (
     </div>
 );
 
+
+
+// ... (existing imports)
+
 export default function CampusDetail() {
     const [persona, setPersona] = useState("students");
     const { pathname, hash } = useLocation();
@@ -62,6 +67,12 @@ export default function CampusDetail() {
 
     return (
         <div className="bg-gray-50 min-h-screen font-sans">
+            <SEO
+                title="OnIT Campus | Local Tasks for Students"
+                description="Join OnIT Campus to find flexible, local work or get help instantly. Connect with students and task performers nearby."
+                keywords="campus jobs, student tasks, local freelance, OnIT Campus, flexible work, student internships"
+                canonical="https://onitindia.com/campus-detail"
+            />
             {/* Added id="campus" here for the target */}
             <section
                 id="campus"

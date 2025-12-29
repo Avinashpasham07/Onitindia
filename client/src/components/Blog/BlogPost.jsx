@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock, Calendar, Check, ArrowUp, Share2, Copy, Twitter, Linkedin, ChevronRight } from "react-feather";
+import SEO from "../SEO";
 import { blogs } from "../../data/blogs";
 import Footer from "../Footer";
 
@@ -102,10 +103,21 @@ function BlogPost() {
     </div>
   );
 
+
+
+  // ... existing code ...
+
   return (
     <div className="min-h-screen bg-[#f3f4f6] text-[#0a2540] font-sans selection:bg-[#635bff] selection:text-white">
-
-
+      {post && (
+        <SEO
+          title={post.title}
+          description={post.description}
+          keywords={post.keywords ? post.keywords.join(", ") : "OnIT blog, article"}
+          canonical={`https://onitindia.com/blog/${post._id}`}
+          type="article"
+        />
+      )}
 
       <main className="max-w-[1040px] mx-auto px-4 md:px-6 pt-28 pb-12 md:py-12 lg:py-20">
 

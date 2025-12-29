@@ -2,7 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { UserPlus, Search, Briefcase, DollarSign, ArrowLeft } from "react-feather";
-import Footer from "./Footer"; // ✅ Import Footer
+import Footer from "./Footer";
+import SEO from "./SEO";
 
 
 const cards = [
@@ -32,11 +33,21 @@ const cards = [
   },
 ];
 
+
+
+// ... existing code ...
+
 function Task_Performers() {
   const navigate = useNavigate();
 
   return (
     <div className="flex flex-col min-h-screen bg-[#f3f4f6]">
+      <SEO
+        title="Find Work Nearby | Task Performers"
+        description="Find local work opportunities nearby. Work when you want and earn what you deserve with OnIT India."
+        keywords="local work, task performer, earn money, gig jobs, part time jobs, OnIT India"
+        canonical="https://onitindia.com/task-performers"
+      />
       {/* Main Content */}
       <div className="flex-grow px-4 sm:px-8 md:px-20 py-14 sm:py-20 relative">
         {/* 🔙 Back Button */}
@@ -96,29 +107,29 @@ function Task_Performers() {
         </div>
 
         {/* ✅ Register Button */}
-       <div className="flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-10 mt-16 sm:mt-20 md:mt-24">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-10 mt-16 sm:mt-20 md:mt-24">
 
-  <a
-    href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="inline-block bg-green-500 text-white text-base sm:text-1xl px-8 sm:px-10 py-5
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdjLQSxhukM9y99iIDBT8p86_ZLZi3gYuxseIC1kK0FbL31ag/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-green-500 text-white text-base sm:text-1xl px-8 sm:px-10 py-5
                rounded-full hover:bg-black hover:text-white transition-all duration-300 shadow-md"
-  >
-    Register
-  </a>
+          >
+            Register
+          </a>
 
-  <a
-    href="https://chat.whatsapp.com/KXVDlz7PlJ7E4uyWOrZhOo"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="inline-block bg-green-500 text-white text-base sm:text-1xl px-8 sm:px-10 py-5
+          <a
+            href="https://chat.whatsapp.com/KXVDlz7PlJ7E4uyWOrZhOo"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-green-500 text-white text-base sm:text-1xl px-8 sm:px-10 py-5
                rounded-full hover:bg-black hover:text-white transition-all duration-300 shadow-md"
-  >
-    Join WhatsApp Our Community
-  </a>
+          >
+            Join WhatsApp Our Community
+          </a>
 
-</div>
+        </div>
 
       </div>
 

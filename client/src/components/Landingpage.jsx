@@ -101,9 +101,6 @@ function Landingpage() {
             </span>
           </div>
         </h1>
-
-        {/* --- Description --- */}
-        {/* Mobile Description */}
         <div className="mt-5 w-[90%] md:hidden">
           <p className="text-base text-zinc-600 leading-tight font-medium text-justify">
             Connecting people who need help with those ready to help <span className="text-green-500 font-bold">instantly,</span> <span className="text-green-500 font-bold">locally,</span> and with <span className="text-green-500 font-bold">zero commission.</span>

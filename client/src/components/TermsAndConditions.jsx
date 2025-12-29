@@ -1,8 +1,14 @@
 import React from "react";
+import SEO from "./SEO";
 
 const TermsAndConditions = () => {
   return (
     <section className="h-screen bg-white text-gray-800 flex flex-col justify-start pt-24 pb-16 px-6 md:px-20">
+      <SEO
+        title="Terms & Conditions"
+        description="Review the Terms and Conditions for using OnIT India's platform and services."
+        canonical="https://onitindia.com/terms-and-conditions"
+      />
       <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center text-green-600">
         Terms & Conditions
       </h2>
@@ -46,9 +52,9 @@ const TermsAndConditions = () => {
           </p>
         </div>
 
-       
 
-        
+
+
       </div>
     </section>
   );

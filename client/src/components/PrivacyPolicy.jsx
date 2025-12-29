@@ -1,8 +1,14 @@
 import React from "react";
+import SEO from "./SEO";
 
 const PrivacyPolicy = () => {
   return (
     <section className="h-screen bg-white text-gray-800 flex flex-col justify-start pt-24 pb-16 px-6 md:px-20">
+      <SEO
+        title="Privacy Policy"
+        description="Read OnIT India's privacy policy. We prioritize your data security and transparency."
+        canonical="https://onitindia.com/privacy-policy"
+      />
       <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center text-green-600">
         Privacy Policy
       </h2>

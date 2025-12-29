@@ -38,7 +38,6 @@ function Home() {
       <section id="whychooseus"><WhyChooseUs /></section>
       <section id="partner"><Partner /></section>
       <section id="Campus"><Campus /></section>
-
       <section id="marquee"><Marquee /></section>
       <section id="testimonials"><Testimonials /></section>
       <section id="footer"><Footer /></section>
@@ -53,7 +52,6 @@ function App() {
     script1.async = true;
     script1.src = "https://www.googletagmanager.com/gtag/js?id=G-HDDWFT5Z6C";
     document.head.appendChild(script1);
-
     const script2 = document.createElement("script");
     script2.innerHTML = `
       window.dataLayer = window.dataLayer || [];
