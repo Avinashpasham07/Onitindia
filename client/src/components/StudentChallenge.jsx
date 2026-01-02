@@ -5,12 +5,12 @@ import {
     Briefcase,
     Share2,
     TrendingUp,
-    DollarSign,
     ChevronLeft,
     ChevronRight,
     MessageCircle, // Added for Scattered Opportunities
     Clock,         // Added for Work-Study Balance
 } from "react-feather";
+import { IndianRupee } from "lucide-react";
 
 // Replace these with your actual imports
 import workImage from "../assets/work.png";
@@ -22,7 +22,7 @@ import paymentImage from "../assets/money.png";
 const challenges = [
     {
         id: "financial",
-        icon: <DollarSign className="w-5 h-5" />,
+        icon: <Search className="w-5 h-5" />,
         title: "Finding Paid Work",
         heading: "Finding Paid Work",
         desc: "Hard to find real, legitimate paid work on campus that matches skill levels and respects academic schedules.",
@@ -58,7 +58,7 @@ const challenges = [
     },
     {
         id: "payment",
-        icon: <DollarSign className="w-5 h-5" />,
+        icon: <IndianRupee className="w-5 h-5" />,
         title: "Payment Uncertainty",
         heading: "Payment Uncertainty",
         desc: "Frequent uncertainty about project scope, vague timelines, and lack of guaranteed payment for work done.",
@@ -129,11 +129,11 @@ const StudentChallenge = () => {
     };
 
     return (
-        <section className="bg-[#f3f4f6]  w-full py-16 px-4 md:px-8 overflow-hidden font-sans flex flex-col items-center justify-center min-h-screen">
+        <section className="bg-[#f3f4f6] w-full py-10 md:py-16 px-4 md:px-8 overflow-hidden font-sans flex flex-col items-center justify-center min-h-screen">
             <div className="max-w-[1400px] mx-auto w-full relative">
 
                 {/* Main Heading */}
-                <div className="text-center mb-16">
+                <div className="text-center mb-8 md:mb-16">
                     <h2 className="text-2xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
                         Challenges for <span className="text-green-600">Students</span>
                     </h2>

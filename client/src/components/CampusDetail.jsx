@@ -28,11 +28,12 @@ import s1 from "../assets/s1.png";
 import s2 from "../assets/s2.png";
 import s3 from "../assets/s3.png"
 import s4 from "../assets/s4.png"
-import a1 from "../assets/1.jpeg"
+
 import a2 from "../assets/2.png"
 import a3 from "../assets/3.jpeg"
 import a4 from "../assets/4.jpeg"
 import a5 from "../assets/7.JPG"
+import g3 from "../assets/g3.JPG"
 
 const SectionTitle = ({ title, subtitle }) => (
     <div className="text-center max-w-3xl mx-auto mb-16">
@@ -52,6 +53,8 @@ export default function CampusDetail() {
     const { pathname, hash } = useLocation();
 
     // UPDATED SCROLL LOGIC
+    // Scroll logic removed to allow browser native scroll restoration on refresh and prevent jumping
+    /*
     useEffect(() => {
         // If there is a hash (like #campus), scroll to it
         if (hash === "#campus") {
@@ -64,9 +67,10 @@ export default function CampusDetail() {
             window.scrollTo({ top: 0, left: 0, behavior: "instant" });
         }
     }, [pathname, hash]);
+    */
 
     return (
-        <div className="bg-gray-50 min-h-screen font-sans">
+        <div className=" bg-[#f3f4f6] min-h-screen font-sans">
             <SEO
                 title="OnIT Campus | Local Tasks for Students"
                 description="Join OnIT Campus to find flexible, local work or get help instantly. Connect with students and task performers nearby."
@@ -76,7 +80,7 @@ export default function CampusDetail() {
             {/* Added id="campus" here for the target */}
             <section
                 id="campus"
-                className="relative pt-20 pb-20 lg:pt-32 lg:pb-32 px-6 overflow-hidden min-h-auto md:min-h-[90vh] flex flex-col items-center justify-center bg-[#f3f4f6]"
+                className="relative pt-32 pb-0 lg:pt-30 lg:pb-30 px-6 overflow-hidden min-h-auto flex flex-col items-center justify-center bg-[#f3f4f6] -mb-24 lg:mt-0 lg:mb-0"
             >
                 {/* Background Decor */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-green-50/60 rounded-full blur-[120px] -z-10 pointer-events-none" />
@@ -160,7 +164,7 @@ export default function CampusDetail() {
                         transition={{ duration: 0.8 }}
                         className="relative z-10 max-w-4xl mx-auto"
                     >
-                        <h1 className="text-3xl md:text-6xl lg:text-8xl font-black text-slate-900 leading-[0.9] tracking-tighter mb-8 drop-shadow-sm">
+                        <h1 className="text-3xl md:text-6xl lg:text-8xl font-black text-slate-900 leading-[0.9] tracking-tighter mb-4 lg:mb-8 drop-shadow-sm">
                             On<span className="text-transparent bg-clip-text bg-green-600 to-emerald-500">IT</span>
                             <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-500">
@@ -170,14 +174,14 @@ export default function CampusDetail() {
                             INITIATIVE
                         </h1>
 
-                        <p className="max-w-2xl mx-auto text-xl md:text-2xl ml-6 text-slate-500 mb-12 font-medium leading-relaxed">
+                        <p className="max-w-2xl mx-auto text-xl md:text-2xl ml-6 text-slate-500 mb-6 lg:mb-12 font-medium leading-relaxed">
                             A task platform where real work meets proven talent.{" "}
                             <b className="text-slate-900">Earn,learn,</b> {" "}
                             <b className="text-slate-900">and grow  through {" "}</b>meaningful work
                             and opportunities.
                         </p>
 
-                        <div className="flex flex-row items-center justify-center gap-4 mt-8 md:mt-0 mb-16">
+                        <div className="flex flex-row items-center justify-center gap-4 mt-8 md:mt-0 mb-4 lg:mb-16">
                             <Link
                                 to="/task-performers"
                                 className="px-4 py-2 md:px-8 md:py-3.5 bg-green-600 text-white rounded-full font-bold text-sm md:text-xl shadow-xl hover:bg-green-700 hover:shadow-2xl w-auto"
@@ -194,6 +198,33 @@ export default function CampusDetail() {
                             >
                                 Learn More
                             </button>
+                        </div>
+
+                        {/* Mobile Only: Student Cards Visual */}
+                        <div className="lg:hidden w-full px-2 mb-6">
+                            <div className="flex justify-center gap-4">
+                                {/* Card 1 */}
+                                <div className="relative w-36 h-28 md:w-56 md:h-40 bg-slate-200 rounded-2xl overflow-hidden shadow-lg border-2 border-green-500 rotate-[-3deg]">
+                                    <img src={s1} alt="Student" className="w-full h-full object-cover" />
+                                    <div className="absolute bottom-1 left-1 bg-white/90 backdrop-blur-sm px-2 py-1 md:px-3 md:py-1.5 rounded-full shadow-sm flex items-center gap-1 md:gap-2">
+                                        <div className="w-4 h-4 md:w-6 md:h-6 bg-yellow-400 rounded-full flex items-center justify-center">
+                                            <span className="text-[10px] md:text-sm font-bold text-black">₹</span>
+                                        </div>
+                                        <span className="text-[10px] md:text-sm font-bold text-slate-900">1200</span>
+                                    </div>
+                                </div>
+
+                                {/* Card 2 */}
+                                <div className="relative w-36 h-28 md:w-56 md:h-40 bg-slate-200 rounded-2xl overflow-hidden shadow-lg border-2 border-green-500 rotate-[3deg]">
+                                    <img src={s2} alt="Student" className="w-full h-full object-cover" />
+                                    <div className="absolute bottom-1 right-1 bg-white/90 backdrop-blur-sm px-2 py-1 md:px-3 md:py-1.5 rounded-full shadow-sm flex items-center gap-1 md:gap-2">
+                                        <div className="w-4 h-4 md:w-6 md:h-6 bg-green-400 rounded-full flex items-center justify-center">
+                                            <TrendingUp className="w-2.5 h-2.5 md:w-4 md:h-4 text-white" />
+                                        </div>
+                                        <span className="text-[10px] md:text-sm font-bold text-slate-900">Intern</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </motion.div>
                 </div>
@@ -221,7 +252,7 @@ export default function CampusDetail() {
                 <div className="max-w-7xl mx-auto mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
                     {/* Image 1 - Large */}
                     <div className="col-span-2 row-span-2 relative group overflow-hidden rounded-2xl md:rounded-3xl shadow-lg h-[300px] md:h-[400px]">
-                        <img src={a1} alt="Event 1" className="w-full h-full object-cover transition-transform duration-700 " />
+                        <img src={g3} alt="Event 1" className="w-full h-full object-cover transition-transform duration-700 " />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 flex items-end p-6">
 
                         </div>
@@ -661,7 +692,7 @@ export default function CampusDetail() {
                     )}
                 </AnimatePresence>
             </section>
-            <section className="py-24 px-6 bg-gray-50 bg-[#f3f4f6] overflow-hidden">
+            <section className="py-24 px-6 bg-gray-50 overflow-hidden">
                 {/* CSS Styles for Marquee Animation & Hover Pause */}
                 <style>{`
         @keyframes scrollLeft {
@@ -823,7 +854,7 @@ export default function CampusDetail() {
                                 <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-6 text-green-600 group-hover:scale-110 transition-transform">
                                     <Check size={28} strokeWidth={3} />
                                 </div>
-                                <div className="text-5xl font-black text-white mb-2">50+</div>
+                                <div className="text-5xl font-black text-white mb-2">80+</div>
                                 <div className="text-sm text-white font-bold tracking-wide uppercase">
                                     Tasks Delivered
                                 </div>
@@ -853,7 +884,7 @@ export default function CampusDetail() {
                                 <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-6 text-green-600 group-hover:scale-110 transition-transform">
                                     <Users size={28} strokeWidth={3} />
                                 </div>
-                                <div className="text-5xl font-black text-white mb-2">100+</div>
+                                <div className="text-5xl font-black text-white mb-2">200+</div>
                                 <div className="text-sm text-white font-bold tracking-wide uppercase">
                                     Students Onboarded
                                 </div>
@@ -894,7 +925,7 @@ export default function CampusDetail() {
                                 <div className="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center mb-2 text-green-600 mx-auto">
                                     <Users size={16} strokeWidth={3} />
                                 </div>
-                                <div className="text-2xl font-black text-white mb-0.5">100+</div>
+                                <div className="text-2xl font-black text-white mb-0.5">200+</div>
                                 <div className="text-[9px] text-white/80 font-bold tracking-wider uppercase leading-tight">
                                     Students
                                     <br />
@@ -924,7 +955,7 @@ export default function CampusDetail() {
                                 <div className="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center mb-2 text-green-600 mx-auto">
                                     <Check size={16} strokeWidth={3} />
                                 </div>
-                                <div className="text-2xl font-black text-white mb-0.5">50+</div>
+                                <div className="text-2xl font-black text-white mb-0.5">80+</div>
                                 <div className="text-[9px] text-white/80 font-bold tracking-wider uppercase leading-tight">
                                     Tasks
                                     <br />

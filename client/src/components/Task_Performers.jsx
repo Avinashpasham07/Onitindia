@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { UserPlus, Search, Briefcase, DollarSign, ArrowLeft } from "react-feather";
 import Footer from "./Footer";
 import SEO from "./SEO";
+import { IndianRupee } from "lucide-react";
 
 
 const cards = [
@@ -29,7 +30,7 @@ const cards = [
     number: "4",
     title: "Get Paid",
     description: "Complete tasks and earn securely with instant payout.",
-    icon: <DollarSign className="text-[#1a1a1a]" />,
+    icon: <IndianRupee className="text-[#1a1a1a]" />,
   },
 ];
 
@@ -51,19 +52,12 @@ function Task_Performers() {
       {/* Main Content */}
       <div className="flex-grow px-4 sm:px-8 md:px-20 py-14 sm:py-20 relative">
         {/* 🔙 Back Button */}
-        <button
-          onClick={() => navigate("/")}
-          className="absolute top-20 sm:top-20 left-6 flex items-center gap-2 text-black
-                    px-4 py-2 rounded-full text-sm sm:text-base font-semibold border border-gray-300
-                    hover:bg-black hover:text-white transition duration-300 z-[9999] shadow-lg"
-        >
-          <ArrowLeft size={18} /> Back
-        </button>
+
 
         {/* Section Heading */}
         <div className="text-center mb-10 sm:mb-14 mt-24 sm:mt-20">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black font-['Neue Montreal'] leading-snug">
-            Find Work Nearby You!
+            Join as Task Performer
           </h1>
           <p className="text-gray-600 mt-3 sm:mt-4 text-base sm:text-lg">
             Work When You Want. Earn What You Deserve.
@@ -84,7 +78,9 @@ function Task_Performers() {
                          h-[230px] sm:h-[270px] md:h-[320px]"
             >
               {/* Background Number */}
-              <span className="absolute text-[5rem] sm:text-[6rem] md:text-[8rem] font-bold text-black/15 top-24 left-6 select-none">
+              <span className="absolute font-bold text-black/15 select-none 
+                               text-[6rem] -bottom-6 right-2 
+                               md:text-[8rem] md:top-24 md:left-6 md:right-auto md:bottom-auto">
                 {card.number}
               </span>
 
@@ -119,15 +115,6 @@ function Task_Performers() {
             Register
           </a>
 
-          <a
-            href="https://chat.whatsapp.com/KXVDlz7PlJ7E4uyWOrZhOo"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-green-500 text-white text-base sm:text-1xl px-8 sm:px-10 py-5
-               rounded-full hover:bg-black hover:text-white transition-all duration-300 shadow-md"
-          >
-            Join WhatsApp Our Community
-          </a>
 
         </div>
 

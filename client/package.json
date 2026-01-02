@@ -23,6 +23,7 @@
     "react-helmet-async": "^2.0.5",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.9.5",
+    "react-snap": "^1.23.0",
     "realm-web": "^2.0.1"
   },
   "devDependencies": {

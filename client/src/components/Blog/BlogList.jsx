@@ -173,7 +173,48 @@ const BlogCard = React.forwardRef(({ post, onClick, isAdmin, onDelete }, ref) =>
 
 
 function BlogList() {
-  // ... existing code ...
+  const navigate = useNavigate();
+  const [blogs, setBlogs] = useState(staticBlogs || []);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    // Simulate loading
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Filter blogs based on search and category
+  const filteredBlogs = useMemo(() => {
+    return blogs.filter((post) => {
+      const matchesSearch =
+        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory =
+        activeCategory === "All" || post.category === activeCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchQuery, activeCategory, blogs]);
+
+  const featuredBlog = filteredBlogs.length > 0 ? filteredBlogs[0] : null;
+  const gridBlogs = filteredBlogs.length > 0 ? filteredBlogs.slice(1) : [];
+
+  const categories = useMemo(() => {
+    const cats = new Set(blogs.map((blog) => blog.category));
+    return ["All", ...Array.from(cats)];
+  }, [blogs]);
+
+  const handleDelete = (e, id) => {
+    e.stopPropagation();
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      setBlogs((prev) => prev.filter((blog) => blog._id !== id));
+    }
+  };
 
   return (
     <div className="bg-white min-h-screen text-zinc-900 font-sans selection:bg-zinc-900 selection:text-white">

@@ -5,46 +5,70 @@ import {
     Zap,
     Shield,
     Users,
-    CheckCircle
+    CheckCircle,
+    Coins,
+    Hammer,
+    MapPin
 } from "lucide-react";
-import realTasksImage from "../assets/realtask.png";
-
-import verifiedImage from "../assets/securepayment.png";
-import inter from "../assets/interaction.png";
+import i1 from "../assets/i1.png";
+import i2 from "../assets/i2.png";
+import i3 from "../assets/i3.png";
+import i4 from "../assets/i4.png";
 
 // Content adapted for the "OnIT Campus" intro, but in the requested tabbed format
 const features = [
     {
-        id: "real-tasks",
+        id: "learn-earn",
+        icon: <Coins className="w-5 h-5" />,
+        color: "bg-green-100 text-green-600",
+        btnColor: "bg-slate-900",
+        title: "Learn & Earn",
+        heading: "Learn & Earn",
+        desc: "Students stop paying for theoretical courses and start getting paid for executing tasks. Learning funded by execution.",
+        image: i1
+    },
+    {
+        id: "real-work",
+        icon: <Hammer className="w-5 h-5" />,
+        color: "bg-green-100 text-green-600",
+        btnColor: "bg-slate-900",
+        title: "Real Work",
+        heading: "Real Work",
+        desc: "Moving beyond theoretical case studies. Students work on live projects that actually impact business outcomes.",
+        image: i2
+    },
+    {
+        id: "micro-tasks",
         icon: <Zap className="w-5 h-5" />,
-        title: "Real Tasks & Internships",
-        heading: "Real Tasks & Internships",
-        desc: "Students complete short-term tasks and find internship roles across various domains.",
-        image: realTasksImage
+        color: "bg-green-100 text-green-600",
+        btnColor: "bg-slate-900",
+        title: "Flexible Micro-Tasks",
+        heading: "Flexible Micro-Tasks",
+        desc: "Short-term commitments (hours/days) fitting student schedules, unlike rigid 6-month full-time internships.",
+        image: i3
     },
     {
-        id: "industry",
-        icon: <Users className="w-5 h-5" />,
-        title: "Industry Connection",
-        heading: "Industry Connection",
-        desc: "Startups, freelancers, and professionals post their needs directly to the campus talent pool.",
-        image: inter
-    },
-    {
-        id: "verified",
-        icon: <Shield className="w-5 h-5" />,
-        title: "Seamless Process",
-        heading: "Seamless Process",
-        desc: "Simple task briefs, clear budget expectations, and realistic timelines for every project.",
-        image: verifiedImage
+        id: "hyperlocal",
+        icon: <MapPin className="w-5 h-5" />,
+        color: "bg-green-100 text-green-600",
+        btnColor: "bg-slate-900",
+        title: "Hyperlocal Trust",
+        heading: "Hyperlocal Trust",
+        desc: "Connecting local talent with local businesses builds accountability and stronger professional networks.",
+        image: i4
     }
 ];
 
 const ScrollRevealSection = () => {
-    const [activeTab, setActiveTab] = useState("real-tasks");
+    const [activeTab, setActiveTab] = useState("learn-earn");
+    const [isHovered, setIsHovered] = useState(false);
+    const scrollContainerRef = React.useRef(null);
+    const tabsRef = React.useRef({});
     const activeContent = features.find(c => c.id === activeTab) || features[0];
 
     useEffect(() => {
+        if (isHovered) return;
+
         const interval = setInterval(() => {
             setActiveTab((current) => {
                 const currentIndex = features.findIndex(c => c.id === current);
@@ -52,32 +76,60 @@ const ScrollRevealSection = () => {
                 return features[nextIndex].id;
             });
         }, 5000);
-
         return () => clearInterval(interval);
+    }, [activeTab, isHovered]);
+
+    // Auto-scroll active tab into view
+    useEffect(() => {
+        const container = scrollContainerRef.current;
+        const activeBtn = tabsRef.current[activeTab];
+
+        if (container && activeBtn) {
+            const containerWidth = container.offsetWidth;
+            const btnLeft = activeBtn.offsetLeft;
+            const btnWidth = activeBtn.offsetWidth;
+
+            // Calculate scroll position to center the button
+            const scrollLeft = btnLeft - (containerWidth / 2) + (btnWidth / 2);
+
+            container.scrollTo({
+                left: scrollLeft,
+                behavior: "smooth"
+            });
+        }
     }, [activeTab]);
 
     return (
-        <section id="introduction" className="bg-[#f3f4f6] mb-5 min-h-[500px] sm:min-h-screen flex flex-col justify-center py-8 sm:py-10 px-4 md:px-12 lg:px-24 overflow-hidden">
+        <section id="introduction" className="bg-[#f3f4f6] mb-5 min-h-[500px] sm:min-h-screen flex flex-col justify-center py-8 sm:py-10 px-8 md:px-12 lg:px-24 overflow-hidden">
             <div className="max-w-7xl mx-auto w-full">
 
                 {/* Section Heading */}
                 <div className="text-center mb-6 sm:mb-8">
+                    <span className="text-green-600 font-bold tracking-wider text-xs uppercase mb-2 block">
+                        The Solution
+                    </span>
                     <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 mb-2 sm:mb-3 leading-tight">
                         Introducing <span className="text-green-600">OnIT Campus</span>
                     </h2>
-                    <p className="text-xs sm:text-base md:text-lg text-slate-600 max-w-2xl mx-auto">
-                        Learn-by-doing. Earn-as-you-grow.
+
+                    <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto">
+                        We bridge the gap between education and employment by turning real-world business needs into paid learning opportunities.
                     </p>
                 </div>
 
                 {/* Navigation Tabs */}
-                <div className="flex flex-nowrap overflow-x-auto sm:overflow-visible justify-start sm:justify-center gap-2 sm:gap-3 mb-6 sm:mb-8 px-1 pb-2 sm:pb-0 scrollbar-hide">
+                <div
+                    ref={scrollContainerRef}
+                    className="flex flex-nowrap overflow-x-auto sm:overflow-visible justify-start sm:justify-center gap-2 sm:gap-3 mb-6 sm:mb-8 px-1 pb-2 sm:pb-0 scrollbar-hide scroll-smooth"
+                >
                     {features.map((feature) => (
                         <button
                             key={feature.id}
+                            ref={el => tabsRef.current[feature.id] = el}
                             onClick={() => setActiveTab(feature.id)}
+                            onMouseEnter={() => setActiveTab(feature.id)}
                             className={`
-                                flex items-center gap-1 sm:gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-[5px] sm:text-xs md:text-sm font-bold tracking-wide transition-all duration-300 border whitespace-nowrap flex-shrink-0
+                                    flex items-center gap-1.5 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full text-[10px] sm:text-xs md:text-sm font-bold tracking-wide transition-all duration-300 border whitespace-nowrap flex-shrink-0
                                 ${activeTab === feature.id
                                     ? "bg-green-600 text-white border-green-600 shadow-md scale-105"
                                     : "bg-white text-slate-500 border-slate-200 hover:bg-green-50 hover:text-green-700 hover:border-green-200"}
@@ -88,12 +140,15 @@ const ScrollRevealSection = () => {
                         </button>
                     ))}
                 </div>
-
                 {/* Content Display - Split Layout */}
-                <div className="grid grid-cols-1 md:grid-cols-2 mb-6 gap-0 md:gap-0 items-stretch">
+                <div
+                    className="grid grid-cols-1 md:grid-cols-2 mb-6 gap-0 md:gap-0 items-stretch"
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                >
 
                     {/* Left Column: Text Content */}
-                    <div className="bg-white rounded-t-2xl rounded-b-none md:rounded-3xl md:rounded-r-none p-6 md:p-12 shadow-xl border border-slate-100 flex flex-col justify-center relative overflow-hidden group min-h-[300px]">
+                    <div className="bg-white rounded-t-2xl rounded-b-none md:rounded-3xl md:rounded-r-none p-5 md:p-12 shadow-xl border border-slate-100 flex flex-col justify-center relative overflow-hidden group min-h-[220px]">
                         <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
                             <motion.div
                                 key={activeContent.id + "-bg-icon"}
@@ -114,7 +169,7 @@ const ScrollRevealSection = () => {
                                 transition={{ duration: 0.5, ease: "easeInOut" }}
                                 className="z-10"
                             >
-                                <div className="w-10 h-10 sm:w-14 sm:h-14 bg-green-100 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 text-green-600 shadow-inner">
+                                <div className={`w-10 h-10 sm:w-14 sm:h-14 ${activeContent.color} rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 shadow-inner`}>
                                     {React.cloneElement(activeContent.icon, { className: "w-5 h-5 sm:w-6 sm:h-6" })}
                                 </div>
 
@@ -126,16 +181,13 @@ const ScrollRevealSection = () => {
                                     {activeContent.desc}
                                 </p>
 
-                                <button className="group/btn flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 bg-slate-900 text-white rounded-lg sm:rounded-xl font-bold hover:bg-green-600 transition-all duration-300 w-fit text-xs sm:text-sm">
-                                    <span>Learn more</span>
-                                    <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 group-hover/btn:translate-x-1 transition-transform" />
-                                </button>
+
                             </motion.div>
                         </AnimatePresence>
                     </div>
 
                     {/* Right Column: Image */}
-                    <div className="relative rounded-b-2xl rounded-t-none md:rounded-3xl md:rounded-l-none overflow-hidden h-[250px] sm:h-[350px] md:h-auto shadow-2xl bg-slate-900">
+                    <div className="relative rounded-b-2xl rounded-t-none md:rounded-3xl md:rounded-l-none overflow-hidden h-[180px] sm:h-[350px] md:h-auto shadow-2xl bg-slate-900">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={activeContent.id + "-img"}

@@ -18,9 +18,9 @@ const GradientCard = ({ children, className = "", innerClassName = "bg-white p-3
 
 export default function WhyChooseOnIt() {
   return (
-    <section className="min-h-screen py-20 flex flex-col justify-center items-center px-4 sm:px-10 lg:px-20 bg-zinc-100">
+    <section className="min-h-screen py-10 md:py-20 flex flex-col justify-center items-center px-4 sm:px-10 lg:px-20 bg-zinc-100">
       {/* Title */}
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-zinc-800 mb-12">
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-zinc-800 mb-6 md:mb-12">
         Why Choose{" "}
         <span className="text-black">
           On<span className="text-green-500">IT</span>
@@ -31,10 +31,10 @@ export default function WhyChooseOnIt() {
         <GradientCard className="flex flex-col order-1 col-span-1">
           <div className="flex flex-col justify-between h-full text-left">
             <div className="mb-2 md:mb-4">
-              <FiShoppingCart className="text-2xl md:text-3xl lg:text-4xl text-green-500 ml-2 md:ml-5 -mb-4 md:-mb-8" />
+              <FiShoppingCart className="text-2xl md:text-3xl lg:text-4xl text-green-500 ml-2 md:ml-5 -mb-6 md:-mb-8" />
             </div>
             <div>
-              <h3 className="text-sm md:text-xl font-bold text-black mb-1 md:mb-2 ml-2 md:ml-5">
+              <h3 className="text-sm md:text-xl font-bold text-black mb-1 -mt-3 md:mb-2 ml-2 md:ml-5">
                 Zero Commission
               </h3>
               <p className="text-zinc-500 text-[10px] md:text-sm leading-relaxed ml-2 md:ml-5">

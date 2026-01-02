@@ -37,9 +37,9 @@ const domains = [
 
 function Domains() {
   return (
-    <div className="w-full px-4 mt-0 sm:px-6 md:px-12 lg:px-20 py-14 sm:py-16 bg-[#f3f4f6]">
+    <div className="w-full px-4 mt-0 sm:px-6 md:px-12 lg:px-20 py-10 sm:py-16 bg-[#f3f4f6]">
       {/* Heading */}
-      <div className="text-center mb-10 md:mb-16">
+      <div className="text-center mb-6 md:mb-16">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-zinc-800 font-['Neue Montreal'] mb-2">
           Explore Domains on <span className="text-black">On<span className="text-green-600">IT</span></span>
         </h1>
@@ -122,7 +122,7 @@ function Domains() {
 
                 {/* Animation or Image */}
                 {domain.animation ? (
-                  <div className="w-full h-20 sm:h-28 md:h-32 lg:h-36 rounded-xl sm:rounded-2xl overflow-hidden mt-auto">
+                  <div className="w-full h-32 sm:h-28 md:h-32 lg:h-36 rounded-xl sm:rounded-2xl overflow-hidden mt-auto">
                     <iframe
                       src={domain.animation}
                       className="w-full h-full border-0 scale-110"
@@ -130,7 +130,7 @@ function Domains() {
                     ></iframe>
                   </div>
                 ) : domain.video ? (
-                  <div className="w-full h-20 sm:h-28 md:h-32 lg:h-36 rounded-xl sm:rounded-2xl overflow-hidden mt-auto">
+                  <div className="w-full h-32 sm:h-28 md:h-32 lg:h-36 rounded-xl sm:rounded-2xl overflow-hidden mt-auto">
                     <video
                       src={domain.video}
                       className="w-full h-full object-cover"
@@ -144,7 +144,7 @@ function Domains() {
                   <img
                     src={domain.img}
                     alt={domain.title}
-                    className="w-full h-20 sm:h-28 md:h-32 lg:h-36 object-cover rounded-xl sm:rounded-2xl mt-auto"
+                    className="w-full h-32 sm:h-28 md:h-32 lg:h-36 object-cover rounded-xl sm:rounded-2xl mt-auto"
                   />
                 )}
               </div>

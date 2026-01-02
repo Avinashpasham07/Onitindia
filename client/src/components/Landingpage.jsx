@@ -57,18 +57,39 @@ function Landingpage() {
     <div
       data-scroll
       data-scroll-section
-      data-scroll-speed="0.3"
-      className="relative w-full pt-2 overflow-hidden bg-[#f3f4f6]"
+      data-scroll-speed="0.6"
+      className="relative w-full pt-1 overflow-hidden bg-[#f3f4f6]"
     >
+      <style>{`
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-25%); }
+        }
+        .animate-marquee {
+            animation: marquee 25s linear infinite;
+        }
+      `}</style>
+
+      {/* ===== HEADER MARQUEE ===== */}
+      <div className="w-full py-1 overflow-hidden mb-1 mt-20">
+        <div className="relative flex overflow-x-hidden">
+          <div className="py-2 animate-marquee whitespace-nowrap flex items-center min-w-full">
+            <span className="text-black text-xs md:text-sm font-bold uppercase tracking-widest mx-4 md:mx-8">
+              Happy New Year!🎉 <span className="text-green-500 font-bold">We are live in Delhi!</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
       {/* ===== HEADLINE AREA ===== */}
-      <div className="mt-24 md:mt-36 px-4 sm:px-8 md:px-20">
+      <div className="px-4 sm:px-8 md:px-20">
         <h1 className="flex flex-col gap-[0.1rem] sm:gap-[0.2rem] md:gap-[0.3rem]">
           {/* --- FIRST LINE --- */}
           <div className="flex items-end gap-3 leading-none">
-            <span className="text-[10vw] sm:text-[8vw] md:text-[6.5vw] uppercase font-bold text-zinc-800">
+            <span className="text-[10vw] sm:text-[7vw] md:text-[6.5vw] uppercase font-bold text-zinc-800">
               Any
             </span>
-            <div className="overflow-hidden h-[10vw] sm:h-[8vw] md:h-[6.5vw]">
+            <div className="overflow-hidden h-[10vw] sm:h-[7vw] md:h-[6.5vw]">
               <AnimatePresence mode="wait">
                 <motion.span
                   key={activeSet + "-any"}
@@ -76,7 +97,7 @@ function Landingpage() {
                   animate="animate"
                   exit="exit"
                   variants={slideVariant}
-                  className="block text-[10vw] sm:text-[8vw] md:text-[6.5vw] uppercase font-bold text-green-400 leading-none"
+                  className="block text-[10vw] sm:text-[7vw] md:text-[6.5vw] uppercase font-bold text-green-500 leading-none"
                 >
                   {alternates[activeSet][0]}
                 </motion.span>
@@ -86,24 +107,24 @@ function Landingpage() {
 
           {/* --- SECOND LINE --- */}
           <div className="flex items-end gap-3 leading-none">
-            <span className="text-[10vw] sm:text-[8vw] md:text-[6.5vw] font-bold text-zinc-800">
+            <span className="text-[10vw] sm:text-[7vw] md:text-[6.5vw] font-bold text-zinc-800">
               REAL{" "}
-              <span className="text-green-400 font-bold">FAST</span>
+              <span className="text-green-500 font-bold">FAST</span>
             </span>
           </div>
 
           {/* --- THIRD LINE --- */}
           <div className="flex items-end gap-3 leading-none ">
-            <span className="text-[13vw] sm:text-[10vw] md:text-[7vw] font-bold text-zinc-800">
+            <span className="text-[13vw] sm:text-[9vw] md:text-[7vw] font-bold text-zinc-800">
               We’re{" "}
               <span className="text-zinc-800 font-bold">On</span>
-              <span className="text-green-400 font-bold leading-none">IT</span>
+              <span className="text-green-500 font-bold leading-none">IT</span>
             </span>
           </div>
         </h1>
         <div className="mt-5 w-[90%] md:hidden">
           <p className="text-base text-zinc-600 leading-tight font-medium text-justify">
-            Connecting people who need help with those ready to help <span className="text-green-500 font-bold">instantly,</span> <span className="text-green-500 font-bold">locally,</span> and with <span className="text-green-500 font-bold">zero commission.</span>
+            Connecting people who need help with those ready to help <span className="text-green-500 font-bold">instantly,</span> <span className="text-green-500 font-bold">locally,</span> and with  <span className="text-green-500 font-bold">direct and fair connections.</span>
           </p>
         </div>
 
@@ -113,7 +134,7 @@ function Landingpage() {
             Connecting people who need help with those ready to help
           </p>
           <p className="mt-3 sm:mt-5 ml-2 -mb-7 text-[4.5vw] sm:text-[4vw] md:text-xl text-zinc-600 w-[90%] md:w-[60%] leading-relaxed">
-            <span className="text-green-500 font-semibold leading-none">instantly,</span> <span className="text-green-500 font-semibold leading-none">locally,</span> and with <span className="text-green-500 font-semibold leading-none">zero commission.</span>
+            <span className="text-green-500 font-semibold leading-none">instantly,</span> <span className="text-green-500 font-semibold leading-none">locally,</span> and with <span className="text-green-500 font-semibold leading-none">direct and fair connections.</span>
           </p>
         </div>
       </div>
@@ -192,7 +213,7 @@ function Landingpage() {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 }
 

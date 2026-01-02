@@ -10,6 +10,7 @@ import Task_see from "./components/task_seeker";
 import Task_Performers from "./components/Task_Performers";
 import WhyChooseUs from "./components/WhyChooseUs";
 import Partner from "./components/Partner";
+import Team from "./components/Team";
 import KnowAboutUs from "./components/KnowAboutUs";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import TermsAndConditions from "./components/TermsAndConditions";
@@ -37,6 +38,7 @@ function Home() {
       <section id="domain"><Domain /></section>
       <section id="whychooseus"><WhyChooseUs /></section>
       <section id="partner"><Partner /></section>
+      <section id="team"><Team /></section>
       <section id="Campus"><Campus /></section>
       <section id="marquee"><Marquee /></section>
       <section id="testimonials"><Testimonials /></section>

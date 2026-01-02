@@ -66,14 +66,13 @@ function Testimonials() {
   });
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col justify-center items-center bg-[#f3f4f6] overflow-hidden">
+    <section className="relative w-full py-10 md:min-h-screen flex flex-col justify-center items-center bg-[#f3f4f6] overflow-hidden">
       {/* Heading */}
-      <div className="text-center mb-10 px-6">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-zinc-800 font-['Neue Montreal']">
-          Real Stories from <span className="text-black">On</span>
-          <span className="text-green-600">IT</span>
+      <div className="text-center mb-4 md:mb-10 px-6">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black font-sans tracking-tight">
+          Real Stories from On<span className="text-green-600">IT</span>
         </h1>
-        <p className="text-gray-600 mt-3 sm:mt-4 text-base sm:text-lg  ">
+        <p className="text-slate-600 mt-3 sm:mt-4 text-base sm:text-lg">
           Hear what our users have to say about their experience.
         </p>
       </div>

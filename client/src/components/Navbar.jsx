@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "react-feather";
+import { Menu, X, ArrowRight } from "react-feather";
 import { useNavigate } from "react-router-dom";
 import logoImage from "../assets/logo.png";
 
@@ -88,10 +88,7 @@ function Navbar() {
   return (
     <>
       <div
-        className={`fixed top-0 left-0 w-full flex justify-between items-center px-6 sm:px-10 h-20 z-[9999] transition-all duration-300 ease-in-out font-sans ${scrolled || menuOpen
-          ? "bg-white/90 backdrop-blur-3xl shadow-sm border-b border-gray-100"
-          : "bg-transparent backdrop-blur-[2px]"
-          }`}
+        className="fixed top-0 left-0 w-full flex justify-between items-center px-6 sm:px-10 h-20 z-[9999] transition-all duration-300 ease-in-out font-sans bg-[#f3f4f6] backdrop-blur-md "
       >
         {/* ================= LOGO ================= */}
         <div className="flex items-center shrink-0">
@@ -104,7 +101,7 @@ function Navbar() {
         </div>
 
         {/* ================= DESKTOP NAV ================= */}
-        <div className="hidden md:flex gap-8 absolute left-1/2 transform -translate-x-1/2 items-center">
+        <div className="hidden md:flex gap-6 absolute left-1/2 transform -translate-x-1/2 items-center">
           {centerNavItems.map((item, index) => {
             const isHighlighted = !!item.highlight;
 
@@ -176,16 +173,43 @@ function Navbar() {
             </div>
             <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-gray-200 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
           </motion.div>
+
+          {/* Join Us Link */}
+          <motion.div
+            className="relative cursor-pointer group"
+            onClick={handleTaskPerformer}
+            variants={containerVariants}
+            initial="hidden"
+            whileHover="visible"
+          >
+            <div className="flex">
+              {"Join Us".split("").map((char, idx) => (
+                <motion.span
+                  key={idx}
+                  variants={letterVariants}
+                  className="inline-block text-[16px] font-medium text-gray-700 group-hover:text-black"
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+            </div>
+            <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-gray-200 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
+          </motion.div>
         </div>
 
         {/* ================= DESKTOP BUTTONS ================= */}
         <div className="hidden md:flex items-center gap-4">
-          <button
-            onClick={handleTaskPerformer}
-            className="bg-green-500 text-white text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-black hover:shadow-lg  "
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSeD90sDCZFts-uu_g_FgfVfG4Qmb1Ixyf0rJI7f-I4y9L6hgA/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-sm font-bold pl-6 pr-2 py-2 rounded-full "
           >
-            Join as Task Performer
-          </button>
+            <span className="tracking-wide">Start Posting</span>
+            <div className="bg-white/20  rounded-full p-2 group-hover:bg-black group-hover:text-white ">
+              <ArrowRight size={16} strokeWidth={2.5} />
+            </div>
+          </a>
         </div>
 
         {/* ================= MOBILE MENU BUTTON ================= */}
@@ -233,14 +257,12 @@ function Navbar() {
                 Blog
               </button>
 
-              <div className="w-full px-8 pt-4 border-t border-gray-100">
-                <button
-                  onClick={handleTaskPerformer}
-                  className="w-full text-lg font-bold text-white bg-green-600 hover:bg-green-700 px-6 py-3.5 rounded-xl shadow-md transition active:scale-95"
-                >
-                  Join as Task Performer
-                </button>
-              </div>
+              <button
+                onClick={handleTaskPerformer}
+                className="text-xl font-medium text-gray-700 hover:text-black transition"
+              >
+                Join Us
+              </button>
             </motion.div>
           )}
         </AnimatePresence>

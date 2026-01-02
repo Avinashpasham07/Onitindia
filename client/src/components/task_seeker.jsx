@@ -31,13 +31,13 @@ const cards = [
 
 function Task_see() {
   return (
-    <div className="w-full min-h-screen px-4 sm:px-10 md:px-20 flex flex-col items-center justify-center">
+    <div className="w-full py-8 md:min-h-screen px-4 sm:px-18 md:px-18 flex flex-col items-center md:justify-center">
       {/* Heading */}
-      <div className="text-center mb-10 sm:mb-16">
+      <div className="text-center mb-10 sm:mb-9">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-zinc-800 font-['Neue Montreal']">
           Find Tasker Nearby You!
         </h1>
-        <p className="text-gray-600 mt-3 sm:mt-4 text-base sm:text-lg">
+        <p className="text-gray-600 mt-6 sm:mt-4 text-base sm:text-lg">
           Get Anything Done. Just Ask.
         </p>
       </div>
@@ -53,11 +53,11 @@ function Task_see() {
                        border-2 border-green-200
                        bg-gradient-to-br from-white via-white to-[#dcfce7]
                        flex flex-col justify-between
-                       w-[48%] sm:w-[45%] md:w-[22%]
+                       w-[48%] sm:w-[45%] md:w-[45%] lg:w-[22%]
                        h-[180px] sm:h-[270px] md:h-[320px]"
           >
             {/* Background Number */}
-            <span className="absolute text-[4rem] sm:text-[6rem] md:text-[8rem] font-bold text-green-200 top-8 sm:top-35 left-4 sm:left-6 select-none">
+            <span className="absolute text-[5rem] sm:text-[6rem] md:text-[8rem] font-bold text-green-200 top-auto bottom-[-1rem] left-[1rem] right-auto sm:top-35 sm:left-6 md:left-8 select-none">
               {card.number}
             </span>
             {/* Card Content */}

@@ -36,11 +36,11 @@ function Footer({ onShowPrivacyPolicy }) {
   };
 
   return (
-    <footer className="w-full bg-[#004d43] text-white pt-20 pb-10 px-6 md:px-20 relative overflow-hidden rounded-t-[3rem]">
+    <footer className="w-full bg-[#004d43] text-white pt-10 md:pt-20 pb-10 px-6 md:px-20 relative overflow-hidden rounded-t-[3rem]">
       {/* Subtle overlay for depth */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20 pointer-events-none"></div>
 
-      <div className="flex flex-col lg:flex-row justify-between items-start gap-12 relative z-10">
+      <div className="flex flex-col lg:flex-row justify-between items-start gap-8 md:gap-12 relative z-10">
         {/* Left Section: Brand & Newsletter */}
         <div className="w-full lg:w-5/12 space-y-8">
           {/* Brand Tagline */}
@@ -50,7 +50,7 @@ function Footer({ onShowPrivacyPolicy }) {
               <span className="text-green-300">Start earning.</span>
             </h2>
             <p className="text-zinc-300 text-base leading-relaxed max-w-md">
-              OnIt connects people who need help with those ready to help  instantly, locally, and securely.
+              <span className="text-black font-bold">On</span><span className="text-green-500 font-bold">IT</span> connects people who need help with those ready to help  instantly, locally, and securely.
             </p>
           </div>
 
@@ -94,8 +94,8 @@ function Footer({ onShowPrivacyPolicy }) {
                 </a>
               </li>
               <li>
-                <a href="/#Campus" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 inline-block text-sm md:text-base">
-                  ONIT Campus
+                <a href="/campus-detail#campus" className="text-zinc-300 hover:text-white hover:translate-x-1 transition-all duration-300 inline-block text-sm md:text-base">
+                  <span className="text-black font-bold">On</span><span className="text-green-500 font-bold">IT</span> Campus
                 </a>
               </li>
             </ul>
@@ -151,10 +151,7 @@ function Footer({ onShowPrivacyPolicy }) {
         <h1 className="block text-[3rem] md:text-[5rem] lg:text-[7rem] font-black text-white/5 tracking-tighter select-none pointer-events-none leading-none -ml-4">
           #HyperLocal
         </h1>
-        <p className="font-medium text-center md:text-right mt-17">
-          © 2025 <span className="text-black font-bold">On</span>
-          <span className="text-green-400 font-bold">IT</span> Technologies Pvt. Ltd.
-        </p>
+
       </div>
     </footer>
   );
