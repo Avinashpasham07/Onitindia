@@ -37,7 +37,7 @@ function Home() {
       <section id="tasksee"><Task_see /></section>
       <section id="domain"><Domain /></section>
       <section id="whychooseus"><WhyChooseUs /></section>
-      <section id="partner"><Partner /></section>
+      {/* <section id="partner"><Partner /></section> */}
       <section id="team"><Team /></section>
       <section id="Campus"><Campus /></section>
       <section id="marquee"><Marquee /></section>

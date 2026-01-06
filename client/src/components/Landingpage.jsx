@@ -75,7 +75,7 @@ function Landingpage() {
         <div className="relative flex overflow-x-hidden">
           <div className="py-2 animate-marquee whitespace-nowrap flex items-center min-w-full">
             <span className="text-black text-xs md:text-sm font-bold uppercase tracking-widest mx-4 md:mx-8">
-              Happy New Year!🎉 <span className="text-green-500 font-bold">We are live in Delhi!</span>
+              Happy New Year!🎉 <span className="text-green-500 font-bold">We are live in Hyderabad & Delhi!</span>
             </span>
           </div>
         </div>

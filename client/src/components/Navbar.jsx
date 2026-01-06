@@ -196,7 +196,6 @@ function Navbar() {
             <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-gray-200 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
           </motion.div>
         </div>
-
         {/* ================= DESKTOP BUTTONS ================= */}
         <div className="hidden md:flex items-center gap-4">
           <a
@@ -206,12 +205,11 @@ function Navbar() {
             className="group flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-sm font-bold pl-6 pr-2 py-2 rounded-full "
           >
             <span className="tracking-wide">Start Posting</span>
-            <div className="bg-white/20  rounded-full p-2 group-hover:bg-black group-hover:text-white ">
+            <div className="bg-white/20 rounded-full p-2 group-hover:bg-black group-hover:text-white ">
               <ArrowRight size={16} strokeWidth={2.5} />
             </div>
           </a>
         </div>
-
         {/* ================= MOBILE MENU BUTTON ================= */}
         <div className="md:hidden z-[1000]">
           <button
@@ -221,7 +219,6 @@ function Navbar() {
             {menuOpen ? <X size={28} className="text-black" /> : <Menu size={28} className="text-black" />}
           </button>
         </div>
-
         {/* ================= MOBILE DROPDOWN ================= */}
         <AnimatePresence>
           {menuOpen && (
@@ -249,7 +246,6 @@ function Navbar() {
                   )}
                 </button>
               ))}
-
               <button
                 onClick={handleBlogClick}
                 className="text-xl font-medium text-gray-700 hover:text-black transition"
